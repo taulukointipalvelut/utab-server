@@ -3,7 +3,7 @@ FORMAT: 1A
 ## Data Structures
 
 ### CreateTournament
-+ name: testtournament (string, optional)
++ name: testtournament (string, required)
     + default: testtournament
 + style: NA (string, optional)
     + default: NA
@@ -24,7 +24,7 @@ FORMAT: 1A
 
 ### ModifyTournament
 + id: 32141324123 (number, required)
-+ name: testtournament (string, required)
++ name: testtournament (string, optional)
 + style: NA (string, optional)
 + total_round_num: 4 (number, optional)
 + current_round_num: 1 (number, optional)
@@ -211,9 +211,35 @@ There is no DELETE method in allocations endpoint
  * if the specified round exceeds current round, throws an error.
 
  + Parameters
-  + round (number, optional)
+    + round (number, optional)
+    + simple (boolean, optional)
+     + default: false
+    + force (boolean, optional)
+     + default: false
+    + team_allocation_algorithm (string, optional)
+     + default: 'standard'
+    + team_allocation_algorithm_options (object, optional)
+     + default: {
+                         "filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution']
+                    }
+    + shuffle (boolean, optional)
+     + default: true
+    + adjudicator_allocation_algorithm (string, optional)
+     + default: 'standard'
+    + adjudicator_allocation_algorithm_options (object, optional)
+     + default: {
+                       "filters": ['by_bubble', 'by_strength', 'by_attendance', 'by_conflict', 'by_institution', 'by_past'],
+                       "assign": 'high_to_high',
+                       "scatter": false
+                  }
+    + numbers (object, optional)
+     + default: {
+                       "chairs": 2,
+                       "panels": 1,
+                       "trainees": 1
+                  }
 
-+ Response 200 (application/json)
+    + Response 200 (application/json)
     + Attributes (array[Square])
 
 + Response 404
@@ -237,10 +263,16 @@ There is no DELETE method in allocations endpoint
 ### compute a team allocation [GET]
 
  + Parameters
+  + simple (boolean, optional)
+        + default: false
   + force (boolean, optional)
         + default: false
-  + allocation (array[Square], optional)
-  + check (boolean, optional)
+  + algorithm (string, optional)
+        + default: 'standard'
+  + algorithm_options (object, optional)
+        + default: {
+                        "filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution']
+                   }
 
 + Response 200 (application/json)
     + Attributes (array[Square])
@@ -260,9 +292,25 @@ There is no DELETE method in allocations endpoint
  * computes an adjudicator allocation based on given team allocation
 
  + Parameters
+  + allocation (array[Square], required)
+  + simple (boolean, optional)
+        + default: false
   + force (boolean, optional)
         + default: false
-  + allocation (array[Square], required)
+  + algorithm (string, optional)
+        + default: 'standard'
+  + algorithm_options (object, optional)
+        + default: {
+                        "filters": ['by_bubble', 'by_strength', 'by_attendance', 'by_conflict', 'by_institution', 'by_past'],
+                        "assign": 'high_to_high',
+                        "scatter": false
+                   }
+  + numbers (object, optional)
+        + default: {
+                        "chairs": 2,
+                        "panels": 1,
+                        "trainees": 1
+                   }
 
 + Response 200 (application/json)
     + Attributes (array[Square])
@@ -282,9 +330,11 @@ There is no DELETE method in allocations endpoint
  * computes a venue allocation based on given team/adjudicator allocation
 
  + Parameters
-      + force (boolean, optional)
-            + default: false
       + allocation (array[Square], required)
+      + force (boolean, optional)
+          + default: false
+      + shuffle (boolean, optional)
+          + default: true
 
  + Response 200 (application/json)
     + Attributes (array[Square])

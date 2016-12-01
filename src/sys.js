@@ -6,7 +6,7 @@ function create_hash(seed) {
 }
 
 function find_tournament(list, id) {
-    return list.filter(e => e.id === id)[0]
+    return list.filter(e => e.id === parseInt(id))[0]
 }
 
 function get_node(tournaments, tournament_id, keys) {
@@ -23,10 +23,10 @@ function get_property(object, keys) {//TESTED//
 }
 
 var syncadd = async.queue(function(dict, callback) {
-    list.push(dict.e)
+    dict.list.push(dict.e)
     callback()
 }, 1)
-syncadd.drain = function() {}
+syncadd.drain = function () {}
 /*
 var list = [1, 32, 3]
 
@@ -38,3 +38,4 @@ for (let i = 0; i < 20; i++) {
 exports.syncadd = syncadd
 exports.get_node = get_node
 exports.create_hash = create_hash
+exports.find_tournament = find_tournament

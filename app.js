@@ -14,12 +14,12 @@ app.use(bodyParser.json())
 
 winston.configure({
     transports: [
-        new (winston.transports.File) ({ level: 'silly', filename: __dirname+'/log/'+Date.now().toString()+'.log' }),
+        new (winston.transports.File) ({ level: 'silly', json: false, filename: __dirname+'/log/'+Date.now().toString()+'.log' }),
         new (winston.transports.Console) ({ level: 'silly', colorize: true })
     ]
 })
 
-const PORT = process.env.PORT || 7001
+const PORT = process.env.PORT || 7011
 const BASEURL = process.env.BASEURL || 'mongodb://localhost'
 const DBURL = process.env.DBURL || BASEURL+'/_tournaments'
 
@@ -29,6 +29,7 @@ INITIALIZE
 
 function connect_to_each_tournament(doc) {
     let t = new utab.TournamentHandler(BASEURL+'/'+doc.id.toString())
+    log_connection(doc.id)
     return {id: doc.id, handler: t}
 }
 
@@ -36,10 +37,14 @@ function connect_to_tournaments(DB) {
     let handlers = []
     DB.tournaments.read().then(function(docs) {
         for (let doc of docs) {
-            sys.syncadd.push(handlers, connect_to_each_tournament(doc))
+            sys.syncadd.push({list: handlers, e: connect_to_each_tournament(doc)})
         }
     })
     return handlers
+}
+
+function log_connection(id) {
+    winston.info('connected to Database of tournament id '+id.toString())
 }
 
 function log_request(req) {
@@ -47,6 +52,7 @@ function log_request(req) {
 }
 
 const DB = new controllers.CON({db_url: DBURL})
+winston.info('connected to tournaments database')
 let handlers = connect_to_tournaments(DB)
 /*
 IMPLEMENT COMMON DATABASE API
@@ -101,22 +107,22 @@ IMPLEMENT REMAINING API
 app.route('/tournaments/:tournament_id/rounds')
     .get(function(req, res) {
         log_request(req)
-        let th = sys.find_tournament(handlers, tournament_id)
+        let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.config.read().then(doc => res.json(doc)).catch(err => res.status(500).json(err))
     })
     .post(function(req, res) {
         log_request(req)
-        let th = sys.find_tournament(handlers, tournament_id)
+        let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.config.proceed().then(doc => res.json(doc)).catch(err => res.status(500).json(err))
     })
     .delete(function(req, res) {
         log_request(req)
-        let th = sys.find_tournament(handlers, tournament_id)
+        let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.config.rollback().then(doc => res.json(doc))
     })
     .patch(function(req, res) {
         log_request(req)
-        let th = sys.find_tournament(handlers, tournament_id)
+        let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.config.extend().then(doc => res.json(doc))
     })
 
@@ -129,14 +135,16 @@ app.route('/tournaments')
     .post(function(req, res) {//TESTED//
         log_request(req)
         let dict = _.clone(req.body)
-        let id = sys.create_hash(req.body.db_url)
+        let id = sys.create_hash(req.body.name)
+        let db_url = BASEURL + '/'+req.body.name
         dict.id = id
+        dict.db_url = db_url
 
         DB.tournaments.create(dict).then(docs => res.json(docs))
         .then(function() {
             let id2 = id
             let th = new utab.TournamentHandler(req.db_url, req.body)
-            sys.syncadd.push(handlers, {id: id2, handler: th})
+            sys.syncadd.push({list: handlers, e: {id: id2, handler: th}})
         })
         .catch(err => res.status(500).json(err))
     })
@@ -172,9 +180,46 @@ for (let route of result_routes) {
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = _.clone(req.body)
             dict.r_or_rs = dict.rounds
-            node.organize(req.body).then(docs => res.json(docs)).catch(err => res.status(404).json(err))
+            node.organize(req.body).then(docs => res.json(docs)).catch(err => res.status(500).json(err))
         })
 }
+
+let allocation_routes = [
+    {keys: ['allocations', 'teams'], paths: ['allocations', 'teams']},
+    {keys: ['allocations', 'adjudicators'], paths: ['allocations', 'adjudicators']},
+    {keys: ['allocations', 'venues'], paths: ['allocations', 'venues']}
+]
+
+for (let route of allocation_routes) {
+    app.route('/tournaments/:tournament_id/'+route.paths.join('/'))
+        .get(function(req, res) {
+            log_request(req)
+            let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
+            node.get(req.body).then(docs => res.json(docs)).catch(err => res.status(500).json(err))
+        })
+        .patch(function(req, res) {
+            log_request(req)
+            let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
+            node.check(req.body.allocation).then(doc => res.json(doc)).catch(err => res.status(500).json(err))
+        })
+}
+
+app.route('/tournaments/:tournament_id/allocations')
+    .get(function(req, res) {
+        log_request(req)
+        let th = sys.find_tournament(handlers, req.params.tournament_id)
+        th.allocations.read(req.body).then(doc => res.json(doc)).catch(err => res.status(500).json(err))
+    })
+    .post(function(req, res) {
+        log_request(req)
+        let th = sys.find_tournament(handlers, req.params.tournament_id)
+        th.allocations.create(req.body).then(doc => res.json(doc)).catch(err => res.status(500).json(err))
+    })
+    .put(function(req, res) {
+        log_request(req)
+        let th = sys.find_tournament(handlers, req.params.tournament_id)
+        th.allocations.update(req.body).then(doc => res.json(doc)).catch(err => res.status(500).json(err))
+    })
 
 app.get('/*', function(req, res) {
     res.send('404 Not Found')

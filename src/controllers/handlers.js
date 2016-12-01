@@ -51,8 +51,8 @@ class _CollectionHandler {//TESTED// returns Promise object
         return this.Model.find(dict).exec().then(docs => docs.map(arrange_doc))
     }
     create(dict) {//TESTED//
+        console.log(dict)
         var M = this.Model
-
         var model = new M(dict)
         return model.save().then(arrange_doc)
     }
