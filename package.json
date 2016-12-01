@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/taulukointipalvelut/utab-api-server#readme",
   "dependencies": {
+    "async": "^2.1.4",
+    "blueimp-md5": "^2.6.0",
     "body-parser": "^1.15.2",
     "browser-sync": "^2.18.2",
     "express": "^4.14.0",

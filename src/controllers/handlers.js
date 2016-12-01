@@ -96,7 +96,7 @@ class _CollectionHandler {//TESTED// returns Promise object
 }
 class TournamentsCollectionHandler extends _CollectionHandler {
     constructor(Model) {
-        super(Model, ['name'])
+        super(Model, ['id'])
     }
 }
 

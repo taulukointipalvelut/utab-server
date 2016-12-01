@@ -5,8 +5,6 @@ FORMAT: 1A
 ### CreateTournament
 + name: testtournament (string, optional)
     + default: testtournament
-+ db_url: mongodb://localhost/testtournament (string, optional)
-    + default: mongodb://localhost/testtournament
 + style: NA (string, optional)
     + default: NA
 + total_round_num: 4 (number, optional)
@@ -17,23 +15,23 @@ FORMAT: 1A
     + default: {}
 
 ### Tournament
++ id: 32141324123 (number)
 + name: testtournament (string)
-+ db_url: mongodb://localhost/testtournament (string)
 + style: NA (string)
 + total_round_num: 4 (number)
 + current_round_num: 1 (number)
 + user_defined_data: {} (object)
 
 ### ModifyTournament
++ id: 32141324123 (number, required)
 + name: testtournament (string, required)
-+ db_url: mongodb://localhost/testtournament (string, optional)
 + style: NA (string, optional)
 + total_round_num: 4 (number, optional)
 + current_round_num: 1 (number, optional)
 + user_defined_data: {} (object, optional)
 
 ### SpecifyTournament
-+ name: testtournament (string)
++ id: 32141324123 (number, required)
 
 ### CreateTeam
 + name: kymstr (string, required)
@@ -126,9 +124,29 @@ FORMAT: 1A
 + Response 200 (application/json)
     + Attributes (array[Tournament])
 
+# Group Rounds
+
+## rounds [/tournaments/{tournament_id}/rounds]
+
+### show status [GET]
+
+ + Response 200 (application/json)
+    + Attributes (Tournament)
+
+### proceed to next round [POST]
+
+ + Request (application/json)
+
+ + Response 200 (application/json)
+    + Attributes (Tournament)
+
+### rollback round [DELETE]
+
+### extend round [PATCH]
+
 # Group Database
 
-## teams [/{tournament_name}/teams]
+## teams [/tournaments/{tournament_id}/teams]
 
 ### search or read all teams [GET]
 
@@ -183,7 +201,7 @@ FORMAT: 1A
 
 # Group Allocation
 
-## allocations [/{tournament_name}/allocations]
+## allocations [/tournaments/{tournament_id}/allocations]
 
 There is no DELETE method in allocations endpoint
 
@@ -214,7 +232,7 @@ There is no DELETE method in allocations endpoint
  + Response 200 (application/json)
     + Attributes (array[Square])
 
-## team allocations [/{tournament_name}/allocations/teams]
+## team allocations [/tournaments/{tournament_id}/allocations/teams]
 
 ### compute a team allocation [GET]
 
@@ -235,7 +253,7 @@ There is no DELETE method in allocations endpoint
  + Response 200 (application/json)
     + Attributes (array[Square])
 
-## adjudicator allocations [/{tournament_name}/allocations/adjudicators]
+## adjudicator allocations [/tournaments/{tournament_id}/allocations/adjudicators]
 
 ### compute an adjudicator allocation [GET]
 
@@ -257,7 +275,7 @@ There is no DELETE method in allocations endpoint
  + Response 200 (application/json)
     + Attributes (array[Square])
 
-## venue allocations [/{tournament_name}/allocations/venues]
+## venue allocations [/tournaments/{tournament_id}/allocations/venues]
 
 ### compute venue allocation [GET]
 
@@ -281,23 +299,29 @@ There is no DELETE method in allocations endpoint
 
 # Group Result
 
-## results [/{tournament_name}/teams/results]
+## team results [/tournaments/{tournament_id}/teams/results]
 
 ### get team result [GET]
 
- * reads/finds raw team results. if compile is true, returns compiled team results on specified rounds
+ * returns compiled team results. if rounds is not specified, it compiles all raw results including those collected in the current round.
 
  + Parameters
-    + compile (boolean, optional)
-         + default: false
-    + rounds (array[number], optional)
-         + default: [1, ..., current_round_num]
+    + rounds (array[number] | number, optional)
+        + default: [1, ..., current_round_num]
+    + force (boolean, optional)
+        + default: false
 
  + Response 200 (application/json)
     + Attributes (RawTeamResult)
 
-### create raw team result [POST]
+## adjudicator results [/tournaments/{tournament_id}/adjudicators/results]
 
-### update raw team result [PUT]
+## venue results [/tournaments/{tournament_id}/adjudicators/results]
 
-### delete raw team result [DELETE]
+## team results [/tournaments/{tournament_id}/teams/results/raw]
+
+### get raw team result [GET]
+
+## adjudicator results [/tournaments/{tournament_id}/adjudicators/results/raw]
+
+## venue results [/tournaments/{tournament_id}/adjudicators/results/raw]
