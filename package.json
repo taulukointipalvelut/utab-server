@@ -18,6 +18,17 @@
   "homepage": "https://github.com/taulukointipalvelut/utab-api-server#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
-    "express": "^4.14.0"
+    "browser-sync": "^2.18.2",
+    "express": "^4.14.0",
+    "gulp": "^3.9.1",
+    "gulp-aglio": "0.0.10",
+    "gulp-plumber": "^1.1.0",
+    "gulp-watch": "^4.3.11",
+    "mongoose": "^4.7.1",
+    "require-dir": "^0.3.1",
+    "rimraf": "^2.5.4",
+    "run-sequence": "^1.2.2",
+    "underscore": "^1.8.3",
+    "winston": "^2.3.0"
   }
 }
