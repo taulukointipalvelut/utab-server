@@ -60,15 +60,18 @@ IMPLEMENT COMMON DATABASE API
 */
 
 var routes = [
-    {keys: ['teams'], path: '/teams'},
-    {keys: ['adjudicators'], path: '/adjudicators'},
-    {keys: ['venues'], path: '/venues'},
-    {keys: ['debaters'], path: '/debaters'},
-    {keys: ['institutions'], path: '/institutions'},
-    {keys: ['teams', 'debaters'], path: '/teams/debaters'},
-    {keys: ['teams', 'institutions'], path: '/teams/institutions'},
-    {keys: ['adjudicators', 'institutions'], path: '/adjudicators/institutions'},
-    {keys: ['adjudicators', 'conflicts'], path: '/adjudicators/conflicts'}
+    {keys: ['teams'], path: '/teams', detail: true},
+    {keys: ['adjudicators'], path: '/adjudicators', detail: true},
+    {keys: ['venues'], path: '/venues', detail: true},
+    {keys: ['debaters'], path: '/debaters', detail: true},
+    {keys: ['institutions'], path: '/institutions', detail: true},
+    {keys: ['teams', 'debaters'], path: '/teams/debaters', detail: true},
+    {keys: ['teams', 'institutions'], path: '/teams/institutions', detail: true},
+    {keys: ['adjudicators', 'institutions'], path: '/adjudicators/institutions', detail: true},
+    {keys: ['adjudicators', 'conflicts'], path: '/adjudicators/conflicts', detail: true},
+    {keys: ['teams', 'results'], path: '/teams/results/raw', detail: false},
+    {keys: ['adjudicators', 'results'], path: '/adjudicators/results/raw', detail: false},
+    {keys: ['debaters', 'results'], path: '/debaters/results/raw', detail: false}
 ]
 
 for (let route of routes) {
@@ -82,7 +85,11 @@ for (let route of routes) {
             log_request(req)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            node.create(req.body).then(docs => res.json(docs)).catch(err => res.status(500).json(err))
+            if (Array.isArray(req.body)) {
+                Promise.all(req.body.map(d => node.create(d))).then(docs => res.json(docs)).catch(err => res.status(500).json(err))
+            } else {
+                node.create(req.body).then(docs => res.json(docs)).catch(err => res.status(500).json(err))
+            }
         })
         .put(function(req, res) {//update//TESTED//
             log_request(req)
@@ -96,43 +103,33 @@ for (let route of routes) {
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             node.delete(req.body).then(docs => res.json(docs)).catch(err => res.status(404).json(err))
         })
-    app.route('/tournaments/:tournament_id'+route.path+'/:id')
-        .get(function(req, res) {//read or find//TESTED//
-            log_request(req)
-            let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            let dict = _.clone(req.body)
-            dict.id = req.params.id
-            node.findOne(dict).then(doc => res.json(doc)).catch(err => res.status(500).json(err))
-        })
-        .put(function(req, res) {//update//TESTED//
-            log_request(req)
-            req.accepts('application/json')
-            let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            let dict = _.clone(req.body)
-            dict.id = req.params.id
-            node.update(dict).then(doc => res.json(doc)).catch(err => res.status(404).json(err))
-        })
-        .delete(function(req, res) {//delete//TESTED//
-            log_request(req)
-            req.accepts('application/json')
-            let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            let dict = _.clone(req.body)
-            dict.id = req.params.id
-            node.delete(dict).then(doc => res.json(doc)).catch(err => res.status(404).json(err))
-        })
+    if (route.detail) {
+        app.route('/tournaments/:tournament_id'+route.path+'/:id')
+            .get(function(req, res) {//read or find//TESTED//
+                log_request(req)
+                let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
+                let dict = _.clone(req.body)
+                dict.id = req.params.id
+                node.findOne(dict).then(doc => res.json(doc)).catch(err => res.status(500).json(err))
+            })
+            .put(function(req, res) {//update//TESTED//
+                log_request(req)
+                req.accepts('application/json')
+                let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
+                let dict = _.clone(req.body)
+                dict.id = req.params.id
+                node.update(dict).then(doc => res.json(doc)).catch(err => res.status(404).json(err))
+            })
+            .delete(function(req, res) {//delete//TESTED//
+                log_request(req)
+                req.accepts('application/json')
+                let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
+                let dict = _.clone(req.body)
+                dict.id = req.params.id
+                node.delete(dict).then(doc => res.json(doc)).catch(err => res.status(404).json(err))
+            })
+        }
 }
-
-/*
-IMPLEMENT RAW RESULTS API
-*/
-
-
-/*
-
-{keys: ['teams', 'results'], path: '/teams/results/raw'},
-{keys: ['adjudicators', 'results'], path: '/adjudicators/results/raw'},
-{keys: ['debaters', 'results'], path: '/debaters/results/raw'},
- */
 
 /*
 IMPLEMENT TOURNAMENT CONFIG API

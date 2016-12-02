@@ -177,11 +177,11 @@ if the round to rollback is 1, throws an error.
 
  + Request (application/json)
 
-    + Attributes (CreateTeam)
+    + Attributes (CreateTeam or array[CreateTeam])
 
  + Response 200 (application/json)
 
-    + Attributes (Team)
+    + Attributes (Team or array[Team])
 
 ### update a team [PUT]
 
