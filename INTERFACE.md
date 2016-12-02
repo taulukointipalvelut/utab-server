@@ -126,7 +126,7 @@ FORMAT: 1A
 
 # Group Rounds
 
-## rounds [/tournaments/{tournament_id}/rounds]
+## rounds [/tournaments/{tournament_id}]
 
 ### show status [GET]
 
@@ -135,6 +135,9 @@ FORMAT: 1A
 
 ### proceed to next round [POST]
 
+::: warning
+if the next round exceeds total round, throws an error.
+:::
  + Request (application/json)
 
  + Response 200 (application/json)
@@ -142,9 +145,13 @@ FORMAT: 1A
 
 ### rollback round [DELETE]
 
+::: warning
+if the round to rollback is 1, throws an error.
+:::
+
 ### update round config [PATCH]
 
-# Group Database
+# Group Database of entities, relations
 
 ## teams [/tournaments/{tournament_id}/teams]
 
@@ -168,7 +175,6 @@ FORMAT: 1A
  * create a team
  * if force option is true, creates a team even if the same name team already exists, otherwise throws an error.
 
-
  + Request (application/json)
 
     + Attributes (CreateTeam)
@@ -180,7 +186,11 @@ FORMAT: 1A
 ### update a team [PUT]
 
  * updates a team.
- * throws an error if the specified team does not exist.
+
+ ::: warning
+ throws an error if the specified team does not exist.
+ :::
+
 
 + Request (application/json)
     + Attributes (ModifyTeam)
@@ -191,7 +201,9 @@ FORMAT: 1A
 ### delete a team [DELETE]
 
 * deletes a team.
-* throws an error if the specified team does not exist.
+::: warning
+throws an error if the specified team does not exist.
+:::
 
 + Request (application/json)
     + Attributes (SpecifyTeam)
@@ -208,7 +220,9 @@ There is no DELETE method in allocations endpoint
 ### get/compute an allocation [GET]
 
  * if the round is specified, returns an allocation, otherwise computes an allocation for current round. if specified round is the current round, computes an allocation. Can be a shortcut for computing all team/adjudicator/venue allocation at once.
- * if the specified round exceeds current round, throws an error.
+ ::: warning
+ if the specified round exceeds current round, throws an error.
+ :::
 
  + Parameters
     + round (number, optional)
@@ -239,10 +253,8 @@ There is no DELETE method in allocations endpoint
                        "trainees": 1
                   }
 
-    + Response 200 (application/json)
++ Response 200 (application/json)
     + Attributes (array[Square])
-
-+ Response 404
 
 ### save an allocation [POST]
 
@@ -261,6 +273,8 @@ There is no DELETE method in allocations endpoint
 ## team allocations [/tournaments/{tournament_id}/allocations/teams]
 
 ### compute a team allocation [GET]
+
+ * if simple option is true, it doesn't use debater scores in computing matchups.
 
  + Parameters
   + simple (boolean, optional)
@@ -328,6 +342,8 @@ There is no DELETE method in allocations endpoint
 ### compute venue allocation [GET]
 
  * computes a venue allocation based on given team/adjudicator allocation
+ * if force is true, it allocates venues even if venues are fewer than squares.
+ * if shuffle is true, it shuffles venues so that no one can recognize current team rankings.
 
  + Parameters
       + allocation (array[Square], required)

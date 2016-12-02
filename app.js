@@ -56,25 +56,23 @@ winston.info('connected to tournaments database')
 let handlers = connect_to_tournaments(DB)
 /*
 IMPLEMENT COMMON DATABASE API
+ * for entities, relations, raw results
 */
 
 var routes = [
-    {keys: ['teams'], paths: ['teams']},
-    {keys: ['adjudicators'], paths: ['adjudicators']},
-    {keys: ['venues'], paths: ['venues']},
-    {keys: ['debaters'], paths: ['debaters']},
-    {keys: ['institutions'], paths: ['institutions']},
-    {keys: ['teams', 'debaters'], paths: ['teams', 'debaters']},
-    {keys: ['teams', 'institutions'], paths: ['teams', 'institutions']},
-    {keys: ['adjudicators', 'institutions'], paths: ['adjudicators', 'institutions']},
-    {keys: ['adjudicators', 'conflicts'], paths: ['adjudicators', 'conflicts']},
-    {keys: ['teams', 'results'], paths: ['teams', 'results', 'raw']},
-    {keys: ['adjudicators', 'results'], paths: ['adjudicators', 'results', 'raw']},
-    {keys: ['debaters', 'results'], paths: ['debaters', 'results', 'raw']}
+    {keys: ['teams'], path: '/teams'},
+    {keys: ['adjudicators'], path: '/adjudicators'},
+    {keys: ['venues'], path: '/venues'},
+    {keys: ['debaters'], path: '/debaters'},
+    {keys: ['institutions'], path: '/institutions'},
+    {keys: ['teams', 'debaters'], path: '/teams/debaters'},
+    {keys: ['teams', 'institutions'], path: '/teams/institutions'},
+    {keys: ['adjudicators', 'institutions'], path: '/adjudicators/institutions'},
+    {keys: ['adjudicators', 'conflicts'], path: '/adjudicators/conflicts'}
 ]
 
 for (let route of routes) {
-    app.route('/tournaments/:tournament_id/'+route.paths.join('/'))
+    app.route('/tournaments/:tournament_id'+route.path)
         .get(function(req, res) {//read or find//TESTED//
             log_request(req)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -98,10 +96,46 @@ for (let route of routes) {
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             node.delete(req.body).then(docs => res.json(docs)).catch(err => res.status(404).json(err))
         })
+    app.route('/tournaments/:tournament_id'+route.path+'/:id')
+        .get(function(req, res) {//read or find//TESTED//
+            log_request(req)
+            let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
+            let dict = _.clone(req.body)
+            dict.id = req.params.id
+            node.findOne(dict).then(doc => res.json(doc)).catch(err => res.status(500).json(err))
+        })
+        .put(function(req, res) {//update//TESTED//
+            log_request(req)
+            req.accepts('application/json')
+            let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
+            let dict = _.clone(req.body)
+            dict.id = req.params.id
+            node.update(dict).then(doc => res.json(doc)).catch(err => res.status(404).json(err))
+        })
+        .delete(function(req, res) {//delete//TESTED//
+            log_request(req)
+            req.accepts('application/json')
+            let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
+            let dict = _.clone(req.body)
+            dict.id = req.params.id
+            node.delete(dict).then(doc => res.json(doc)).catch(err => res.status(404).json(err))
+        })
 }
 
 /*
-IMPLEMENT REMAINING API
+IMPLEMENT RAW RESULTS API
+*/
+
+
+/*
+
+{keys: ['teams', 'results'], path: '/teams/results/raw'},
+{keys: ['adjudicators', 'results'], path: '/adjudicators/results/raw'},
+{keys: ['debaters', 'results'], path: '/debaters/results/raw'},
+ */
+
+/*
+IMPLEMENT TOURNAMENT CONFIG API
 */
 
 app.route('/tournaments/:tournament_id')
@@ -125,6 +159,10 @@ app.route('/tournaments/:tournament_id')
         let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.config.update(req.body).then(doc => res.json(doc)).catch(err => res.status(500).json(err))
     })
+
+/*
+IMPLEMENT TOURNAMENTS API
+*/
 
 app.route('/tournaments')
     .get(function(req, res) {//TESTED//
@@ -167,14 +205,18 @@ app.route('/tournaments')
         })
     })
 
+/*
+IMPLEMENT COMPILED RESULTS API
+*/
+
 let result_routes = [
-    {keys: ['teams', 'results'], paths: ['teams', 'results']},
-    {keys: ['adjudicators', 'results'], paths: ['adjudicators', 'results']},
-    {keys: ['debaters', 'results'], paths: ['debaters', 'results']},
+    {keys: ['teams', 'results'], path: '/teams/results'},
+    {keys: ['adjudicators', 'results'], path: '/adjudicators/results'},
+    {keys: ['debaters', 'results'], path: '/debaters/results'},
 ]
 
 for (let route of result_routes) {
-    app.route('/tournaments/:tournament_id/'+route.paths.join('/'))
+    app.route('/tournaments/:tournament_id/'+route.path)
         .get(function(req, res) {
             log_request(req)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -184,14 +226,18 @@ for (let route of result_routes) {
         })
 }
 
+/*
+IMPLEMENT ALLOCATION API
+*/
+
 let allocation_routes = [
-    {keys: ['allocations', 'teams'], paths: ['allocations', 'teams']},
-    {keys: ['allocations', 'adjudicators'], paths: ['allocations', 'adjudicators']},
-    {keys: ['allocations', 'venues'], paths: ['allocations', 'venues']}
+    {keys: ['allocations', 'teams'], path: '/allocations/teams'},
+    {keys: ['allocations', 'adjudicators'], path: '/allocations/adjudicators'},
+    {keys: ['allocations', 'venues'], path: '/allocations/venues'}
 ]
 
 for (let route of allocation_routes) {
-    app.route('/tournaments/:tournament_id/'+route.paths.join('/'))
+    app.route('/tournaments/:tournament_id'+route.path)
         .get(function(req, res) {
             log_request(req)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)

@@ -10,7 +10,7 @@ function find_tournament(list, id) {
 }
 
 function get_node(tournaments, tournament_id, keys) {
-    let t = find_tournament(tournaments, tournament_id).handler
+    let t = find_tournament(tournaments, tournament_id)
     return get_property(t, keys)
 }
 
@@ -20,6 +20,13 @@ function get_property(object, keys) {//TESTED//
     } else {
         return object
     }
+}
+
+function get_id(path) {
+    let parsed_path = path.split('/')
+    let e = path[path.length-1] === '/' ? parsed_path[parsed_path.length-2] : parsed_path[parsed_path.length-1]
+    let e2 = parseInt(e)
+    return Number.isNaN(e2) ? null : e2
 }
 
 var syncadd = async.queue(function(dict, callback) {
@@ -39,3 +46,4 @@ exports.syncadd = syncadd
 exports.get_node = get_node
 exports.create_hash = create_hash
 exports.find_tournament = find_tournament
+exports.get_id = get_id
