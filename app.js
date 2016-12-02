@@ -19,7 +19,7 @@ winston.configure({
     ]
 })
 
-const PORT = process.env.PORT || 7011
+const PORT = process.env.PORT || 7012
 const BASEURL = process.env.BASEURL || 'mongodb://localhost'
 const DBURL = process.env.DBURL || BASEURL+'/_tournaments'
 
@@ -104,8 +104,8 @@ for (let route of routes) {
 IMPLEMENT REMAINING API
 */
 
-app.route('/tournaments/:tournament_id/rounds')
-    .get(function(req, res) {
+app.route('/tournaments/:tournament_id')
+    .get(function(req, res) {//TESTED//
         log_request(req)
         let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.config.read().then(doc => res.json(doc)).catch(err => res.status(500).json(err))
@@ -118,12 +118,12 @@ app.route('/tournaments/:tournament_id/rounds')
     .delete(function(req, res) {
         log_request(req)
         let th = sys.find_tournament(handlers, req.params.tournament_id)
-        th.config.rollback().then(doc => res.json(doc))
+        th.config.rollback().then(doc => res.json(doc)).catch(err => res.status(500).json(err))
     })
-    .patch(function(req, res) {
+    .put(function(req, res) {
         log_request(req)
         let th = sys.find_tournament(handlers, req.params.tournament_id)
-        th.config.extend().then(doc => res.json(doc))
+        th.config.update(req.body).then(doc => res.json(doc)).catch(err => res.status(500).json(err))
     })
 
 app.route('/tournaments')

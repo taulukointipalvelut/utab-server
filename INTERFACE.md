@@ -142,7 +142,7 @@ FORMAT: 1A
 
 ### rollback round [DELETE]
 
-### extend round [PATCH]
+### update round config [PATCH]
 
 # Group Database
 

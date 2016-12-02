@@ -6,7 +6,7 @@ function create_hash(seed) {
 }
 
 function find_tournament(list, id) {
-    return list.filter(e => e.id === parseInt(id))[0]
+    return list.filter(e => e.id === parseInt(id))[0].handler
 }
 
 function get_node(tournaments, tournament_id, keys) {
