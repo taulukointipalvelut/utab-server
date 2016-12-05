@@ -143,11 +143,10 @@ app.route('/tournaments/:tournament_id')
         th.config.proceed().then(doc => res.json(doc)).catch(err => res.status(500).json(err))
         .then(th.config.read().then(doc => DB.tournaments.update(doc)))
     })
-    .delete(function(req, res) {
+    .delete(function(req, res) {//TESTED//
         log_request(req)
         let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.config.rollback().then(doc => res.json(doc)).catch(err => res.status(500).json(err))
-        .then(DB.tournaments.delete({id: req.params.tournament_id}))
     })
     .put(function(req, res) {
         log_request(req)

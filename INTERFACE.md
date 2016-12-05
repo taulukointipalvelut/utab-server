@@ -37,7 +37,7 @@ FORMAT: 1A
 + name: kymstr (string, required)
 + available: true (boolean, optional)
     + default: true
-+ debaters: [{r: 1, debaters: [43234244, 439587243]}] (array[object], optional)
++ debaters_by_r: [{r: 1, debaters: [43234244, 439587243]}] (array[object], optional)
     + default: []
 + institutions: [123431244, 321413244] (array[number], optional)
     + default: []    
@@ -48,7 +48,7 @@ FORMAT: 1A
 + id: 1324908734 (number)
 + name: kymstr (string)
 + available: true (boolean)
-+ debaters: [{r: 1, debaters: [43234244, 439587243]}] (array[object])
++ debaters_by_r: [{r: 1, debaters: [43234244, 439587243]}] (array[object])
 + institutions: [123431244, 321413244] (array[number])
 + user_defined_data: {} (object)
 
@@ -56,7 +56,7 @@ FORMAT: 1A
 + id: 1324908734 (number, required)
 + name: kymstr (string, optional)
 + available: true (boolean, optional)
-+ debaters: [{r: 1, debaters: [43234244, 439587243]}] (array[object], optional)
++ debaters_by_r: [{r: 1, debaters: [43234244, 439587243]}] (array[object], optional)
 + institutions: [123431244, 321413244] (array[number], optional)
 + user_defined_data: {} (object, optional)
 
@@ -532,4 +532,3 @@ There is no DELETE method in allocations endpoint
 ## adjudicator results [/tournaments/{tournament_id}/adjudicators/results]
 
 ## debater results [/tournaments/{tournament_id}/debaters/results]
-

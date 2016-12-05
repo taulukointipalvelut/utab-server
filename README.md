@@ -5,10 +5,16 @@ utab api server written in node js
 
 The documentation is available at [here](build/INTERFACE.html)
 
+## Attention
+
+1. MongoDB has connection limit. You must configure it up to 1000 or more to run server safely.
+
 ## Usage
 
-1. `git clone https://github.com/taulukointipalvelut/utab-api-server`
+1. clone this repository. `git clone https://github.com/taulukointipalvelut/utab-api-server`
 
-1. `cd utab-api-server`
+1. move to repository folder. `cd utab-api-server`
 
-1. `node app.js`
+1. start MongoDB. `mongod`
+
+1. run app. `node app.js`

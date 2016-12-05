@@ -3,6 +3,7 @@
 var mongoose = require('mongoose')
 var schemas = require('./schemas.js')
 var _ = require('underscore/underscore.js')
+var errors = require('../general/errors.js')
 
 mongoose.Promise = global.Promise
 
