@@ -175,13 +175,17 @@ if the round to rollback is 1, throws an error.
  * create a team
  * if force option is true, creates a team even if the same name team already exists, otherwise throws an error.
 
- + Request (application/json)
+ + Request Single (application/json)
 
-    + Attributes (CreateTeam or array[CreateTeam])
+    + Attributes (CreateTeam)
+
+ + Request Multiple (application/json)
+
+    + Attributes (array[CreateTeam])
 
  + Response 200 (application/json)
 
-    + Attributes (Team or array[Team])
+    requested data with created id
 
 ### update a team [PUT]
 
