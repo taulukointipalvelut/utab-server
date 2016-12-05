@@ -37,6 +37,10 @@ FORMAT: 1A
 + name: kymstr (string, required)
 + available: true (boolean, optional)
     + default: true
++ debaters: [{r: 1, debaters: [43234244, 439587243]}] (array[object], optional)
+    + default: []
++ institutions: [123431244, 321413244] (array[number], optional)
+    + default: []    
 + user_defined_data: {} (object, optional)
     + default: {}
 
@@ -44,17 +48,45 @@ FORMAT: 1A
 + id: 1324908734 (number)
 + name: kymstr (string)
 + available: true (boolean)
++ debaters: [{r: 1, debaters: [43234244, 439587243]}] (array[object])
++ institutions: [123431244, 321413244] (array[number])
 + user_defined_data: {} (object)
-
 
 ### ModifyTeam
 + id: 1324908734 (number, required)
 + name: kymstr (string, optional)
 + available: true (boolean, optional)
++ debaters: [{r: 1, debaters: [43234244, 439587243]}] (array[object], optional)
++ institutions: [123431244, 321413244] (array[number], optional)
 + user_defined_data: {} (object, optional)
 
 ### SpecifyTeam
 + id: 1324908734 (number, required)
+
+### Adjudicator
++ id: 1324908734 (number)
++ name: kymstr (string)
++ available: true (boolean)
++ preev: 7 (number)
++ conflicts: [324907134, 321432144] (array[number])
++ institutions: [123431244, 321413244] (array[number])
++ user_defined_data: {} (object)
+
+### Venue
++ id: 1324908734 (number)
++ name: kymstr (string)
++ available: true (boolean)
++ user_defined_data: {} (object)
+
+### Institution
++ id: 1324908734 (number)
++ name: kymstr (string)
++ user_defined_data: {} (object)
+
+### Debater
++ id: 1324908734 (number)
++ name: kymstr (string)
++ user_defined_data: {} (object)
 
 ### SquareWarning
 + msg: InstitutionConflict (string)
@@ -71,6 +103,7 @@ FORMAT: 1A
 + id: 3432522346 (number)
 + r: 1 (number)
 + from_id: 232342346 (number)
++ weight: 1 (number)
 + win: 1 (number)
 + side: gov (string)
 + opponents: [4352432524] (array[number])
@@ -80,6 +113,7 @@ FORMAT: 1A
 + id: 3432522346 (number)
 + r: 1 (number)
 + from_id: 232342346 (number)
++ weight: 1 (number)
 + scores: [75, 0, 38.5] (array[number])
 + user_defined_data: {} (object)
 
@@ -87,10 +121,71 @@ FORMAT: 1A
 + id: 3432522346 (number)
 + r: 1 (number)
 + from_id: 232342346 (number)
++ weight: 1 (number)
 + score: 7 (number)
 + judged_teams: [32423423, 42512132] (array[number])
 + comment: Good adjudicator (string)
 + user_defined_data: {} (object)
+
+### SummarizedTeamResult
++ id: 3432522346 (number)
++ r: 1 (number)
++ win: 1 (number)
++ side: gov (string)
++ opponents: [4352432524] (array[number])
++ sum: 230 (number)
++ margin: -6 (number)
++ user_defined_data: {} (object)
+
+### SummarizedSimpleTeamResult
++ id: 3432522346 (number)
++ r: 1 (number)
++ win: 1 (number)
++ side: gov (string)
++ opponents: [4352432524] (array[number])
++ user_defined_data: {} (object)
+
+### SummarizedDebaterResult
++ id: 3432522346 (number)
++ r: 1 (number)
++ scores: [76.33333, 0, 37.5] (array[number])
++ average: 75.888889
++ sum: 113.833333
++ user_defined_data_collection: [] (array[object])
+
+### SummarizedAdjudicatorResult
++ id: 3432522346 (number)
++ r: 1 (number)
++ score: 7 (number)
++ judged_teams: [32423423, 42512132] (array[number])
++ comments: [Good adjudicator, not too bad] (array[string])
++ user_defined_data_collection: [] (array[object])
+
+### CompiledDebaterResult
++ id: 3432522346 (number)
++ average: 75.888889
++ sum: 113.833333
++ sd: 12.53 (number)
++ details: [] (array[SummarizedDebaterResult])
+
+### CompiledTeamResult
++ id: 3432522346 (number)
++ win: 2 (number)
++ sum: 440 (number)
++ margin: 16 (number)
++ average: 110 (number)
++ sd: 12.53 (number)
++ past_sides: gov (string)
++ past_opponents: [4352432524, 4352432524, 823974324] (array[number])
++ details: [] (array[SummarizedTeamResult])
+
+### CompiledAdjudicatorResult
++ id: 3432522346 (number)
++ average: 7.2222
++ sd: 1.89
++ judged_teams: [32423423, 42512132, 42512132, 32423222] (array[number])
++ active_num: 7 (number)
++ details: [] (array[SummarizedAdjudicatorResult])
 
 # UTab Operation API
 
@@ -135,6 +230,7 @@ FORMAT: 1A
 
 ### proceed to next round [POST]
 
+proceed to the next round.
 ::: warning
 if the next round exceeds total round, throws an error.
 :::
@@ -145,28 +241,39 @@ if the next round exceeds total round, throws an error.
 
 ### rollback round [DELETE]
 
+moves back to the prior round.
 ::: warning
 if the round to rollback is 1, throws an error.
 :::
+ + Request (application/json)
+
+ + Response 200 (application/json)
+    + Attributes (Tournament)
 
 ### update round config [PATCH]
 
-# Group Database of entities, relations
+updates round config.
+::: warning
+if the round to rollback is 1, throws an error.
+:::
+ + Request (application/json)
+
+ + Response 200 (application/json)
+    + Attributes (Tournament)
+
+# Group Entities, Raw Results
+
+* each resouce url accepts object or array[object]
+* also each resource url has sub url of the individual entities where you don't have to request entity id for GET/PUT/DELETE methods though POST method is not available in the sub url.
 
 ## teams [/tournaments/{tournament_id}/teams]
 
 ### search or read all teams [GET]
 
-#### summary
-
  * read all teams or search teams on specified condition at query
  * NO SIDE EFFECT
 
  + Parameters
-
-  + name: TEAMALPHA (string, optional)
-  + id: 234432847 (number, optional)
-  + institutions: [324788234, 2340870923] (array[number], optional)
 
  + Response 200 (application/json)
 
@@ -175,17 +282,15 @@ if the round to rollback is 1, throws an error.
  * create a team
  * if force option is true, creates a team even if the same name team already exists, otherwise throws an error.
 
- + Request Single (application/json)
+ + Request Team (application/json)
 
     + Attributes (CreateTeam)
 
- + Request Multiple (application/json)
-
+ + Request Teams (applications/json)
     + Attributes (array[CreateTeam])
 
  + Response 200 (application/json)
-
-    requested data with created id
+    same as requested data
 
 ### update a team [PUT]
 
@@ -214,6 +319,46 @@ throws an error if the specified team does not exist.
 
 + Response (application/json)
     + Attributes (Team)
+
+## teams [/tournaments/{tournament_id}/teams/{team_id}]
+
+### get team information [GET]
+
+ + Parameters
+
+ + Response 200 (application/json)
+    + Attributes (Team)
+
+### update a team [PUT]
+
+ * updates a team.
+
+ ::: warning
+ throws an error if the specified team does not exist.
+ :::
+
+### delete a team [DELETE]
+
+* deletes a team.
+::: warning
+throws an error if the specified team does not exist.
+:::
+
+## adjudicators [/tournaments/{tournament_id}/adjudicators]
+
+## venues [/tournaments/{tournament_id}/venues]
+
+## debaters [/tournaments/{tournament_id}/debaters]
+
+## institutions [/tournaments/{tournament_id}/institutions]
+
+## raw team results [/tournaments/{tournament_id}/teams/results/raw]
+
+### get raw team result [GET]
+
+## raw adjudicator results [/tournaments/{tournament_id}/adjudicators/results/raw]
+
+## raw debater results [/tournaments/{tournament_id}/debaters/results/raw]
 
 # Group Allocation
 
@@ -386,12 +531,5 @@ There is no DELETE method in allocations endpoint
 
 ## adjudicator results [/tournaments/{tournament_id}/adjudicators/results]
 
-## venue results [/tournaments/{tournament_id}/adjudicators/results]
+## debater results [/tournaments/{tournament_id}/debaters/results]
 
-## team results [/tournaments/{tournament_id}/teams/results/raw]
-
-### get raw team result [GET]
-
-## adjudicator results [/tournaments/{tournament_id}/adjudicators/results/raw]
-
-## venue results [/tournaments/{tournament_id}/adjudicators/results/raw]
