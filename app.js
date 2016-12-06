@@ -147,6 +147,7 @@ app.route('/tournaments/:tournament_id')
         log_request(req)
         let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.config.rollback().then(doc => res.json(doc)).catch(err => res.status(500).json(err))
+        .then(th.config.read().then(doc => DB.tournaments.update(doc)))
     })
     .put(function(req, res) {
         log_request(req)
@@ -269,7 +270,7 @@ app.route('/tournaments/:tournament_id/allocations')
     })
 
 app.get('/*', function(req, res) {
-    res.send('404 Not Found')
+    res.status(404).send('404 Not Found')
 })
 app.listen(PORT)
 console.log("server started")
