@@ -4,9 +4,8 @@ FORMAT: 1A
 
 ### CreateTournament
 + name: testtournament (string, required)
-    + default: testtournament
-+ style: NA (string, optional)
-    + default: NA
++ style: {name: "NA", team_num: 2, score_weights: [1, 1, 0.5]} (object, optional)
+    + default: {name: "NA", team_num: 2, score_weights: [1, 1, 0.5]}
 + total_round_num: 4 (number, optional)
     + default: 4
 + current_round_num: 1 (number, optional)
@@ -17,7 +16,7 @@ FORMAT: 1A
 ### Tournament
 + id: 32141324123 (number)
 + name: testtournament (string)
-+ style: NA (string)
++ style: {name: "NA", team_num: 2, score_weights: [1, 1, 0.5]} (object)
 + total_round_num: 4 (number)
 + current_round_num: 1 (number)
 + user_defined_data: {} (object)
@@ -25,7 +24,7 @@ FORMAT: 1A
 ### ModifyTournament
 + id: 32141324123 (number, required)
 + name: testtournament (string, optional)
-+ style: NA (string, optional)
++ style: {name: "NA", team_num: 2, score_weights: [1, 1, 0.5]} (object, optional)
 + total_round_num: 4 (number, optional)
 + current_round_num: 1 (number, optional)
 + user_defined_data: {} (object, optional)

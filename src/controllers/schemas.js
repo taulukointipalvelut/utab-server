@@ -1,14 +1,6 @@
 var mongoose = require('mongoose')
+var schemas = require('../../lib/utab-core/src/controllers/schemas.js')
 
-var TournamentSchema = new mongoose.Schema({
-    id: {type: Number, required: true, unique: true},
-    db_url: {type: String, require: true, unique: true},
-    name: {type: String, require: true, unique: true},
-    total_round_num: {type: Number, default: 4},
-    current_round_num: {type: Number, default: 1},
-    style: {type: String, default: 'NA'},
-    preev_weights: {type: [Number], default: [0]},
-    user_defined_data: {type: mongoose.Schema.Types.Mixed, default: {}}
-})
+var TournamentSchema = schemas.RoundInfoSchema
 
 exports.TournamentSchema = TournamentSchema

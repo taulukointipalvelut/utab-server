@@ -2,7 +2,7 @@
   {
     "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">32141324123</span></span>,
     "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"testtournament"</span></span>,
-    "<span class="hljs-attribute">style</span>": <span class="hljs-value"><span class="hljs-string">"NA"</span></span>,
+    "<span class="hljs-attribute">style</span>": <span class="hljs-value">{}</span>,
     "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value"><span class="hljs-number">4</span></span>,
     "<span class="hljs-attribute">current_round_num</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
     "<span class="hljs-attribute">user_defined_data</span>": <span class="hljs-value">{}
@@ -12,7 +12,6 @@
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"array"</span>
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div><div id="tournaments-tournaments-post" class="action post"><h4 class="action-heading"><div class="name">create a tournament</div><a href="#tournaments-tournaments-post" class="method post">POST</a><code class="uri">/tournaments</code></h4><h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/tournaments</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"testtournament"</span></span>,
-  "<span class="hljs-attribute">style</span>": <span class="hljs-value"><span class="hljs-string">"NA"</span></span>,
   "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value"><span class="hljs-number">4</span></span>,
   "<span class="hljs-attribute">current_round_num</span>": <span class="hljs-value"><span class="hljs-number">1</span>
 </span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
@@ -20,12 +19,11 @@
   "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
   "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{
     "<span class="hljs-attribute">name</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">default</span>": <span class="hljs-value"><span class="hljs-string">"testtournament"</span>
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
     </span>}</span>,
     "<span class="hljs-attribute">style</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span></span>,
-      "<span class="hljs-attribute">default</span>": <span class="hljs-value"><span class="hljs-string">"NA"</span>
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{}
     </span>}</span>,
     "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span></span>,
@@ -47,7 +45,7 @@
   {
     "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">32141324123</span></span>,
     "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"testtournament"</span></span>,
-    "<span class="hljs-attribute">style</span>": <span class="hljs-value"><span class="hljs-string">"NA"</span></span>,
+    "<span class="hljs-attribute">style</span>": <span class="hljs-value">{}</span>,
     "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value"><span class="hljs-number">4</span></span>,
     "<span class="hljs-attribute">current_round_num</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
     "<span class="hljs-attribute">user_defined_data</span>": <span class="hljs-value">{}
@@ -58,7 +56,6 @@
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div><div id="tournaments-tournaments-put" class="action put"><h4 class="action-heading"><div class="name">update a tournament</div><a href="#tournaments-tournaments-put" class="method put">PUT</a><code class="uri">/tournaments</code></h4><h4>Example URI</h4><div class="definition"><span class="method put">PUT</span>&nbsp;<span class="uri"><span class="hostname"></span>/tournaments</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">32141324123</span></span>,
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"testtournament"</span></span>,
-  "<span class="hljs-attribute">style</span>": <span class="hljs-value"><span class="hljs-string">"NA"</span></span>,
   "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value"><span class="hljs-number">4</span></span>,
   "<span class="hljs-attribute">current_round_num</span>": <span class="hljs-value"><span class="hljs-number">1</span>
 </span>}</code></pre><div style="height: 1px;"></div><h5>Schema</h5><pre><code>{
@@ -72,7 +69,8 @@
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
     </span>}</span>,
     "<span class="hljs-attribute">style</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{}
     </span>}</span>,
     "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
@@ -105,7 +103,7 @@
   {
     "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">32141324123</span></span>,
     "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"testtournament"</span></span>,
-    "<span class="hljs-attribute">style</span>": <span class="hljs-value"><span class="hljs-string">"NA"</span></span>,
+    "<span class="hljs-attribute">style</span>": <span class="hljs-value">{}</span>,
     "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value"><span class="hljs-number">4</span></span>,
     "<span class="hljs-attribute">current_round_num</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
     "<span class="hljs-attribute">user_defined_data</span>": <span class="hljs-value">{}
@@ -116,7 +114,7 @@
 </span>}</code></pre><div style="height: 1px;"></div></div></div></div></div></section><section id="rounds" class="resource-group"><h2 class="group-heading">Rounds <a href="#rounds" class="permalink">&para;</a></h2><div id="rounds-rounds" class="resource"><h3 class="resource-heading">rounds <a href="#rounds-rounds" class="permalink">&nbsp;&para;</a></h3><div id="rounds-rounds-get" class="action get"><h4 class="action-heading"><div class="name">show status</div><a href="#rounds-rounds-get" class="method get">GET</a><code class="uri">/tournaments/</code></h4><h4>Example URI</h4><div class="definition"><span class="method get">GET</span>&nbsp;<span class="uri"><span class="hostname"></span>/tournaments/</span></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">32141324123</span></span>,
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"testtournament"</span></span>,
-  "<span class="hljs-attribute">style</span>": <span class="hljs-value"><span class="hljs-string">"NA"</span></span>,
+  "<span class="hljs-attribute">style</span>": <span class="hljs-value">{}</span>,
   "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value"><span class="hljs-number">4</span></span>,
   "<span class="hljs-attribute">current_round_num</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">user_defined_data</span>": <span class="hljs-value">{}
@@ -131,7 +129,8 @@
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
     </span>}</span>,
     "<span class="hljs-attribute">style</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{}
     </span>}</span>,
     "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
@@ -151,7 +150,7 @@
 <h4>Example URI</h4><div class="definition"><span class="method post">POST</span>&nbsp;<span class="uri"><span class="hostname"></span>/tournaments/</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">32141324123</span></span>,
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"testtournament"</span></span>,
-  "<span class="hljs-attribute">style</span>": <span class="hljs-value"><span class="hljs-string">"NA"</span></span>,
+  "<span class="hljs-attribute">style</span>": <span class="hljs-value">{}</span>,
   "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value"><span class="hljs-number">4</span></span>,
   "<span class="hljs-attribute">current_round_num</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">user_defined_data</span>": <span class="hljs-value">{}
@@ -166,7 +165,8 @@
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
     </span>}</span>,
     "<span class="hljs-attribute">style</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{}
     </span>}</span>,
     "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
@@ -186,7 +186,7 @@
 <h4>Example URI</h4><div class="definition"><span class="method delete">DELETE</span>&nbsp;<span class="uri"><span class="hostname"></span>/tournaments/</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">32141324123</span></span>,
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"testtournament"</span></span>,
-  "<span class="hljs-attribute">style</span>": <span class="hljs-value"><span class="hljs-string">"NA"</span></span>,
+  "<span class="hljs-attribute">style</span>": <span class="hljs-value">{}</span>,
   "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value"><span class="hljs-number">4</span></span>,
   "<span class="hljs-attribute">current_round_num</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">user_defined_data</span>": <span class="hljs-value">{}
@@ -201,7 +201,8 @@
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
     </span>}</span>,
     "<span class="hljs-attribute">style</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{}
     </span>}</span>,
     "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
@@ -221,7 +222,7 @@
 <h4>Example URI</h4><div class="definition"><span class="method patch">PATCH</span>&nbsp;<span class="uri"><span class="hostname"></span>/tournaments/</span></div><div class="title"><strong>Request</strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div></div></div><div class="title"><strong>Response&nbsp;&nbsp;<code>200</code></strong><div class="collapse-button"><span class="close">Hide</span><span class="open">Show</span></div></div><div class="collapse-content"><div class="inner"><h5>Headers</h5><pre><code><span class="hljs-attribute">Content-Type</span>: <span class="hljs-string">application/json</span></code></pre><div style="height: 1px;"></div><h5>Body</h5><pre><code>{
   "<span class="hljs-attribute">id</span>": <span class="hljs-value"><span class="hljs-number">32141324123</span></span>,
   "<span class="hljs-attribute">name</span>": <span class="hljs-value"><span class="hljs-string">"testtournament"</span></span>,
-  "<span class="hljs-attribute">style</span>": <span class="hljs-value"><span class="hljs-string">"NA"</span></span>,
+  "<span class="hljs-attribute">style</span>": <span class="hljs-value">{}</span>,
   "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value"><span class="hljs-number">4</span></span>,
   "<span class="hljs-attribute">current_round_num</span>": <span class="hljs-value"><span class="hljs-number">1</span></span>,
   "<span class="hljs-attribute">user_defined_data</span>": <span class="hljs-value">{}
@@ -236,7 +237,8 @@
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
     </span>}</span>,
     "<span class="hljs-attribute">style</span>": <span class="hljs-value">{
-      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"string"</span>
+      "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"object"</span></span>,
+      "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{}
     </span>}</span>,
     "<span class="hljs-attribute">total_round_num</span>": <span class="hljs-value">{
       "<span class="hljs-attribute">type</span>": <span class="hljs-value"><span class="hljs-string">"number"</span>
@@ -862,7 +864,7 @@
       "<span class="hljs-attribute">properties</span>": <span class="hljs-value">{}
     </span>}
   </span>}
-</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="result-adjudicator-results" class="resource"><h3 class="resource-heading">adjudicator results <a href="#result-adjudicator-results" class="permalink">&nbsp;&para;</a></h3></div><div id="result-debater-results" class="resource"><h3 class="resource-heading">debater results <a href="#result-debater-results" class="permalink">&nbsp;&para;</a></h3></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 05 Dec 2016</p><script>/* eslint-env browser */
+</span>}</code></pre><div style="height: 1px;"></div></div></div></div></div><div id="result-adjudicator-results" class="resource"><h3 class="resource-heading">adjudicator results <a href="#result-adjudicator-results" class="permalink">&nbsp;&para;</a></h3></div><div id="result-debater-results" class="resource"><h3 class="resource-heading">debater results <a href="#result-debater-results" class="permalink">&nbsp;&para;</a></h3></div></section></div></div></div><p style="text-align: center;" class="text-muted">Generated by&nbsp;<a href="https://github.com/danielgtaylor/aglio" class="aglio">aglio</a>&nbsp;on 07 Dec 2016</p><script>/* eslint-env browser */
 /* eslint quotes: [2, "single"] */
 'use strict';
 

@@ -19,7 +19,7 @@ winston.configure({
     ]
 })
 
-const PORT = process.env.PORT || 7022
+const PORT = process.env.PORT || 7024
 const BASEURL = process.env.BASEURL || 'mongodb://localhost'
 const DBURL = process.env.DBURL || BASEURL+'/_tournaments'
 
@@ -91,13 +91,21 @@ for (let route of routes) {
             log_request(req)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            node.update(req.body).then(docs => res.json(docs)).catch(err => res.status(404).json(err))
+            if (Array.isArray(req.body)) {
+                Promise.all(req.body.map(d => node.update(d))).then(docs => res.json(docs)).catch(err => res.status(500).json(err))
+            } else {
+                node.update(req.body).then(doc => res.json(doc)).catch(err => res.status(404).json(err))
+            }
         })
         .delete(function(req, res) {//delete//TESTED//
             log_request(req)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            node.delete(req.body).then(docs => res.json(docs)).catch(err => res.status(404).json(err))
+            if (Array.isArray(req.body)) {
+                Promise.all(req.body.map(d => node.delete(d))).then(docs => res.json(docs)).catch(err => res.status(500).json(err))
+            } else {
+                node.delete(req.body).then(docs => res.json(docs)).catch(err => res.status(404).json(err))
+            }
         })
     if (route.detail) {
         app.route('/tournaments/:tournament_id'+route.path+'/:id')
