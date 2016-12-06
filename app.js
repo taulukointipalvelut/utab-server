@@ -249,7 +249,7 @@ for (let route of allocation_routes) {
         .get(function(req, res) {
             log_request(req)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            node.get(req.body).then(docs => res.json(docs)).catch(err => res.status(500).json(err))
+            node.get(req.query).then(docs => res.json(docs)).catch(err => res.status(500).json(err))
         })
         .patch(function(req, res) {
             log_request(req)
