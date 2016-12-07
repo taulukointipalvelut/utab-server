@@ -33,11 +33,11 @@ FORMAT: 1A
 + id: 32141324123 (number, required)
 
 ### Style
-+ id: "STYLE" (string)
-+ name_long: "new style" (string)
++ id: STYLE (string)
++ name_long: new style (string)
 + team_num: 2 (number)
-+ positions: ["Affirmative", "Negative"] (array[string])
-+ positions_short: ["Aff", "Neg"] (array[string])
++ positions: Affirmative, Negative (array[string])
++ positions_short: Aff, Neg (array[string])
 + score_weights: [1, 1, 1, 1] (array[number])
 
 ### CreateTeam
