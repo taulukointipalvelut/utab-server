@@ -1,0 +1,79 @@
+module.exports = [
+	{
+		id: "ACADEMIC",
+		name_long: "Academic",
+		debater_num_per_team: 4,
+		team_num: 2,
+		positions: ["Affirmative", "Negative"],
+		positions_short: ["Aff", "Neg"],
+		score_weights: [1, 1, 1, 1],
+		replies: [],
+		reply_num: 0
+	},
+	{
+		id: "NA",
+		name_long: "North American",
+		debater_num_per_team: 2,
+		team_num: 2,
+		positions: ["Government", "Opposition"],
+		positions_short: ["Gov", "Opp"],
+		score_weights: [1, 1, 0.5],
+		replies: [1],
+		reply_num: 1
+	},
+	{
+		id: "NAFA",
+		name_long: "NAFA",
+		debater_num_per_team: 2,
+		team_num: 2,
+		positions: ["Affirmative", "Negative"],
+		positions_short: ["Aff", "Opp"],
+		score_weights: [1, 1, 1, 1],
+		replies: [],
+		reply_num: 0
+	},
+	{
+		id: "PDA",
+		name_long: "PDA",
+		debater_num_per_team: 3,
+		team_num: 2,
+		positions: ["Government", "Opposition"],
+		positions_short: ["Gov", "Opp"],
+		score_weights: [1, 1, 1],
+		replies: [],
+		reply_num: 0
+	},
+	{
+		id: "ASIAN",
+		name_long: "Asian",
+		debater_num_per_team: 3,
+		team_num: 2,
+		positions: ["Government", "Opponents"],
+		positions_short: ["Gov", "Opp"],
+		score_weights: [1, 1, 1, 0.5],
+		replies: [0, 1],
+		reply_num: 1
+	},
+	{
+		id: "BP",
+		name_long: "British Parliamentary",
+		debater_num_per_team: 2,
+		team_num: 4,
+		positions: ["Opening Government", "Opening Opposition", "Closing Government", "Closing Opposition"],
+		positions_short: ["OG", "OO", "CG", "CO"],
+		score_weights: [1, 1],
+		replies: [],
+		reply_num: 0
+	},
+	{
+		id: "PF",
+		name_long: "Public Forum",
+		debater_num_per_team: 2,
+		team_num: 2,
+		positions: ["Affirmative", "Negative"],
+		positions_short: ["Aff", "Neg"],
+		score_weights: [1, 1, 1, 1],
+		replies: [0, 1],
+		reply_num: 2
+	}
+]

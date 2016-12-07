@@ -3,7 +3,7 @@ class DoesNotExist extends Error {
         super('DoesNotExist')
         this.identity = identity
         this.code = 551
-        this.text = 'The target with identity '+this.identity.toString()+'does not exist'
+        this.text = 'The target with identity '+JSON.stringify(this.identity)+'does not exist'
         this.msg = 'DoesNotExist'
     }
 }
@@ -13,7 +13,7 @@ class AlreadyExists extends Error {
         super('AlreadyExists')
         this.identity = identity
         this.code = 552
-        this.text = 'The target with identity '+this.identity.toString()+'does not exist'
+        this.text = 'The target with identity '+JSON.stringify(this.identity)+'already exists'
         this.msg = 'AlreadyExists'
     }
 }

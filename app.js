@@ -22,6 +22,7 @@ winston.configure({
 const PORT = process.env.PORT || 7024
 const BASEURL = process.env.BASEURL || 'mongodb://localhost'
 const DBURL = process.env.DBURL || BASEURL+'/_tournaments'
+const DBSTYLEURL = process.env.DBSTYLEURL || BASEURL+'/_styles'
 
 /*
 INITIALIZE
@@ -51,7 +52,7 @@ function log_request(req) {
     winston.debug('['+req.method+']'+' path '+req.path+' is accessed\nQuery\n'+JSON.stringify(req.query, null, 2)+'\nRequest\n'+JSON.stringify(req.body, null, 4))
 }
 
-const DB = new controllers.CON({db_url: DBURL})
+const DB = new controllers.CON({db_url: DBURL, db_style_url: DBSTYLEURL})
 winston.info('connected to tournaments database')
 let handlers = connect_to_tournaments(DB)
 /*
@@ -276,6 +277,27 @@ app.route('/tournaments/:tournament_id/allocations')
         let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.allocations.update(req.body).then(doc => res.json(doc)).catch(err => res.status(500).json(err))
     })
+
+    app.route('/styles')
+        .get(function(req, res) {///TESTED///
+            log_request(req)
+            DB.styles.find(req.query).then(docs => res.json(docs)).catch(err => res.status(500).json(err))
+        })
+        .post(function(req, res) {///TESTED///
+            log_request(req)
+            req.accepts('application/json')
+            DB.styles.create(req.body).then(docs => res.json(docs)).catch(err => res.status(500).json(err))
+        })
+        .put(function(req, res) {///TESTED///
+            log_request(req)
+            req.accepts('application/json')
+            DB.styles.update(req.body).then(docs => res.json(docs)).catch(err => res.status(500).json(err))
+        })
+        .delete(function(req, res) {///TESTED///
+            log_request(req)
+            req.accepts('application/json')
+            DB.styles.delete(req.body).then(docs => res.json(docs)).catch(err => res.status(500).json(err))
+        })
 
 app.get('/*', function(req, res) {
     res.status(404).send('404 Not Found')

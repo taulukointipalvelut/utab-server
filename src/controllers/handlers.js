@@ -4,6 +4,7 @@ var mongoose = require('mongoose')
 var schemas = require('./schemas.js')
 var _ = require('underscore/underscore.js')
 var errors = require('../general/errors.js')
+var styles = require('./styles.js')
 
 mongoose.Promise = global.Promise
 
@@ -12,6 +13,26 @@ function arrange_doc(doc) {
     delete new_doc.__v
     delete new_doc._id
     return new_doc
+}
+
+class DBStylesHandler {
+    constructor({db_style_url: db_style_url}) {
+        var conn = mongoose.createConnection(db_style_url)
+        this.conn = conn
+        conn.on('error', function (e) {
+            console.log('connection failed: '+e)
+        })
+
+        var Style = conn.model('RoundInfo', schemas.StylesSchema)
+
+        this.styles = new StylesCollectionHandler(Style)
+        for (let style of styles) {
+            this.styles.create.call(this.styles, style).catch(err => {})
+        }
+    }
+    close() {
+        this.conn.close()
+    }
 }
 
 class DBTournamentsHandler {//TESTED//
@@ -100,7 +121,14 @@ class TournamentsCollectionHandler extends _CollectionHandler {
     }
 }
 
+class StylesCollectionHandler extends _CollectionHandler {
+    constructor(Model) {
+        super(Model, ['id'])
+    }
+}
+
 exports.DBTournamentsHandler = DBTournamentsHandler
+exports.DBStylesHandler = DBStylesHandler
 
 //var dt = new DBTournamentsHandler()
 //dt.create({id: 3, name: "hi"}).then(dt.read().then(console.log)).catch(console.error)

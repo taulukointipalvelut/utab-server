@@ -3,7 +3,7 @@ utab api server written in node js
 
 ## Documentation
 
-The documentation is available at [here](build/INTERFACE.html)
+The documentation is available at [here](https://taulukointipalvelut.github.io/utab-api-server/)
 
 ## Attention
 

@@ -32,6 +32,14 @@ FORMAT: 1A
 ### SpecifyTournament
 + id: 32141324123 (number, required)
 
+### Style
++ id: "STYLE" (string)
++ name_long: "new style" (string)
++ team_num: 2 (number)
++ positions: ["Affirmative", "Negative"] (array[string])
++ positions_short: ["Aff", "Neg"] (array[string])
++ score_weights: [1, 1, 1, 1] (array[number])
+
 ### CreateTeam
 + name: kymstr (string, required)
 + available: true (boolean, optional)
@@ -96,6 +104,7 @@ FORMAT: 1A
 + chairs: [1] (array[number])
 + panels: [4, 6] (array[number])
 + trainees: [] (array[number])
++ venue: null (number)
 + warnings: [] (array[SquareWarning])
 
 ### RawTeamResult
@@ -187,6 +196,10 @@ FORMAT: 1A
 + details: [] (array[SummarizedAdjudicatorResult])
 
 # UTab Operation API
+
+# Group Styles
+
+## styles [/styles]
 
 # Group Tournaments
 
@@ -299,7 +312,6 @@ if the round to rollback is 1, throws an error.
  throws an error if the specified team does not exist.
  :::
 
-
 + Request (application/json)
     + Attributes (ModifyTeam)
 
@@ -319,7 +331,7 @@ throws an error if the specified team does not exist.
 + Response (application/json)
     + Attributes (Team)
 
-## teams [/tournaments/{tournament_id}/teams/{team_id}]
+## specific team [/tournaments/{tournament_id}/teams/{team_id}]
 
 ### get team information [GET]
 
