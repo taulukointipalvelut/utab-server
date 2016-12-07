@@ -201,6 +201,11 @@ FORMAT: 1A
 
 ## styles [/styles]
 
+### search or read all styles [GET]
+
++ Response 200 (application/json)
+    + Attributes (array[Style])
+
 # Group Tournaments
 
 ## tournaments [/tournaments]
