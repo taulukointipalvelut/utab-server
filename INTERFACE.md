@@ -204,7 +204,10 @@ FORMAT: 1A
 ### search or read all styles [GET]
 
 + Response 200 (application/json)
-    + Attributes (array[Style])
+    + Attributes
+        + errors (array[object])
+        + data (array[Style])
+        + log (array[object])
 
 # Group Tournaments
 
@@ -213,7 +216,9 @@ FORMAT: 1A
 ### search or read all tournaments [GET]
 
 + Response 200 (application/json)
-    + Attributes (array[Tournament])
+    + Attributes
+        + errors (array[object])
+        + data (array[Tournament])
 
 ### create a tournament [POST]
 
@@ -221,7 +226,11 @@ FORMAT: 1A
     + Attributes (CreateTournament)
 
 + Response 200 (application/json)
-    + Attributes (array[Tournament])
+    + errors (array[object])
+    + Attributes
+        + errors (array[object])
+        + data (array[Tournament])
+        + log (array[object])
 
 ### update a tournament [PUT]
 
@@ -234,7 +243,11 @@ FORMAT: 1A
     + Attributes (SpecifyTournament)
 
 + Response 200 (application/json)
-    + Attributes (array[Tournament])
+    + errors (array[object])
+    + Attributes
+        + errors (array[object])
+        + data (array[Tournament])
+        + log (array[object])
 
 # Group Rounds
 
@@ -243,7 +256,10 @@ FORMAT: 1A
 ### show status [GET]
 
  + Response 200 (application/json)
-    + Attributes (Tournament)
+    + Attributes
+        + errors (array[object])
+        + data (Tournament)
+        + log (array[object])
 
 ### proceed to next round [POST]
 
@@ -254,7 +270,10 @@ if the next round exceeds total round, throws an error.
  + Request (application/json)
 
  + Response 200 (application/json)
-    + Attributes (Tournament)
+    + Attributes
+        + errors (array[object])
+        + data (Tournament)
+        + log (array[object])
 
 ### rollback round [DELETE]
 
@@ -265,7 +284,10 @@ if the round to rollback is 1, throws an error.
  + Request (application/json)
 
  + Response 200 (application/json)
-    + Attributes (Tournament)
+    + Attributes
+        + errors (array[object])
+        + data (Tournament)
+        + log (array[object])
 
 ### update round config [PATCH]
 
@@ -276,7 +298,10 @@ if the round to rollback is 1, throws an error.
  + Request (application/json)
 
  + Response 200 (application/json)
-    + Attributes (Tournament)
+    + Attributes
+        + errors (array[object])
+        + data (Tournament)
+        + log (array[object])
 
 # Group Entities, Raw Results
 
@@ -321,7 +346,10 @@ if the round to rollback is 1, throws an error.
     + Attributes (ModifyTeam)
 
 + Response (application/json)
-    + Attributes (Team)
+    + Attributes
+        + errors (array[object])
+        + data (Team)
+        + log (array[object])
 
 ### delete a team [DELETE]
 
@@ -334,7 +362,10 @@ throws an error if the specified team does not exist.
     + Attributes (SpecifyTeam)
 
 + Response (application/json)
-    + Attributes (Team)
+    + Attributes
+        + errors (array[object])
+        + data (Team)
+        + log (array[object])
 
 ## specific team [/tournaments/{tournament_id}/teams/{team_id}]
 
@@ -343,7 +374,10 @@ throws an error if the specified team does not exist.
  + Parameters
 
  + Response 200 (application/json)
-    + Attributes (Team)
+    + Attributes
+        + errors (array[object])
+        + data (Team)
+        + log (array[object])
 
 ### update a team [PUT]
 
@@ -419,7 +453,10 @@ There is no DELETE method in allocations endpoint
                   }
 
 + Response 200 (application/json)
-    + Attributes (array[Square])
+    + Attributes
+        + errors (array[object])
+        + data (array[Square])
+        + log (array[object])
 
 ### save an allocation [POST]
 
@@ -433,7 +470,10 @@ There is no DELETE method in allocations endpoint
     + Attributes (array[Square])
 
  + Response 200 (application/json)
-    + Attributes (array[Square])
+    + Attributes
+        + errors (array[object])
+        + data (array[Square])
+        + log (array[object])
 
 ## team allocations [/tournaments/{tournament_id}/allocations/teams]
 
@@ -454,7 +494,10 @@ There is no DELETE method in allocations endpoint
                    }
 
 + Response 200 (application/json)
-    + Attributes (array[Square])
+    + Attributes
+        + errors (array[object])
+        + data (array[Square])
+        + log (array[object])
 
 ### check team allocation [PATCH]
 
@@ -462,7 +505,10 @@ There is no DELETE method in allocations endpoint
     + Attributes (array[Square])
 
  + Response 200 (application/json)
-    + Attributes (array[Square])
+    + Attributes
+        + errors (array[object])
+        + data (array[Square])
+        + log (array[object])
 
 ## adjudicator allocations [/tournaments/{tournament_id}/allocations/adjudicators]
 
@@ -492,7 +538,10 @@ There is no DELETE method in allocations endpoint
                    }
 
 + Response 200 (application/json)
-    + Attributes (array[Square])
+    + Attributes
+        + errors (array[object])
+        + data (array[Square])
+        + log (array[object])
 
 ### check adjudicator allocation [PATCH]
 
@@ -500,7 +549,10 @@ There is no DELETE method in allocations endpoint
     + Attributes (array[Square])
 
  + Response 200 (application/json)
-    + Attributes (array[Square])
+    + Attributes
+        + errors (array[object])
+        + data (array[Square])
+        + log (array[object])
 
 ## venue allocations [/tournaments/{tournament_id}/allocations/venues]
 
@@ -518,7 +570,10 @@ There is no DELETE method in allocations endpoint
           + default: true
 
  + Response 200 (application/json)
-    + Attributes (array[Square])
+    + Attributes
+        + errors (array[object])
+        + data (array[Square])
+        + log (array[object])
 
 ### check venue allocation [PATCH]
 
@@ -526,7 +581,10 @@ There is no DELETE method in allocations endpoint
     + Attributes (array[Square])
 
  + Response 200 (application/json)
-    + Attributes (array[Square])
+    + Attributes
+        + errors (array[object])
+        + data (array[Square])
+        + log (array[object])
 
 # Group Result
 
@@ -543,7 +601,10 @@ There is no DELETE method in allocations endpoint
         + default: false
 
  + Response 200 (application/json)
-    + Attributes (RawTeamResult)
+    + Attributes
+        + errors (array[object])
+        + data (RawTeamResult)
+        + log (array[object])
 
 ## adjudicator results [/tournaments/{tournament_id}/adjudicators/results]
 
