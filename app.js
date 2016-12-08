@@ -200,7 +200,6 @@ app.route('/tournaments')
 
             DB.tournaments.create(dict).then(doc => respond_data(doc, res))
             .then(function() {
-                console.log("created")
                 let id2 = id
                 let th = new utab.TournamentHandler(db_url, dict)
                 sys.syncadd.push({list: handlers, e: {id: id2, handler: th}})
@@ -253,32 +252,35 @@ IMPLEMENT ALLOCATION API
 */
 
 let allocation_routes = [
-    {keys: ['allocations', 'teams'], path: '/allocations/teams'},
-    {keys: ['allocations', 'adjudicators'], path: '/allocations/adjudicators'},
-    {keys: ['allocations', 'venues'], path: '/allocations/venues'}
+    {keys: ['allocations', 'teams'], path: '/allocations/teams', require_pre_allocation: false},
+    {keys: ['allocations', 'adjudicators'], path: '/allocations/adjudicators', require_pre_allocation: true},
+    {keys: ['allocations', 'venues'], path: '/allocations/venues', require_pre_allocation: true}
 ]
 
 for (let route of allocation_routes) {
     app.route('/tournaments/:tournament_id'+route.path)
-        .get(function(req, res) {
+        .patch(function(req, res) {
             log_request(req)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            node.get(req.query).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+            if (route.require_pre_allocation) {
+                node.get(req.body.allocation, req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+            } else {
+                node.get(req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+            }
         })
+        /*
         .patch(function(req, res) {
             log_request(req)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             node.check(req.body.allocation).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
-        })
+        })*/
 }
 
 app.route('/tournaments/:tournament_id/allocations')
     .get(function(req, res) {
         log_request(req)
         let th = sys.find_tournament(handlers, req.params.tournament_id)
-        let dict = _.clone(req.query)
-        dict.r = parseInt(dict.round)
-        th.allocations.read(dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
+        th.allocations.read(req.query).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
     })
     .post(function(req, res) {
         log_request(req)
@@ -290,27 +292,32 @@ app.route('/tournaments/:tournament_id/allocations')
         let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.allocations.update(req.body).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
     })
+    .patch(function(req, res) {
+        log_request(req)
+        let th = sys.find_tournament(handlers, req.params.tournament_id)
+        th.allocations.get(req.body).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
+    })
 
-    app.route('/styles')
-        .get(function(req, res) {///TESTED///
-            log_request(req)
-            DB.styles.find(req.query).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
-        })
-        .post(function(req, res) {///TESTED///
-            log_request(req)
-            req.accepts('application/json')
-            DB.styles.create(req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
-        })
-        .put(function(req, res) {///TESTED///
-            log_request(req)
-            req.accepts('application/json')
-            DB.styles.update(req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
-        })
-        .delete(function(req, res) {///TESTED///
-            log_request(req)
-            req.accepts('application/json')
-            DB.styles.delete(req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
-        })
+app.route('/styles')
+    .get(function(req, res) {///TESTED///
+        log_request(req)
+        DB.styles.find(req.query).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+    })
+    .post(function(req, res) {///TESTED///
+        log_request(req)
+        req.accepts('application/json')
+        DB.styles.create(req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+    })
+    .put(function(req, res) {///TESTED///
+        log_request(req)
+        req.accepts('application/json')
+        DB.styles.update(req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
+    })
+    .delete(function(req, res) {///TESTED///
+        log_request(req)
+        req.accepts('application/json')
+        DB.styles.delete(req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
+    })
 
 app.get('/*', function(req, res) {
     res.status(404).send('404 Not Found')

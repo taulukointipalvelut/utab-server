@@ -34,7 +34,7 @@ FORMAT: 1A
 
 ### Style
 + id: STYLE (string)
-+ name_long: new style (string)
++ name: new style (string)
 + team_num: 2 (number)
 + positions: Affirmative, Negative (array[string])
 + positions_short: Aff, Neg (array[string])
@@ -194,6 +194,52 @@ FORMAT: 1A
 + judged_teams: [32423423, 42512132, 42512132, 32423222] (array[number])
 + active_num: 7 (number)
 + details: [] (array[SummarizedAdjudicatorResult])
+
+### AllocationOptions
++ simple: false (boolean, optional)
+    + default: false
++ force: false (boolean, optional)
+    + default: false
++ team_allocation_algorithm: standard (string, optional)
+    + default: 'standard'
++ team_allocation_algorithm_options: {"filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution']} (object, optional)
+    + default: {"filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution']}
++ adjudicator_allocation_algorithm: standard (string, optional)
+    + default: 'standard'
++ adjudicator_allocation_algorithm_options: {"filters": ['by_bubble', 'by_strength', 'by_attendance', 'by_conflict', 'by_institution', 'by_past'],"assign": 'high_to_high',"scatter": false} (object, optional)
+    + default: {"filters": ['by_bubble', 'by_strength', 'by_attendance', 'by_conflict', 'by_institution', 'by_past'],"assign": 'high_to_high',"scatter": false}
++ venue_allocation_algorithm_options: {shuffle: true} (object, optional)
+    + default: {shuffle: true}
++ numbers: {"chairs": 2,"panels": 1,"trainees": 1} (object, optional)
+    + default: {"chairs": 2,"panels": 1,"trainees": 1}
+
+### TeamAllocationOptions
++ simple: false (boolean, optional)
+   + default: false
++ force: false (boolean, optional)
+   + default: false
++ algorithm: standard (string, optional)
+   + default: 'standard'
++ algorithm_options: {"filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution']} (object, optional)
+   + default: {"filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution']}
+
+### AdjudicatorAllocationOptions
++ simple: false (boolean, optional)
+   + default: false
++ force: false (boolean, optional)
+   + default: false
++ algorithm: standard (string, optional)
+   + default: 'standard'
++ algorithm_options: {"filters": ['by_bubble', 'by_strength', 'by_attendance', 'by_conflict', 'by_institution', 'by_past'],"assign": 'high_to_high',"scatter": false} (object, optional)
+   + default: {"filters": ['by_bubble', 'by_strength', 'by_attendance', 'by_conflict', 'by_institution', 'by_past'],"assign": 'high_to_high',"scatter": false}
++ numbers: {"chairs": 2,"panels": 1,"trainees": 1} (object, optional)
+   + default: {"chairs": 2,"panels": 1,"trainees": 1}
+
+### VenueAllocationOptions
++ force: false (boolean, optional)
+    + default: false
++ shuffle: true (boolean, optional)
+    + default: true
 
 # UTab Operation API
 
@@ -396,11 +442,19 @@ throws an error if the specified team does not exist.
 
 ## adjudicators [/tournaments/{tournament_id}/adjudicators]
 
+## specific adjudicator [/tournaments/{tournament_id}/adjudicator/{adjudicator_id}]
+
 ## venues [/tournaments/{tournament_id}/venues]
+
+## specific venue [/tournaments/{tournament_id}/venues/{venue_id}]
 
 ## debaters [/tournaments/{tournament_id}/debaters]
 
+## specific debater [/tournaments/{tournament_id}/debaters/{debater_id}]
+
 ## institutions [/tournaments/{tournament_id}/institutions]
+
+## specific institution [/tournaments/{tournament_id}/institutions/{institution_id}]
 
 ## raw team results [/tournaments/{tournament_id}/teams/results/raw]
 
@@ -416,54 +470,13 @@ throws an error if the specified team does not exist.
 
 There is no DELETE method in allocations endpoint
 
-### get/compute an allocation [GET]
-
- * if the round is specified, returns an allocation, otherwise computes an allocation for current round. if specified round is the current round, computes an allocation. Can be a shortcut for computing all team/adjudicator/venue allocation at once.
- ::: warning
- if the specified round exceeds current round, throws an error.
- :::
-
- + Parameters
-    + round (number, optional)
-    + simple (boolean, optional)
-     + default: false
-    + force (boolean, optional)
-     + default: false
-    + team_allocation_algorithm (string, optional)
-     + default: 'standard'
-    + team_allocation_algorithm_options (object, optional)
-     + default: {
-                         "filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution']
-                    }
-    + shuffle (boolean, optional)
-     + default: true
-    + adjudicator_allocation_algorithm (string, optional)
-     + default: 'standard'
-    + adjudicator_allocation_algorithm_options (object, optional)
-     + default: {
-                       "filters": ['by_bubble', 'by_strength', 'by_attendance', 'by_conflict', 'by_institution', 'by_past'],
-                       "assign": 'high_to_high',
-                       "scatter": false
-                  }
-    + numbers (object, optional)
-     + default: {
-                       "chairs": 2,
-                       "panels": 1,
-                       "trainees": 1
-                  }
-
-+ Response 200 (application/json)
-    + Attributes
-        + errors (array[object])
-        + data (array[Square])
-        + log (array[object])
+### get saved allocation [GET]
 
 ### save an allocation [POST]
 
 ### update saved allocation [PUT]
 
-### delete saved allocation [DELETE]
-
+<!--
 ### check an allocation [PATCH]
 
  + Request (application/json)
@@ -473,38 +486,32 @@ There is no DELETE method in allocations endpoint
     + Attributes
         + errors (array[object])
         + data (array[Square])
-        + log (array[object])
+        + log (array[object])-->
+
+### compute an allocation [PATCH]
+* computes an allocation for current round. Can be a shortcut for computing all team/adjudicator/venue allocation at once.
+
++ Request (application/json)
+   + Attributes
+       + options (AllocationOptions, optional)
+
++ Response 200 (application/json)
+   + Attributes
+       + errors (array[object])
+       + data (array[Square])
+       + log (array[object])
 
 ## team allocations [/tournaments/{tournament_id}/allocations/teams]
 
-### compute a team allocation [GET]
+### compute a team allocation [PATCH]
 
  * if simple option is true, it doesn't use debater scores in computing matchups.
 
- + Parameters
-  + simple (boolean, optional)
-        + default: false
-  + force (boolean, optional)
-        + default: false
-  + algorithm (string, optional)
-        + default: 'standard'
-  + algorithm_options (object, optional)
-        + default: {
-                        "filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution']
-                   }
++ Request (application/json)
+    + Attributes
+        + options (TeamAllocationOptions, optional)
 
 + Response 200 (application/json)
-    + Attributes
-        + errors (array[object])
-        + data (array[Square])
-        + log (array[object])
-
-### check team allocation [PATCH]
-
- + Request (application/json)
-    + Attributes (array[Square])
-
- + Response 200 (application/json)
     + Attributes
         + errors (array[object])
         + data (array[Square])
@@ -512,30 +519,14 @@ There is no DELETE method in allocations endpoint
 
 ## adjudicator allocations [/tournaments/{tournament_id}/allocations/adjudicators]
 
-### compute an adjudicator allocation [GET]
+### compute an adjudicator allocation [PATCH]
 
  * computes an adjudicator allocation based on given team allocation
 
- + Parameters
-  + allocation (array[Square], required)
-  + simple (boolean, optional)
-        + default: false
-  + force (boolean, optional)
-        + default: false
-  + algorithm (string, optional)
-        + default: 'standard'
-  + algorithm_options (object, optional)
-        + default: {
-                        "filters": ['by_bubble', 'by_strength', 'by_attendance', 'by_conflict', 'by_institution', 'by_past'],
-                        "assign": 'high_to_high',
-                        "scatter": false
-                   }
-  + numbers (object, optional)
-        + default: {
-                        "chairs": 2,
-                        "panels": 1,
-                        "trainees": 1
-                   }
++ Request (application/json)
+    + Attributes
+        + allocation (array[Square], required)
+        + options (AdjudicatorAllocationOptions, optional)
 
 + Response 200 (application/json)
     + Attributes
@@ -543,42 +534,18 @@ There is no DELETE method in allocations endpoint
         + data (array[Square])
         + log (array[object])
 
-### check adjudicator allocation [PATCH]
-
- + Request (application/json)
-    + Attributes (array[Square])
-
- + Response 200 (application/json)
-    + Attributes
-        + errors (array[object])
-        + data (array[Square])
-        + log (array[object])
-
 ## venue allocations [/tournaments/{tournament_id}/allocations/venues]
 
-### compute venue allocation [GET]
+### compute venue allocation [PATCH]
 
  * computes a venue allocation based on given team/adjudicator allocation
  * if force is true, it allocates venues even if venues are fewer than squares.
  * if shuffle is true, it shuffles venues so that no one can recognize current team rankings.
 
- + Parameters
-      + allocation (array[Square], required)
-      + force (boolean, optional)
-          + default: false
-      + shuffle (boolean, optional)
-          + default: true
-
- + Response 200 (application/json)
-    + Attributes
-        + errors (array[object])
-        + data (array[Square])
-        + log (array[object])
-
-### check venue allocation [PATCH]
-
  + Request (application/json)
-    + Attributes (array[Square])
+      + Attributes
+        + allocation (array[Square], required)
+        + options (VenueAllocationOptions, optional)
 
  + Response 200 (application/json)
     + Attributes
@@ -609,3 +576,37 @@ There is no DELETE method in allocations endpoint
 ## adjudicator results [/tournaments/{tournament_id}/adjudicators/results]
 
 ## debater results [/tournaments/{tournament_id}/debaters/results]
+
+<!--
+### check team allocation [PATCH]
+
++ Request (application/json)
++ Attributes (array[Square])
+
++ Response 200 (application/json)
++ Attributes
++ errors (array[object])
++ data (array[Square])
++ log (array[object])-->
+<!--
+### check adjudicator allocation [PATCH]
+
++ Request (application/json)
++ Attributes (array[Square])
+
++ Response 200 (application/json)
++ Attributes
++ errors (array[object])
++ data (array[Square])
++ log (array[object])-->
+<!--
+### check venue allocation []
+
++ Request (application/json)
++ Attributes (array[Square])
+
++ Response 200 (application/json)
++ Attributes
++ errors (array[object])
++ data (array[Square])
++ log (array[object])-->
