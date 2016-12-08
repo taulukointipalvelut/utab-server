@@ -255,6 +255,12 @@ FORMAT: 1A
         + data (array[Style])
         + log (array[object])
 
+### create a style [POST]
+
+### update a style [PUT]
+
+### delete a style [DELETE]
+
 # Group Tournaments
 
 ## tournaments [/tournaments]
@@ -295,6 +301,8 @@ FORMAT: 1A
 ## rounds [/tournaments/{tournament_id}]
 
 ### show status [GET]
+ + Parameters
+    + tournament_id: 323242342432 (number)
 
  + Response 200 (application/json)
     + Attributes
@@ -303,6 +311,8 @@ FORMAT: 1A
         + log (array[object])
 
 ### proceed to next round [POST]
+ + Parameters
+    + tournament_id: 323242342432 (number)
 
 proceed to the next round.
 ::: warning
@@ -317,6 +327,8 @@ if the next round exceeds total round, throws an error.
         + log (array[object])
 
 ### rollback round [DELETE]
+ + Parameters
+    + tournament_id: 323242342432 (number)
 
 moves back to the prior round.
 ::: warning
@@ -331,6 +343,8 @@ if the round to rollback is 1, throws an error.
         + log (array[object])
 
 ### update round config [PATCH]
+ + Parameters
+    + tournament_id: 323242342432 (number)
 
 updates round config.
 ::: warning
@@ -349,7 +363,7 @@ if the round to rollback is 1, throws an error.
 * each resouce url accepts object or array[object]
 * also each resource url has sub url of the individual entities where you don't have to request entity id for GET/PUT/DELETE methods though POST method is not available in the sub url.
 
-## teams [/tournaments/{tournament_id}/teams]
+## teams [/tournaments/{tournament_id}/teams{?id,name,available,institutions}]
 
 ### search or read all teams [GET]
 
@@ -357,6 +371,10 @@ if the round to rollback is 1, throws an error.
  * NO SIDE EFFECT
 
  + Parameters
+    + tournament_id: 323242342432 (number)
+    + name: teamA (string)
+    + available: true (boolean)
+    + institutions: [43242342, 542343523] (array[number])
 
  + Response 200 (application/json)
 
@@ -364,6 +382,9 @@ if the round to rollback is 1, throws an error.
 
  * create a team
  * if force option is true, creates a team even if the same name team already exists, otherwise throws an error.
+
+ + Parameters
+     + tournament_id: 323242342432 (number)
 
  + Request Team (application/json)
 
@@ -382,6 +403,8 @@ if the round to rollback is 1, throws an error.
  ::: warning
  throws an error if the specified team does not exist.
  :::
+ + Parameters
+     + tournament_id: 323242342432 (number)
 
 + Request (application/json)
     + Attributes (ModifyTeam)
@@ -398,6 +421,8 @@ if the round to rollback is 1, throws an error.
 ::: warning
 throws an error if the specified team does not exist.
 :::
++ Parameters
+    + tournament_id: 323242342432 (number)
 
 + Request (application/json)
     + Attributes (SpecifyTeam)
@@ -413,6 +438,8 @@ throws an error if the specified team does not exist.
 ### get team information [GET]
 
  + Parameters
+    + tournament_id: 3241087341 (number)
+    + team_id: 23442305928 (number)
 
  + Response 200 (application/json)
     + Attributes
@@ -427,6 +454,9 @@ throws an error if the specified team does not exist.
  ::: warning
  throws an error if the specified team does not exist.
  :::
+ + Parameters
+     + tournament_id: 3241087341 (number)
+     + team_id: 23442305928 (number)
 
 ### delete a team [DELETE]
 
@@ -434,26 +464,67 @@ throws an error if the specified team does not exist.
 ::: warning
 throws an error if the specified team does not exist.
 :::
++ Parameters
+    + tournament_id: 3241087341 (number)
+    + team_id: 23442305928 (number)
 
 ## adjudicators [/tournaments/{tournament_id}/adjudicators]
 
+* similar request/response with teams
++ Parameters
+    + tournament_id: 3241087341 (number)
+
 ## specific adjudicator [/tournaments/{tournament_id}/adjudicator/{adjudicator_id}]
+
+* similar request/response with specific team
++ Parameters
+    + tournament_id: 3241087341 (number)
+    + adjudicator_id: 32479169999 (number)
 
 ## venues [/tournaments/{tournament_id}/venues]
 
+* similar request/response with teams
++ Parameters
+    + tournament_id: 3241087341 (number)
+
 ## specific venue [/tournaments/{tournament_id}/venues/{venue_id}]
+
+* similar request/response with specific team
++ Parameters
+    + tournament_id: 3241087341 (number)
+    + venue_id: 321948719034 (number)
 
 ## debaters [/tournaments/{tournament_id}/debaters]
 
+* similar request/response with teams
++ Parameters
+    + tournament_id: 3241087341 (number)
+
 ## specific debater [/tournaments/{tournament_id}/debaters/{debater_id}]
+
+* similar request/response with specific team
++ Parameters
+    + tournament_id: 3241087341 (number)
+    + debater_id: 4398201575 (number)
 
 ## institutions [/tournaments/{tournament_id}/institutions]
 
+* similar request/response with teams
++ Parameters
+    + tournament_id: 3241087341 (number)
+
 ## specific institution [/tournaments/{tournament_id}/institutions/{institution_id}]
+
+* similar request/response with specific team
++ Parameters
+    + tournament_id: 3241087341 (number)
+    + institution_id: 3214879134 (number)
 
 ## raw team results [/tournaments/{tournament_id}/teams/results/raw]
 
 ### get raw team result [GET]
++ Parameters
+    + tournament_id: 3241087341 (number)
 
 ## raw adjudicator results [/tournaments/{tournament_id}/adjudicators/results/raw]
 
@@ -466,10 +537,16 @@ throws an error if the specified team does not exist.
 There is no DELETE method in allocations endpoint
 
 ### get saved allocation [GET]
++ Parameters
+    + tournament_id: 3241087341 (number)
 
 ### save an allocation [POST]
++ Parameters
+    + tournament_id: 3241087341 (number)
 
 ### update saved allocation [PUT]
++ Parameters
+    + tournament_id: 3241087341 (number)
 
 <!--
 ### check an allocation [PATCH]
@@ -483,8 +560,11 @@ There is no DELETE method in allocations endpoint
         + data (array[Square])
         + log (array[object])-->
 
-### compute an allocation [PATCH]
+### compute allocation [PATCH]
 * computes an allocation for current round. Can be a shortcut for computing all team/adjudicator/venue allocation at once.
+
++ Parameters
+    + tournament_id: 3241087341 (number)
 
 + Request (application/json)
    + Attributes
@@ -498,9 +578,11 @@ There is no DELETE method in allocations endpoint
 
 ## team allocations [/tournaments/{tournament_id}/allocations/teams]
 
-### compute a team allocation [PATCH]
+### compute team allocation [PATCH]
 
  * if simple option is true, it doesn't use debater scores in computing matchups.
+ + Parameters
+     + tournament_id: 323242342432 (number)
 
 + Request (application/json)
     + Attributes
@@ -514,9 +596,11 @@ There is no DELETE method in allocations endpoint
 
 ## adjudicator allocations [/tournaments/{tournament_id}/allocations/adjudicators]
 
-### compute an adjudicator allocation [PATCH]
+### compute adjudicator allocation [PATCH]
 
  * computes an adjudicator allocation based on given team allocation
+ + Parameters
+    + tournament_id: 323242342432 (number)
 
 + Request (application/json)
     + Attributes
@@ -536,6 +620,8 @@ There is no DELETE method in allocations endpoint
  * computes a venue allocation based on given team/adjudicator allocation
  * if force is true, it allocates venues even if venues are fewer than squares.
  * if shuffle is true, it shuffles venues so that no one can recognize current team rankings.
+ + Parameters
+     + tournament_id: 323242342432 (number)
 
  + Request (application/json)
       + Attributes
@@ -557,6 +643,7 @@ There is no DELETE method in allocations endpoint
  * returns compiled team results. if rounds is not specified, it compiles all raw results including those collected in the current round.
 
  + Parameters
+    + tournament_id: 323242342432 (number)
     + rounds (array[number] | number, optional)
         + default: [1, ..., current_round_num]
     + force (boolean, optional)
@@ -565,7 +652,7 @@ There is no DELETE method in allocations endpoint
  + Response 200 (application/json)
     + Attributes
         + errors (array[object])
-        + data (RawTeamResult)
+        + data (CompiledTeamResult)
         + log (array[object])
 
 ## adjudicator results [/tournaments/{tournament_id}/adjudicators/results]
