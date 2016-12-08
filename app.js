@@ -14,8 +14,22 @@ app.use(bodyParser.json())
 
 winston.configure({
     transports: [
-        new (winston.transports.File) ({ level: 'silly', filename: __dirname+'/log/'+Date.now().toString()+'.log' }),
-        new (winston.transports.Console) ({ level: 'silly', colorize: true })
+        new (winston.transports.File) ({
+            level: 'silly',
+            filename: __dirname+'/log/'+Date.now().toString()+'.log',
+            timestamp: function() {
+                let dt = new Date()
+                return dt.getFullYear() +'/'+ dt.getMonth() +'/'+ dt.getDate() +' '+ dt.getHours() +':'+ dt.getMinutes() +':'+ dt.getSeconds()
+            }
+        }),
+        new (winston.transports.Console) ({
+            level: 'silly',
+            colorize: true,
+            timestamp: function() {
+                let dt = new Date()
+                return dt.getFullYear() +'/'+ dt.getMonth() +'/'+ dt.getDate() +' '+ dt.getHours() +':'+ dt.getMinutes() +':'+ dt.getSeconds()
+            }
+        })
     ]
 })
 
@@ -343,7 +357,7 @@ app.use(function(err, req, res, next){
 })
 
 app.listen(PORT)
-console.log("server started")
+winston.info("server started on port: "+PORT+", database address: "+BASEURL)
 
 process.on('exit', function() {
     for (let t of handlers) {
