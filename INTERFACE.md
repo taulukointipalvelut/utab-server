@@ -210,7 +210,7 @@ FORMAT: 1A
     + default: {"filters": ['by_bubble', 'by_strength', 'by_attendance', 'by_conflict', 'by_institution', 'by_past'],"assign": 'high_to_high',"scatter": false}
 + venue_allocation_algorithm_options: {shuffle: true} (object, optional)
     + default: {shuffle: true}
-+ numbers: {"chairs": 2,"panels": 1,"trainees": 1} (object, optional)
++ numbers_of_adjudicators: {"chairs": 2,"panels": 1,"trainees": 1} (object, optional)
     + default: {"chairs": 2,"panels": 1,"trainees": 1}
 
 ### TeamAllocationOptions
@@ -232,7 +232,7 @@ FORMAT: 1A
    + default: 'standard'
 + algorithm_options: {"filters": ['by_bubble', 'by_strength', 'by_attendance', 'by_conflict', 'by_institution', 'by_past'],"assign": 'high_to_high',"scatter": false} (object, optional)
    + default: {"filters": ['by_bubble', 'by_strength', 'by_attendance', 'by_conflict', 'by_institution', 'by_past'],"assign": 'high_to_high',"scatter": false}
-+ numbers: {"chairs": 2,"panels": 1,"trainees": 1} (object, optional)
++ numbers_of_adjudicators: {"chairs": 2,"panels": 1,"trainees": 1} (object, optional)
    + default: {"chairs": 2,"panels": 1,"trainees": 1}
 
 ### VenueAllocationOptions
@@ -277,11 +277,6 @@ FORMAT: 1A
         + errors (array[object])
         + data (array[Tournament])
         + log (array[object])
-
-### update a tournament [PUT]
-
-+ Request (application/json)
-    + Attributes (ModifyTournament)
 
 ### delete a tournament [DELETE]
 

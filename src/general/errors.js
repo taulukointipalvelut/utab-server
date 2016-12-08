@@ -2,9 +2,9 @@ class DoesNotExist extends Error {
     constructor(identity) {
         super('DoesNotExist')
         this.identity = identity
-        this.code = 551
-        this.text = 'The target with identity '+JSON.stringify(this.identity)+'does not exist'
-        this.msg = 'DoesNotExist'
+        this.code = 404
+        this.message = 'The target with identity '+JSON.stringify(this.identity)+' does not exist'
+        this.name = 'DoesNotExist'
     }
 }
 
@@ -12,9 +12,9 @@ class AlreadyExists extends Error {
     constructor(identity) {
         super('AlreadyExists')
         this.identity = identity
-        this.code = 552
-        this.text = 'The target with identity '+JSON.stringify(this.identity)+'already exists'
-        this.msg = 'AlreadyExists'
+        this.code = 409
+        this.message = 'The target with identity '+JSON.stringify(this.identity)+' already exists'
+        this.name = 'AlreadyExists'
     }
 }
 
