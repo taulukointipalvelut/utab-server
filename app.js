@@ -356,10 +356,11 @@ app.use(function(err, req, res, next){
     respond_error({name: 'InternalServerError', message: 'Internal Server Error', code: 500}, res)
 })
 
-app.listen(PORT)
+var server = app.listen(PORT)
 winston.info("server started on port: "+PORT+", database address: "+BASEURL)
 
 process.on('exit', function() {
+    server.close()
     for (let t of handlers) {
         t.handler.close()
         DB.close()

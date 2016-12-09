@@ -143,7 +143,7 @@ FORMAT: 1A
 + opponents: [4352432524] (array[number])
 + sum: 230 (number)
 + margin: -6 (number)
-+ user_defined_data: {} (object)
++ user_defined_data_collection: {} (object)
 
 ### SummarizedSimpleTeamResult
 + id: 3432522346 (number)
@@ -151,7 +151,7 @@ FORMAT: 1A
 + win: 1 (number)
 + side: gov (string)
 + opponents: [4352432524] (array[number])
-+ user_defined_data: {} (object)
++ user_defined_data_collection: {} (object)
 
 ### SummarizedDebaterResult
 + id: 3432522346 (number)
