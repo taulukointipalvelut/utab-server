@@ -1,0 +1,487 @@
+{
+	"variables": [],
+	"info": {
+		"name": "version 2 tests",
+		"_postman_id": "c9c0d039-84c8-f56e-02d1-b31d03d4ea48",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get allocation",
+			"description": "",
+			"item": [
+				{
+					"name": "get team allocation",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/allocations/teams",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get adjudicator allocation",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/allocations/adjudicators",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"allocation\": [\n    {\n      \"teams\": [\n        83342189991938,\n        52787532214378\n      ],\n      \"chairs\": [],\n      \"panels\": [],\n      \"trainees\": [],\n      \"venue\": null,\n      \"warnings\": [],\n      \"id\": 0\n    },\n    {\n      \"teams\": [\n        48909812278917,\n        78787353238042\n      ],\n      \"chairs\": [],\n      \"panels\": [],\n      \"trainees\": [],\n      \"venue\": null,\n      \"warnings\": [],\n      \"id\": 1\n    },\n    {\n      \"teams\": [\n        246886550116937,\n        94808369574359\n      ],\n      \"chairs\": [],\n      \"panels\": [],\n      \"trainees\": [],\n      \"venue\": null,\n      \"warnings\": [\n        {\n          \"code\": 605,\n          \"id1\": 246886550116937,\n          \"id2\": 94808369574359,\n          \"institutions1\": [\n            203938047466243\n          ],\n          \"institutions2\": [\n            203938047466243\n          ],\n          \"message\": \"Institution(s) is the same : team 246886550116937 institutions(203938047466243) vs team 94808369574359 institutions(203938047466243)\",\n          \"name\": \"SameInstitution\"\n        }\n      ],\n      \"id\": 2\n    }\n  ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get allocation",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/allocations",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"options\": {\n\t\t\"simple\": false,\n\t\t\"team_allocation_algorithm\": \"standard\",\n\t\t\"team_allocation_algorithm_options\": {\n\t\t\t\"avoid_conflict\": false\t\n\t\t},\n\t\t\"adjudicator_allocation_algorithm\": \"traditional\",\n\t\t\"adjudicator_allocation_algorithm_options\": {\n\t\t\t\"assign\": \"high_to_slight\"\n\t\t},\n\t\t\"numbers_of_adjudicators\": {\"chairs\": 1, \"panels\": 2},\n\t\t\"venue_allocation_algorithm_options\": {\n\t\t\t\"shuffle\": false\n\t\t}\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get venue allocation",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/allocations/venues",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"allocation\": [\n    {\n      \"teams\": [\n        83342189991938,\n        52787532214378\n      ],\n      \"chairs\": [],\n      \"panels\": [],\n      \"trainees\": [],\n      \"venue\": null,\n      \"warnings\": [],\n      \"id\": 0\n    },\n    {\n      \"teams\": [\n        48909812278917,\n        78787353238042\n      ],\n      \"chairs\": [],\n      \"panels\": [],\n      \"trainees\": [],\n      \"venue\": null,\n      \"warnings\": [],\n      \"id\": 1\n    },\n    {\n      \"teams\": [\n        246886550116937,\n        94808369574359\n      ],\n      \"chairs\": [],\n      \"panels\": [],\n      \"trainees\": [],\n      \"venue\": null,\n      \"warnings\": [\n        {\n          \"code\": 605,\n          \"id1\": 246886550116937,\n          \"id2\": 94808369574359,\n          \"institutions1\": [\n            203938047466243\n          ],\n          \"institutions2\": [\n            203938047466243\n          ],\n          \"message\": \"Institution(s) is the same : team 246886550116937 institutions(203938047466243) vs team 94808369574359 institutions(203938047466243)\",\n          \"name\": \"SameInstitution\"\n        }\n      ],\n      \"id\": 2\n    }\n  ],\n  \"options\": {\n  \t\"shuffle\": false\n  }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register Entities",
+			"description": "",
+			"item": [
+				{
+					"name": "get teams",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/teams",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get debaters",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/debaters",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get adjudicators",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/adjudicators",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get venues",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/venues",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get institutions",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/institutions",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create teams",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/teams",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"name\": \"t1\",\n\t\t\"debaters_by_r\": [{\"r\": 1, \"debaters\": [107230773267679, 231122909872495]}],\n\t\t\"institutions\": [203938047466243]\n\t},\t\n\t{\n\t\t\"name\": \"t2\",\n\t\t\"debaters_by_r\": [{\"r\": 1, \"debaters\": [36864731289482, 19845014229471]}],\n\t\t\"institutions\": [203938047466243]\n\t},\n\t{\n\t\t\"name\": \"t3\",\n\t\t\"debaters_by_r\": [{\"r\": 1, \"debaters\": [49912552387182, 105067820574904]}],\n\t\t\"institutions\": [203938047466243]\n\t},\n\t{\n\t\t\"name\": \"t4\",\n\t\t\"debaters_by_r\": [{\"r\": 1, \"debaters\": [156593964815527, 924764506342]}],\n\t\t\"institutions\": [203938047466243]\n\t},\n\t{\n\t\t\"name\": \"t5\",\n\t\t\"debaters_by_r\": [{\"r\": 1, \"debaters\": [85243865722706, 93979985404981]}]\n\t},\n\t{\n\t\t\"name\": \"t6\",\n\t\t\"debaters_by_r\": [{\"r\": 1, \"debaters\": [233617762903027, 137626064146044]}]\n\t}\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create debaters",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/debaters",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"name\": \"d1\"\n\t},\n\t{\n\t\t\"name\": \"d2\"\n\t},\n\t{\n\t\t\"name\": \"d3\"\n\t},\n\t{\n\t\t\"name\": \"d4\"\n\t},\n\t{\n\t\t\"name\": \"d5\"\n\t},\n\t{\n\t\t\"name\": \"d6\"\n\t},\n\t{\n\t\t\"name\": \"d7\"\n\t},\n\t{\n\t\t\"name\": \"d8\"\n\t},\n\t{\n\t\t\"name\": \"d9\"\n\t},\n\t{\n\t\t\"name\": \"d10\"\n\t},\n\t{\n\t\t\"name\": \"d11\"\n\t},\n\t{\n\t\t\"name\": \"d12\"\n\t}\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create adjudicators",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/adjudicators",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"name\": \"a1\"\n\t},\n\t{\n\t\t\"name\": \"a2\"\n\t},\n\t{\n\t\t\"name\": \"a3\"\n\t},\n\t{\n\t\t\"name\": \"a4\"\n\t},\n\t{\n\t\t\"name\": \"a5\"\n\t},\n\t{\n\t\t\"name\": \"a6\"\n\t},\n\t{\n\t\t\"name\": \"a7\"\n\t},\n\t{\n\t\t\"name\": \"a8\"\n\t},\n\t{\n\t\t\"name\": \"a9\"\n\t},\n\t{\n\t\t\"name\": \"a10\"\n\t},\n\t{\n\t\t\"name\": \"a11\"\n\t},\n\t{\n\t\t\"name\": \"a12\"\n\t}\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create venues",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/venues",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"name\": \"v1\",\n\t\t\"priority\": 1\n\t},\n\t{\n\t\t\"name\": \"v2\",\n\t\t\"priority\": 2\n\t},\n\t{\n\t\t\"name\": \"v3\",\n\t\t\"priority\": 3\n\t},\n\t{\n\t\t\"name\": \"v4\",\n\t\t\"priority\": 4\n\t},\n\t{\n\t\t\"name\": \"v5\",\n\t\t\"priority\": 5\n\t},\n\t{\n\t\t\"name\": \"v6\",\n\t\t\"priority\": 6\n\t},\n\t{\n\t\t\"name\": \"v7\",\n\t\t\"priority\": 6\n\t}\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create institutions",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/institutions",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"name\": \"i1\"\n\t},\n\t{\n\t\t\"name\": \"i2\"\n\t},\n\t{\n\t\t\"name\": \"i3\"\n\t}\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete created teams",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/teams",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"id\": 52787532214378\n  },\n  {\n    \"id\": 94808369574359\n  },\n  {\n    \"id\": 48909812278917\n  },\n  {\n    \"id\": 246886550116937\n  },\n  {\n    \"id\": 83342189991938\n  },\n  {\n    \"id\": 78787353238042\n  }\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete created adjudicators",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/adjudicators",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"id\": 219565398569069\n  },\n  {\n    \"id\": 114490061301789\n  },\n  {\n    \"id\": 55885490807425\n  },\n  {\n    \"id\": 569606272700\n  },\n  {\n    \"id\": 58475154556349\n  },\n  {\n    \"id\": 201747730638280\n  },\n  {\n    \"id\": 44039440324311\n  },\n  {\n    \"id\": 144555872565878\n  },\n  {\n    \"id\": 268444601868982\n  },\n  {\n    \"id\": 180984277167004\n  },\n  {\n    \"id\": 19713040835010\n  },\n  {\n    \"id\": 71062986225250\n  }\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete created venues",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/venues",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n      \"name\": \"v1\",\n      \"id\": 235425104561772,\n      \"available\": 1,\n      \"priority\": 1\n    },\n    {\n      \"name\": \"v2\",\n      \"id\": 49850610520536,\n      \"available\": 1,\n      \"priority\": 1\n    },\n    {\n      \"name\": \"v3\",\n      \"id\": 102241973725656,\n      \"available\": 1,\n      \"priority\": 1\n    },\n    {\n      \"name\": \"v6\",\n      \"id\": 238473706820345,\n      \"available\": 1,\n      \"priority\": 1\n    },\n    {\n      \"name\": \"v4\",\n      \"id\": 98024443256018,\n      \"available\": 1,\n      \"priority\": 1\n    },\n    {\n      \"name\": \"v5\",\n      \"id\": 144253720654794,\n      \"available\": 1,\n      \"priority\": 1\n    }\n  ]"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Register Tournament",
+			"description": "",
+			"item": [
+				{
+					"name": "get tournaments",
+					"request": {
+						"url": "localhost:7024/tournaments",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": 58125849058451\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "register tournament",
+					"request": {
+						"url": "localhost:7024/tournaments",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"tournament\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete tournament",
+					"request": {
+						"url": "localhost:7024/tournaments",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\": 156076308609979\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Results",
+			"description": "",
+			"item": [
+				{
+					"name": "get team results",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/teams/results?simple=true",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rounds",
+			"description": "",
+			"item": [
+				{
+					"name": "get round info",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "proceed round",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "rollback round",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Styles",
+			"description": "",
+			"item": [
+				{
+					"name": "get styles",
+					"request": {
+						"url": "localhost:7024/styles",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
