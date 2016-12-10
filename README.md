@@ -1,9 +1,9 @@
-# utab-api-server
-utab api server written in node js
+# utab-server
+utab server written in node js
 
 ## Documentation
 
-The documentation is available at [here](https://taulukointipalvelut.github.io/utab-api-server/)
+The documentation is available at [here](https://taulukointipalvelut.github.io/utab-server/)
 
 ## Attention
 
@@ -11,9 +11,9 @@ The documentation is available at [here](https://taulukointipalvelut.github.io/u
 
 ## Usage
 
-1. clone this repository. `git clone https://github.com/taulukointipalvelut/utab-api-server`
+1. clone this repository. `git clone https://github.com/taulukointipalvelut/utab-server`
 
-1. move to repository folder. `cd utab-api-server`
+1. move to repository folder. `cd utab-server`
 
 1. start MongoDB. `mongod`
 
