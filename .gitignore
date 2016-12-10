@@ -1,4 +1,4 @@
 utab-core
 1.html
 /node_modules/*
-!/node_modules
+!/node_modules/.gitkeep
