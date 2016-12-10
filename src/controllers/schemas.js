@@ -3,7 +3,8 @@ var mongoose = require('mongoose')
 var TournamentSchema = new mongoose.Schema({
 	id: {type: Number, required: true, unique: true}
 },{
-    timestamps: {createdAt: 'created', updatedAt: 'updated'}
+    timestamps: {createdAt: 'created', updatedAt: 'updated'},
+	versionKey: 'version'
 })
 
 var StylesSchema = new mongoose.Schema({
@@ -15,7 +16,8 @@ var StylesSchema = new mongoose.Schema({
 	score_weights: {type: [Number], required: true},
     user_defined_data: {type: mongoose.Schema.Types.Mixed, default: {}}
 },{
-    timestamps: {createdAt: 'created', updatedAt: 'updated'}
+    timestamps: {createdAt: 'created', updatedAt: 'updated'},
+	versionKey: 'version'
 })
 
 

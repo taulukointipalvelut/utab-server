@@ -81,7 +81,7 @@ class _CollectionHandler {//TESTED// returns Promise object
         var M = this.Model
         var identity = get_identity(this.identifiers, dict)
 
-        return M.findOneAndUpdate(identity, {$set: dict}, {new: true}).exec().then(function(doc) {
+        return M.findOneAndUpdate(identity, {$set: dict, $inc: {version: 1}}, {new: true}).exec().then(function(doc) {
             if (doc === null) {
                 throw new errors.DoesNotExist(identity)
             } else {
