@@ -534,23 +534,27 @@ throws an error if the specified team does not exist.
 
 ## raw debater results [/tournaments/{tournament_id}/debaters/results/raw]
 
-# Group Allocation
+# Group Draws
 
-## allocations [/tournaments/{tournament_id}/allocations]
+## draws [/tournaments/{tournament_id}/draws]
 
 There is no DELETE method in allocations endpoint
 
-### get saved allocation [GET]
+### get draw allocation [GET]
 + Parameters
     + tournament_id: 3241087341 (number)
 
-### save an allocation [POST]
-+ Parameters
-    + tournament_id: 3241087341 (number)
++ Response
+    + Attributes
+        + errors (array[object])
+        + data (array[Square])
+        + log (array[object])
 
-### update saved allocation [PUT]
-+ Parameters
-    + tournament_id: 3241087341 (number)
+### save an draw [POST]
+
+### update saved draw [PUT]
+
+### delete saved draw [PUT]
 
 <!--
 ### check an allocation [PATCH]
@@ -563,6 +567,10 @@ There is no DELETE method in allocations endpoint
         + errors (array[object])
         + data (array[Square])
         + log (array[object])-->
+
+# Group Allocations
+
+## allocations [/tournaments/{tournament_id}/allocations]
 
 ### compute allocation [PATCH]
 * computes an allocation for current round. Can be a shortcut for computing all team/adjudicator/venue allocation at once.

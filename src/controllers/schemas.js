@@ -2,6 +2,8 @@ var mongoose = require('mongoose')
 
 var TournamentSchema = new mongoose.Schema({
 	id: {type: Number, required: true, unique: true}
+},{
+    timestamps: {createdAt: 'created', updatedAt: 'updated'}
 })
 
 var StylesSchema = new mongoose.Schema({
@@ -12,6 +14,8 @@ var StylesSchema = new mongoose.Schema({
 	positions_short: {type: [String], required: true},
 	score_weights: {type: [Number], required: true},
     user_defined_data: {type: mongoose.Schema.Types.Mixed, default: {}}
+},{
+    timestamps: {createdAt: 'created', updatedAt: 'updated'}
 })
 
 

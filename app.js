@@ -11,6 +11,7 @@ var express = require('express')
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use('/static', express.static(__dirname+'/static'))
 
 winston.configure({
     transports: [
@@ -245,7 +246,8 @@ app.route('/tournaments/:tournament_id')
 IMPLEMENT ALLOCATION API
 */
 
-let allocation_routes = [
+var allocation_routes = [
+    {keys: ['allocations'], path: '/allocations', require_pre_allocation: false},
     {keys: ['allocations', 'teams'], path: '/allocations/teams', require_pre_allocation: false},
     {keys: ['allocations', 'adjudicators'], path: '/allocations/adjudicators', require_pre_allocation: true},
     {keys: ['allocations', 'venues'], path: '/allocations/venues', require_pre_allocation: true}
@@ -264,26 +266,30 @@ for (let route of allocation_routes) {
         })
 }
 
-app.route('/tournaments/:tournament_id/allocations')
+/*
+IMPLEMENT DRAW API
+*/
+
+app.route('/tournaments/:tournament_id/draws')
     .get(function(req, res) {
         log_request(req)
         let th = sys.find_tournament(handlers, req.params.tournament_id)
-        th.allocations.read(req.query).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
+        th.draws.read(req.query).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
     })
     .post(function(req, res) {
         log_request(req)
         let th = sys.find_tournament(handlers, req.params.tournament_id)
-        th.allocations.create(req.body).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res))
+        th.draws.create(req.body).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res))
     })
     .put(function(req, res) {
         log_request(req)
         let th = sys.find_tournament(handlers, req.params.tournament_id)
-        th.allocations.update(req.body).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res))
+        th.draws.update(req.body).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res))
     })
-    .patch(function(req, res) {
+    .delete(function(req, res) {
         log_request(req)
         let th = sys.find_tournament(handlers, req.params.tournament_id)
-        th.allocations.get(req.body).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
+        th.draws.delete(req.body).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
     })
 
 
