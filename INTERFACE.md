@@ -206,8 +206,8 @@ FORMAT: 1A
     + default: false
 + team_allocation_algorithm: standard (string, optional)
     + default: 'standard'
-+ team_allocation_algorithm_options: {"filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution']} (object, optional)
-    + default: {"filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution']}
++ team_allocation_algorithm_options: {"filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution'], 'method': 'straight'} (object, optional)
+    + default: {"filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution'], "method": "straight"}
 + adjudicator_allocation_algorithm: standard (string, optional)
     + default: 'standard'
 + adjudicator_allocation_algorithm_options: {"filters": ['by_bubble', 'by_strength', 'by_attendance', 'by_conflict', 'by_institution', 'by_past'],"assign": 'high_to_high',"scatter": false} (object, optional)
@@ -224,8 +224,8 @@ FORMAT: 1A
    + default: false
 + algorithm: standard (string, optional)
    + default: 'standard'
-+ algorithm_options: {"filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution']} (object, optional)
-   + default: {"filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution']}
++ algorithm_options: {"filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution'], "method": "straight"} (object, optional)
+   + default: {"filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution'], "method": "straight"}
 
 ### AdjudicatorAllocationOptions
 + simple: false (boolean, optional)

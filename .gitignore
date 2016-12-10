@@ -1,3 +1,4 @@
 utab-core
-postman
 1.html
+/node_modules/*
+!/node_modules
