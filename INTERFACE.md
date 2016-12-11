@@ -32,6 +32,10 @@ FORMAT: 1A
 ### SpecifyTournament
 + id: 32141324123 (number, required)
 
+### Round
++ r: 1 (number),
++ motions: [] (array[String])
+
 ### Style
 + id: STYLE (string)
 + name: new style (string)
@@ -200,6 +204,7 @@ FORMAT: 1A
 + details: [] (array[SummarizedAdjudicatorResult])
 
 ### AllocationOptions
++ r: 1 (number, required)
 + simple: false (boolean, optional)
     + default: false
 + force: false (boolean, optional)
@@ -218,6 +223,7 @@ FORMAT: 1A
     + default: {"chairs": 2,"panels": 1,"trainees": 1}
 
 ### TeamAllocationOptions
++ r: 1 (number, required)
 + simple: false (boolean, optional)
    + default: false
 + force: false (boolean, optional)
@@ -228,6 +234,7 @@ FORMAT: 1A
    + default: {"filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution'], "method": "straight"}
 
 ### AdjudicatorAllocationOptions
++ r: 1 (number, required)
 + simple: false (boolean, optional)
    + default: false
 + force: false (boolean, optional)
@@ -240,6 +247,7 @@ FORMAT: 1A
    + default: {"chairs": 2,"panels": 1,"trainees": 1}
 
 ### VenueAllocationOptions
++ r: 1 (number, required)
 + force: false (boolean, optional)
     + default: false
 + shuffle: true (boolean, optional)
@@ -300,69 +308,57 @@ FORMAT: 1A
         + data (array[Tournament])
         + log (array[object])
 
+# Group Config
+
+## config [/tournaments/{tournament_id}]
+
+### show config [GET]
+ + Parameters
+    + tournament_id: 323242342432 (number)
+
+ + Response 200 (application/json)
+    + Attributes
+        + errors (array[object])
+        + data (Tournament)
+        + log (array[object])
+
+### update config [PUT]
+ + Parameters
+    + tournament_id: 323242342432 (number)
+
+updates config.
+ + Request (application/json)
+
+ + Response 200 (application/json)
+    + Attributes
+        + errors (array[object])
+        + data (Tournament)
+        + log (array[object])
+
 # Group Rounds
 
-## rounds [/tournaments/{tournament_id}]
+## rounds [/tournaments/{tournament_id}/rounds]
 
-### show status [GET]
+### search or read round info [GET]
  + Parameters
     + tournament_id: 323242342432 (number)
+    + r: 1 (number)
 
- + Response 200 (application/json)
-    + Attributes
-        + errors (array[object])
-        + data (Tournament)
-        + log (array[object])
+### create round info [POST]
 
-### proceed to next round [POST]
- + Parameters
-    + tournament_id: 323242342432 (number)
+### update round info [PUT]
 
-proceed to the next round.
-::: warning
-if the next round exceeds total round, throws an error.
-:::
- + Request (application/json)
+### delete round info [DELETE]
 
- + Response 200 (application/json)
-    + Attributes
-        + errors (array[object])
-        + data (Tournament)
-        + log (array[object])
+## specific round [/tournaments/{tournament_id}/rounds/{r}]
 
-### rollback round [DELETE]
- + Parameters
-    + tournament_id: 323242342432 (number)
+### read round info [GET]
 
-moves back to the prior round.
-::: warning
-if the round to rollback is 1, throws an error.
-:::
- + Request (application/json)
+### update round info [PUT]
 
- + Response 200 (application/json)
-    + Attributes
-        + errors (array[object])
-        + data (Tournament)
-        + log (array[object])
+### delete round info [DELETE]
 
-### update round config [PATCH]
- + Parameters
-    + tournament_id: 323242342432 (number)
-
-updates round config.
-::: warning
-if the round to rollback is 1, throws an error.
-:::
- + Request (application/json)
-
- + Response 200 (application/json)
-    + Attributes
-        + errors (array[object])
-        + data (Tournament)
-        + log (array[object])
-
-# Group Entities, Raw Results
+# Group Entities
 
 * each resouce url accepts object or array[object]
 * also each resource url has sub url of the individual entities where you don't have to request entity id for GET/PUT/DELETE methods though POST method is not available in the sub url.
@@ -524,15 +520,28 @@ throws an error if the specified team does not exist.
     + tournament_id: 3241087341 (number)
     + institution_id: 3214879134 (number)
 
+# Group Raw Results
+
 ## raw team results [/tournaments/{tournament_id}/teams/results/raw]
 
 ### get raw team result [GET]
 + Parameters
     + tournament_id: 3241087341 (number)
 
+## raw team results [/tournaments/{tournament_id}/rounds/{r}/teams/results/raw]
+
+### get raw team result [GET]
++ Parameters
+    + r: 1 (number)
+    + tournament_id: 3241087341 (number)
+
 ## raw adjudicator results [/tournaments/{tournament_id}/adjudicators/results/raw]
 
+## raw adjudicator results [/tournaments/{tournament_id}/rounds/{r}/adjudicators/results/raw]
+
 ## raw debater results [/tournaments/{tournament_id}/debaters/results/raw]
+
+## raw debater results [/tournaments/{tournament_id}/rounds/{r}/debaters/results/raw]
 
 # Group Draws
 
@@ -556,6 +565,26 @@ There is no DELETE method in allocations endpoint
 
 ### delete saved draw [PUT]
 
+## draws [/tournaments/{tournament_id}/rounds/{r}/draws]
+
+There is no DELETE method in allocations endpoint
+
+### get draw allocation [GET]
++ Parameters
+    + r: 1 (number)
+    + tournament_id: 3241087341 (number)
+
++ Response
+    + Attributes
+        + errors (array[object])
+        + data (array[Square])
+        + log (array[object])
+
+### save an draw [POST]
+
+### update saved draw [PUT]
+
+### delete saved draw [PUT]
 <!--
 ### check an allocation [PATCH]
 
@@ -570,12 +599,13 @@ There is no DELETE method in allocations endpoint
 
 # Group Allocations
 
-## allocations [/tournaments/{tournament_id}/allocations]
+## allocations [/tournaments/{tournament_id}/rounds/{r}/allocations]
 
 ### compute allocation [PATCH]
 * computes an allocation for current round. Can be a shortcut for computing all team/adjudicator/venue allocation at once.
 
 + Parameters
+    + r: 1 (number)
     + tournament_id: 3241087341 (number)
 
 + Request (application/json)
@@ -588,13 +618,14 @@ There is no DELETE method in allocations endpoint
        + data (array[Square])
        + log (array[object])
 
-## team allocations [/tournaments/{tournament_id}/allocations/teams]
+## team allocations [/tournaments/{tournament_id}/rounds/{r}/allocations/teams]
 
 ### compute team allocation [PATCH]
 
  * if simple option is true, it doesn't use debater scores in computing matchups.
  + Parameters
-     + tournament_id: 323242342432 (number)
+    + r: 1 (number)
+    + tournament_id: 323242342432 (number)
 
 + Request (application/json)
     + Attributes
@@ -606,12 +637,13 @@ There is no DELETE method in allocations endpoint
         + data (array[Square])
         + log (array[object])
 
-## adjudicator allocations [/tournaments/{tournament_id}/allocations/adjudicators]
+## adjudicator allocations [/tournaments/{tournament_id}/rounds/{r}/allocations/adjudicators]
 
 ### compute adjudicator allocation [PATCH]
 
  * computes an adjudicator allocation based on given team allocation
  + Parameters
+    + r: 1 (number)
     + tournament_id: 323242342432 (number)
 
 + Request (application/json)
@@ -625,7 +657,7 @@ There is no DELETE method in allocations endpoint
         + data (array[Square])
         + log (array[object])
 
-## venue allocations [/tournaments/{tournament_id}/allocations/venues]
+## venue allocations [/tournaments/{tournament_id}/rounds/{r}/allocations/venues]
 
 ### compute venue allocation [PATCH]
 
@@ -633,6 +665,7 @@ There is no DELETE method in allocations endpoint
  * if force is true, it allocates venues even if venues are fewer than squares.
  * if shuffle is true, it shuffles venues so that no one can recognize current team rankings.
  + Parameters
+    + r: 1 (number)
      + tournament_id: 323242342432 (number)
 
  + Request (application/json)
@@ -650,14 +683,13 @@ There is no DELETE method in allocations endpoint
 
 ## team results [/tournaments/{tournament_id}/teams/results]
 
-### get team result [GET]
+### get compiled team result [GET]
 
  * returns compiled team results. if rounds is not specified, it compiles all raw results including those collected in the current round.
 
  + Parameters
     + tournament_id: 323242342432 (number)
-    + rounds (array[number] | number, optional)
-        + default: [1, ..., current_round_num]
+    + r_or_rs (array[number] | number, required)
     + force (boolean, optional)
         + default: false
 
@@ -671,6 +703,23 @@ There is no DELETE method in allocations endpoint
 
 ## debater results [/tournaments/{tournament_id}/debaters/results]
 
+## team results [/tournaments/{tournament_id}/rounds/{r}/teams/results]
+
+### get compiled team result [GET]
+
+ * returns compiled team results. if rounds is not specified, it compiles all raw results including those collected in the current round.
+
+ + Parameters
+    + r: 1 (number)
+    + tournament_id: 323242342432 (number)
+    + force (boolean, optional)
+        + default: false
+
+ + Response 200 (application/json)
+    + Attributes
+        + errors (array[object])
+        + data (CompiledTeamResult)
+        + log (array[object])
 <!--
 ### check team allocation [PATCH]
 
