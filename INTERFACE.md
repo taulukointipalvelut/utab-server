@@ -34,7 +34,7 @@ FORMAT: 1A
 
 ### Round
 + r: 1 (number),
-+ motions: [] (array[String])
++ motions: [] (array[string])
 
 ### Style
 + id: STYLE (string)
@@ -204,7 +204,7 @@ FORMAT: 1A
 + details: [] (array[SummarizedAdjudicatorResult])
 
 ### AllocationOptions
-+ r: 1 (number, required)
++ by: [1] (array[number], required)
 + simple: false (boolean, optional)
     + default: false
 + force: false (boolean, optional)
@@ -223,7 +223,7 @@ FORMAT: 1A
     + default: {"chairs": 2,"panels": 1,"trainees": 1}
 
 ### TeamAllocationOptions
-+ r: 1 (number, required)
++ by: [1] (array[number], required)
 + simple: false (boolean, optional)
    + default: false
 + force: false (boolean, optional)
@@ -234,7 +234,7 @@ FORMAT: 1A
    + default: {"filters": ['by_strength', 'by_side', 'by_past_opponent', 'by_institution'], "method": "straight"}
 
 ### AdjudicatorAllocationOptions
-+ r: 1 (number, required)
++ by: [1] (array[number], required)
 + simple: false (boolean, optional)
    + default: false
 + force: false (boolean, optional)
@@ -247,7 +247,7 @@ FORMAT: 1A
    + default: {"chairs": 2,"panels": 1,"trainees": 1}
 
 ### VenueAllocationOptions
-+ r: 1 (number, required)
++ by: [1] (array[number], required)
 + force: false (boolean, optional)
     + default: false
 + shuffle: true (boolean, optional)
@@ -599,6 +599,25 @@ There is no DELETE method in allocations endpoint
 
 # Group Allocations
 
+## allocations [/tournaments/{tournament_id}/allocations]
+
+### compute allocation [PATCH]
+* computes an allocation for current round. Can be a shortcut for computing all team/adjudicator/venue allocation at once. You must specify the rounds of which results are used to compute allocations.
+
++ Parameters
+    + tournament_id: 3241087341 (number)
+
++ Request (application/json)
+   + Attributes
+       + for (number)
+       + options (AllocationOptions, optional)
+
++ Response 200 (application/json)
+   + Attributes
+       + errors (array[object])
+       + data (array[Square])
+       + log (array[object])
+
 ## allocations [/tournaments/{tournament_id}/rounds/{r}/allocations]
 
 ### compute allocation [PATCH]
@@ -618,6 +637,8 @@ There is no DELETE method in allocations endpoint
        + data (array[Square])
        + log (array[object])
 
+## team allocations [/tournaments/{tournament_id}/allocations/teams]
+
 ## team allocations [/tournaments/{tournament_id}/rounds/{r}/allocations/teams]
 
 ### compute team allocation [PATCH]
@@ -636,6 +657,8 @@ There is no DELETE method in allocations endpoint
         + errors (array[object])
         + data (array[Square])
         + log (array[object])
+
+## adjudicator allocations [/tournaments/{tournament_id}/allocations/adjudicators]
 
 ## adjudicator allocations [/tournaments/{tournament_id}/rounds/{r}/allocations/adjudicators]
 
@@ -689,7 +712,7 @@ There is no DELETE method in allocations endpoint
 
  + Parameters
     + tournament_id: 323242342432 (number)
-    + r_or_rs (array[number] | number, required)
+    + r_or_rs: [1, 2] (array[number] | number, required)
     + force (boolean, optional)
         + default: false
 

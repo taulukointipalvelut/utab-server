@@ -129,16 +129,19 @@ for (let route of result_routes) {
         .get(function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
+            let dict = req.query
+            let r_or_rs = convert_name_if_exists(_.clone(req.query), 'r_or_rs', 'r_or_rs', 'number_or_array').r_or_rs
 
             dict = convert_name_if_exists(dict, 'force', 'force', 'boolean')
             dict = convert_name_if_exists(dict, 'simple', 'simple', 'boolean')
-            node.organize(dict.r_or_rs, dict).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+            node.organize(r_or_rs, dict).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
         })
     app.route('/tournaments/:tournament_id/rounds/:r'+route.path)
         .get(function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            let round = parseInt(req.params.r)
+            let dict = req.query
+            let r_or_rs = parseInt(req.params.r)
 
             dict = convert_name_if_exists(dict, 'force', 'force', 'boolean')
             dict = convert_name_if_exists(dict, 'simple', 'simple', 'boolean')
@@ -219,14 +222,25 @@ IMPLEMENT ALLOCATION API
 */
 
 var allocation_routes = [
-    {keys: ['allocations', 'teams'], path: '/rounds/:r/allocations/teams', require_pre_allocation: false},
-    {keys: ['allocations', 'adjudicators'], path: '/rounds/:r/allocations/adjudicators', require_pre_allocation: true},
-    {keys: ['allocations', 'venues'], path: '/rounds/:r/allocations/venues', require_pre_allocation: true},
-    {keys: ['allocations'], path: '/rounds/:r/allocations', require_pre_allocation: false}
+    {keys: ['allocations', 'teams'], path: '/allocations/teams', require_pre_allocation: false},
+    {keys: ['allocations', 'adjudicators'], path: '/allocations/adjudicators', require_pre_allocation: true},
+    {keys: ['allocations', 'venues'], path: '/allocations/venues', require_pre_allocation: true},
+    {keys: ['allocations'], path: '/allocations', require_pre_allocation: false}
 ]
 
 for (let route of allocation_routes) {
     app.route('/tournaments/:tournament_id'+route.path)
+        .patch(function(req, res) {
+            log_request(req, route.path)
+            let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
+            let _for = req.body.for
+            if (route.require_pre_allocation) {
+                node.get(_for, req.body.allocation, req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+            } else {
+                node.get(_for, req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+            }
+        })
+    app.route('/tournaments/:tournament_id/rounds/:r'+route.path)
         .patch(function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
