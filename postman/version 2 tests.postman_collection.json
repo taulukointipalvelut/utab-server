@@ -8,13 +8,13 @@
 	},
 	"item": [
 		{
-			"name": "Get allocation",
+			"name": "Allocations",
 			"description": "",
 			"item": [
 				{
 					"name": "get team allocation",
 					"request": {
-						"url": "localhost:7024/tournaments/156076308609979/allocations/teams",
+						"url": "localhost:7024/tournaments/156076308609979/rounds/1/allocations/teams",
 						"method": "PATCH",
 						"header": [
 							{
@@ -34,7 +34,7 @@
 				{
 					"name": "get adjudicator allocation",
 					"request": {
-						"url": "localhost:7024/tournaments/156076308609979/allocations/adjudicators",
+						"url": "localhost:7024/tournaments/156076308609979/rounds/1/allocations/adjudicators",
 						"method": "PATCH",
 						"header": [
 							{
@@ -54,7 +54,7 @@
 				{
 					"name": "get allocation",
 					"request": {
-						"url": "localhost:7024/tournaments/156076308609979/allocations",
+						"url": "localhost:7024/tournaments/156076308609979/rounds/1/allocations",
 						"method": "PATCH",
 						"header": [
 							{
@@ -65,7 +65,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"options\": {\n\t\t\"simple\": false,\n\t\t\"team_allocation_algorithm\": \"standard\",\n\t\t\"team_allocation_algorithm_options\": {\n\t\t\t\"avoid_conflict\": false\t\n\t\t},\n\t\t\"adjudicator_allocation_algorithm\": \"traditional\",\n\t\t\"adjudicator_allocation_algorithm_options\": {\n\t\t\t\"assign\": \"high_to_slight\"\n\t\t},\n\t\t\"numbers_of_adjudicators\": {\"chairs\": 1, \"panels\": 2},\n\t\t\"venue_allocation_algorithm_options\": {\n\t\t\t\"shuffle\": false\n\t\t}\n\t}\n}"
+							"raw": "{\n\t\"options\": {\n\t\t\"simple\": false,\n\t\t\"team_allocation_algorithm\": \"standard\",\n\t\t\"team_allocation_algorithm_options\": {\n\t\t\t\"avoid_conflict\": false,\n\t\t\t\"method\": \"custom\",\n\t\t\t\"weights\": [1, 0, 1, 0, 0, 0, 0]\n\t\t},\n\t\t\"adjudicator_allocation_algorithm\": \"standard\",\n\t\t\"adjudicator_allocation_algorithm_options\": {\n\t\t\t\"assign\": \"high_to_slight\"\n\t\t},\n\t\t\"numbers_of_adjudicators\": {\"chairs\": 1, \"panels\": 3},\n\t\t\"venue_allocation_algorithm_options\": {\n\t\t\t\"shuffle\": false\n\t\t}\n\t}\n}"
 						},
 						"description": ""
 					},
@@ -74,7 +74,7 @@
 				{
 					"name": "get venue allocation",
 					"request": {
-						"url": "localhost:7024/tournaments/156076308609979/allocations/venues",
+						"url": "localhost:7024/tournaments/156076308609979/rounds/1/allocations/venues",
 						"method": "PATCH",
 						"header": [
 							{
@@ -90,11 +90,77 @@
 						"description": ""
 					},
 					"response": []
+				},
+				{
+					"name": "get team allocation specifying rs",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/allocations",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"for\": 2,\n\t\"options\": {\n\t\t\"by\": []\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
 				}
 			]
 		},
 		{
-			"name": "Register Entities",
+			"name": "Config",
+			"description": "",
+			"item": [
+				{
+					"name": "get config",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Draws",
+			"description": "",
+			"item": [
+				{
+					"name": "get draws",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/draws",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"options\": {\n\t\t\"simple\": false,\n\t\t\"team_allocation_algorithm\": \"standard\",\n\t\t\"team_allocation_algorithm_options\": {\n\t\t\t\"avoid_conflict\": false\t\n\t\t},\n\t\t\"adjudicator_allocation_algorithm\": \"standard\",\n\t\t\"adjudicator_allocation_algorithm_options\": {\n\t\t\t\"assign\": \"high_to_slight\"\n\t\t},\n\t\t\"numbers_of_adjudicators\": {\"chairs\": 1, \"panels\": 3},\n\t\t\"venue_allocation_algorithm_options\": {\n\t\t\t\"shuffle\": false\n\t\t}\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entities, Raw Results",
 			"description": "",
 			"item": [
 				{
@@ -181,7 +247,47 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n\t{\n\t\t\"name\": \"t1\",\n\t\t\"debaters_by_r\": [{\"r\": 1, \"debaters\": [107230773267679, 231122909872495]}],\n\t\t\"institutions\": [203938047466243]\n\t},\t\n\t{\n\t\t\"name\": \"t2\",\n\t\t\"debaters_by_r\": [{\"r\": 1, \"debaters\": [36864731289482, 19845014229471]}],\n\t\t\"institutions\": [203938047466243]\n\t},\n\t{\n\t\t\"name\": \"t3\",\n\t\t\"debaters_by_r\": [{\"r\": 1, \"debaters\": [49912552387182, 105067820574904]}],\n\t\t\"institutions\": [203938047466243]\n\t},\n\t{\n\t\t\"name\": \"t4\",\n\t\t\"debaters_by_r\": [{\"r\": 1, \"debaters\": [156593964815527, 924764506342]}],\n\t\t\"institutions\": [203938047466243]\n\t},\n\t{\n\t\t\"name\": \"t5\",\n\t\t\"debaters_by_r\": [{\"r\": 1, \"debaters\": [85243865722706, 93979985404981]}]\n\t},\n\t{\n\t\t\"name\": \"t6\",\n\t\t\"debaters_by_r\": [{\"r\": 1, \"debaters\": [233617762903027, 137626064146044]}]\n\t}\n]"
+							"raw": "[\n\t{\n\t\t\"name\": \"t1\",\n\t\t\"details\": [\n\t\t\t{\n\t\t\t\t\"r\": 1,\n\t\t\t\t\"debaters\": [107230773267679, 231122909872495],\n\t\t\t\t\"institutions\": [203938047466243]\n\t\t\t},\n\t\t\t{\n\t\t          \"r\": 2,\n\t\t          \"debaters\": [\n\t\t            107230773267679,\n\t\t            231122909872495\n\t\t          ],\n\t\t          \"institutions\": [\n\t\t            203938047466243\n\t\t          ]\n\t        }\n\t\t]\n\t},\t\n\t{\n\t\t\"name\": \"t2\",\n\t\t\"details\": [\n\t\t\t{\n\t\t\t\t\"r\": 1,\n\t\t\t\t\"debaters\": [36864731289482, 19845014229471],\n\t\t\t\t\"institutions\": [203938047466243]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"r\": 2,\n\t\t\t\t\"debaters\": [36864731289482, 19845014229471],\n\t\t\t\t\"institutions\": [203938047466243]\n\t\t\t}\n\t\t]\n\t},\n\t{\n\t\t\"name\": \"t3\",\n\t\t\"details\": [\n\t\t\t{\n\t\t\t\t\"r\": 1,\n\t\t\t\t\"debaters\": [49912552387182, 105067820574904],\n\t\t\t\t\"institutions\": [203938047466243]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"r\": 2,\n\t\t\t\t\"debaters\": [49912552387182, 105067820574904],\n\t\t\t\t\"institutions\": [203938047466243]\n\t\t\t}\n\t\t]\n\t},\n\t{\n\t\t\"name\": \"t4\",\n\t\t\"details\": [\n\t\t\t{\n\t\t\t\t\"r\": 1,\n\t\t\t\t\"debaters\": [156593964815527, 924764506342],\n\t\t\t\t\"institutions\": [203938047466243]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"r\": 2,\n\t\t\t\t\"debaters\": [156593964815527, 924764506342],\n\t\t\t\t\"institutions\": [203938047466243]\n\t\t\t}\n\t\t]\n\t},\n\t{\n\t\t\"name\": \"t5\",\n\t\t\"details\": [\n\t\t\t{\n\t\t\t\t\"r\": 1,\n\t\t\t\t\"debaters\": [85243865722706, 93979985404981]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"r\": 2,\n\t\t\t\t\"debaters\": [85243865722706, 93979985404981]\n\t\t\t}\n\t\t]\n\t},\n\t{\n\t\t\"name\": \"t6\",\n\t\t\"details\": [\n\t\t\t{\n\t\t\t\t\"r\": 1,\n\t\t\t\t\"debaters\": [233617762903027, 137626064146044]\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"r\": 2,\n\t\t\t\t\"debaters\": [233617762903027, 137626064146044]\n\t\t\t}\n\t\t]\n\t}\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create adjudicators",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/adjudicators",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n      \"name\": \"a1\",\n      \"details\": [\n      \t{\n      \t\t\"r\": 1,\n\t      \t\"conflicts\": [\n\t    \t\t52787532214378\n\t    \t],\n\t    \t\"institutions\": []\n      \t},\n      \t{\n      \t\t\"r\": 2,\n\t      \t\"conflicts\": [\n\t    \t\t52787532214378\n\t    \t],\n\t    \t\"institutions\": []\n      \t}\n      ]\n    },\n    {\n      \"name\": \"a6\",\n      \"details\": [\n      \t{\n      \t\t\"r\": 1,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t},\n      \t{\n      \t\t\"r\": 2,\n\t      \t\"conflicts\": [\n\t    \t\t52787532214378\n\t    \t],\n\t    \t\"institutions\": []\n      \t}\n      ]\n    },\n    {\n      \"name\": \"a11\",\n      \"details\": [\n      \t{\n      \t\t\"r\": 1,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t},\n      \t{\n      \t\t\"r\": 2,\n\t      \t\"conflicts\": [\n\t    \t\t52787532214378\n\t    \t],\n\t    \t\"institutions\": []\n      \t}\n      ]\n    },\n    {\n      \"name\": \"a2\",\n      \"details\": [\n      \t{\n      \t\t\"r\": 1,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t},\n      \t{\n      \t\t\"r\": 2,\n\t      \t\"conflicts\": [\n\t    \t\t52787532214378\n\t    \t],\n\t    \t\"institutions\": []\n      \t}\n      ]\n    },\n    {\n      \"name\": \"a7\",\n      \"details\": [\n      \t{\n      \t\t\"r\": 1,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t},\n      \t{\n      \t\t\"r\": 2,\n\t      \t\"conflicts\": [\n\t    \t\t52787532214378\n\t    \t],\n\t    \t\"institutions\": []\n      \t}\n      ]\n    },\n    {\n      \"name\": \"a12\",\n      \"details\": [\n      \t{\n      \t\t\"r\": 1,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t},\n      \t{\n      \t\t\"r\": 2,\n\t      \t\"conflicts\": [\n\t    \t\t52787532214378\n\t    \t],\n\t    \t\"institutions\": []\n      \t}\n      ]\n    },\n    {\n      \"name\": \"a3\",\n      \"details\": [\n      \t{\n      \t\t\"r\": 1,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t},\n      \t{\n      \t\t\"r\": 2,\n\t      \t\"conflicts\": [\n\t    \t\t52787532214378\n\t    \t],\n\t    \t\"institutions\": []\n      \t}\n      ]\n    },\n    {\n      \"name\": \"a8\",\n      \"details\": [\n      \t{\n      \t\t\"r\": 1,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t},\n      \t{\n      \t\t\"r\": 2,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t}\n      ]\n    },\n    {\n      \"name\": \"a4\",\n      \"details\": [\n      \t{\n      \t\t\"r\": 1,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t},{\n      \t\t\"r\": 2,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t}\n      ]\n    },\n    {\n      \"name\": \"a9\",\n      \"details\": [\n      \t{\n      \t\t\"r\": 1,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t},\n      \t{\n      \t\t\"r\": 2,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t}\n      ]\n    },\n    {\n      \"name\": \"a5\",\n      \"details\": [\n      \t{\n      \t\t\"r\": 1,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t},\n      \t{\n      \t\t\"r\": 2,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t}\n      ]\n    },\n    {\n      \"name\": \"a10\",\n      \"details\": [\n      \t{\n      \t\t\"r\": 1,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t},\n      \t{\n      \t\t\"r\": 2,\n\t      \t\"conflicts\": [\n\t        \t52787532214378\n\t      \t],\n\t      \t\"institutions\": []\n      \t}\n      ]\n    }\n  ]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create venues",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/venues",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"name\": \"v1\",\n\t\t\"details\": [\n\t\t\t{\n\t\t\t\t\"r\": 1,\n\t\t\t\t\"priority\": 1\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"r\": 2,\n\t\t\t\t\"priority\": 1\n\t\t\t}\n\t\t]\n\t},\n\t{\n\t\t\"name\": \"v2\",\n\t\t\"details\": [\n\t\t\t{\n\t\t\t\t\"r\": 1,\n\t\t\t\t\"priority\": 2\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"r\": 2,\n\t\t\t\t\"priority\": 2\n\t\t\t}\n\t\t]\n\t},\n\t{\n\t\t\"name\": \"v3\",\n\t\t\"details\": [\n\t\t\t{\n\t\t\t\t\"r\": 1,\n\t\t\t\t\"priority\": 3\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"r\": 2,\n\t\t\t\t\"priority\": 3\n\t\t\t}\n\t\t]\n\t},\n\t{\n\t\t\"name\": \"v4\",\n\t\t\"details\": [\n\t\t\t{\n\t\t\t\t\"r\": 1,\n\t\t\t\t\"priority\": 4\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"r\": 2,\n\t\t\t\t\"priority\": 4\n\t\t\t}\n\t\t]\n\t},\n\t{\n\t\t\"name\": \"v5\",\n\t\t\"details\": [\n\t\t\t{\n\t\t\t\t\"r\": 1,\n\t\t\t\t\"priority\": 5\n\t\t\t},\n\t\t\t{\n\t\t\t\t\"r\": 2,\n\t\t\t\t\"priority\": 5\n\t\t\t}\n\t\t]\n\t}\n]"
 						},
 						"description": ""
 					},
@@ -202,46 +308,6 @@
 						"body": {
 							"mode": "raw",
 							"raw": "[\n\t{\n\t\t\"name\": \"d1\"\n\t},\n\t{\n\t\t\"name\": \"d2\"\n\t},\n\t{\n\t\t\"name\": \"d3\"\n\t},\n\t{\n\t\t\"name\": \"d4\"\n\t},\n\t{\n\t\t\"name\": \"d5\"\n\t},\n\t{\n\t\t\"name\": \"d6\"\n\t},\n\t{\n\t\t\"name\": \"d7\"\n\t},\n\t{\n\t\t\"name\": \"d8\"\n\t},\n\t{\n\t\t\"name\": \"d9\"\n\t},\n\t{\n\t\t\"name\": \"d10\"\n\t},\n\t{\n\t\t\"name\": \"d11\"\n\t},\n\t{\n\t\t\"name\": \"d12\"\n\t}\n]"
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "create adjudicators",
-					"request": {
-						"url": "localhost:7024/tournaments/156076308609979/adjudicators",
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "[\n\t{\n\t\t\"name\": \"a1\"\n\t},\n\t{\n\t\t\"name\": \"a2\"\n\t},\n\t{\n\t\t\"name\": \"a3\"\n\t},\n\t{\n\t\t\"name\": \"a4\"\n\t},\n\t{\n\t\t\"name\": \"a5\"\n\t},\n\t{\n\t\t\"name\": \"a6\"\n\t},\n\t{\n\t\t\"name\": \"a7\"\n\t},\n\t{\n\t\t\"name\": \"a8\"\n\t},\n\t{\n\t\t\"name\": \"a9\"\n\t},\n\t{\n\t\t\"name\": \"a10\"\n\t},\n\t{\n\t\t\"name\": \"a11\"\n\t},\n\t{\n\t\t\"name\": \"a12\"\n\t}\n]"
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "create venues",
-					"request": {
-						"url": "localhost:7024/tournaments/156076308609979/venues",
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "[\n\t{\n\t\t\"name\": \"v1\",\n\t\t\"priority\": 1\n\t},\n\t{\n\t\t\"name\": \"v2\",\n\t\t\"priority\": 2\n\t},\n\t{\n\t\t\"name\": \"v3\",\n\t\t\"priority\": 3\n\t},\n\t{\n\t\t\"name\": \"v4\",\n\t\t\"priority\": 4\n\t},\n\t{\n\t\t\"name\": \"v5\",\n\t\t\"priority\": 5\n\t},\n\t{\n\t\t\"name\": \"v6\",\n\t\t\"priority\": 6\n\t},\n\t{\n\t\t\"name\": \"v7\",\n\t\t\"priority\": 6\n\t}\n]"
 						},
 						"description": ""
 					},
@@ -321,7 +387,41 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n    {\n      \"name\": \"v1\",\n      \"id\": 235425104561772,\n      \"available\": 1,\n      \"priority\": 1\n    },\n    {\n      \"name\": \"v2\",\n      \"id\": 49850610520536,\n      \"available\": 1,\n      \"priority\": 1\n    },\n    {\n      \"name\": \"v3\",\n      \"id\": 102241973725656,\n      \"available\": 1,\n      \"priority\": 1\n    },\n    {\n      \"name\": \"v6\",\n      \"id\": 238473706820345,\n      \"available\": 1,\n      \"priority\": 1\n    },\n    {\n      \"name\": \"v4\",\n      \"id\": 98024443256018,\n      \"available\": 1,\n      \"priority\": 1\n    },\n    {\n      \"name\": \"v5\",\n      \"id\": 144253720654794,\n      \"available\": 1,\n      \"priority\": 1\n    }\n  ]"
+							"raw": "[\n    {\n      \"updated\": \"2016-12-11T10:57:26.550Z\",\n      \"created\": \"2016-12-11T10:57:26.550Z\",\n      \"name\": \"v1\",\n      \"id\": 235425104561772,\n      \"version\": 0,\n      \"details\": [\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 1\n        },\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 1\n        }\n      ]\n    },\n    {\n      \"updated\": \"2016-12-11T10:57:26.561Z\",\n      \"created\": \"2016-12-11T10:57:26.561Z\",\n      \"name\": \"v2\",\n      \"id\": 49850610520536,\n      \"version\": 0,\n      \"details\": [\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 2\n        },\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 2\n        }\n      ]\n    },\n    {\n      \"updated\": \"2016-12-11T10:57:26.564Z\",\n      \"created\": \"2016-12-11T10:57:26.564Z\",\n      \"name\": \"v4\",\n      \"id\": 98024443256018,\n      \"version\": 0,\n      \"details\": [\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 4\n        },\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 4\n        }\n      ]\n    },\n    {\n      \"updated\": \"2016-12-11T10:57:26.567Z\",\n      \"created\": \"2016-12-11T10:57:26.567Z\",\n      \"name\": \"v5\",\n      \"id\": 144253720654794,\n      \"version\": 0,\n      \"details\": [\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 5\n        },\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 5\n        }\n      ]\n    },\n    {\n      \"updated\": \"2016-12-11T10:57:26.563Z\",\n      \"created\": \"2016-12-11T10:57:26.563Z\",\n      \"name\": \"v3\",\n      \"id\": 102241973725656,\n      \"version\": 0,\n      \"details\": [\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 3\n        },\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 3\n        }\n      ]\n    }\n  ]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "update teams",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/teams",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t\t\"id\": 94808369574359,\n\t\t\"available\": true\n\t}\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get specific team",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/teams/52787532214378",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
 						},
 						"description": ""
 					},
@@ -330,7 +430,87 @@
 			]
 		},
 		{
-			"name": "Register Tournament",
+			"name": "Results",
+			"description": "",
+			"item": [
+				{
+					"name": "get team results",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/teams/results?r_or_rs=[1, 2]&force=false&simple=true",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rounds",
+			"description": "",
+			"item": [
+				{
+					"name": "get round config",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/rounds/1",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create round config",
+					"request": {
+						"url": "localhost:7024/tournaments/156076308609979/rounds",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"r\": 1,\n\t\"motions\": []\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Styles",
+			"description": "",
+			"item": [
+				{
+					"name": "get styles",
+					"request": {
+						"url": "localhost:7024/styles",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tournaments",
 			"description": "",
 			"item": [
 				{
@@ -388,94 +568,6 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"id\": 156076308609979\n}"
-						},
-						"description": ""
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Results",
-			"description": "",
-			"item": [
-				{
-					"name": "get team results",
-					"request": {
-						"url": "localhost:7024/tournaments/156076308609979/teams/results?simple=true",
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"description": ""
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Rounds",
-			"description": "",
-			"item": [
-				{
-					"name": "get round info",
-					"request": {
-						"url": "localhost:7024/tournaments/156076308609979",
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "proceed round",
-					"request": {
-						"url": "localhost:7024/tournaments/156076308609979",
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "rollback round",
-					"request": {
-						"url": "localhost:7024/tournaments/156076308609979",
-						"method": "DELETE",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
-						},
-						"description": ""
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Styles",
-			"description": "",
-			"item": [
-				{
-					"name": "get styles",
-					"request": {
-						"url": "localhost:7024/styles",
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "formdata",
-							"formdata": []
 						},
 						"description": ""
 					},
