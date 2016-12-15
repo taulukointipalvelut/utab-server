@@ -23,7 +23,7 @@ class DBStylesHandler {
             console.log('connection failed: '+e)
         })
 
-        var Style = conn.model('RoundInfo', schemas.StylesSchema)
+        var Style = conn.model('Style', schemas.StylesSchema)
 
         this.styles = new StylesCollectionHandler(Style)
         for (let style of styles) {
@@ -43,7 +43,7 @@ class DBTournamentsHandler {//TESTED//
             console.log('connection failed: '+e)
         })
 
-        var Tournament = conn.model('RoundInfo', schemas.TournamentSchema)
+        var Tournament = conn.model('Tournament', schemas.TournamentSchema)
 
         this.tournaments = new TournamentsCollectionHandler(Tournament)
 

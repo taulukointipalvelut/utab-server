@@ -34,10 +34,10 @@ winston.configure({
     ]
 })
 
-const BASEURL = process.argv[2] || 'mongodb://localhost'
+const BASEURL = process.env.MONGODB_URI || 'mongodb://localhost'
 const DBTOURNAMENTSURL = BASEURL+'/_tournaments'
 const DBSTYLEURL = BASEURL+'/_styles'
-const PORT = process.argv[3] || 7024
+const PORT = process.env.PORT || 7024
 
 /*
 INITIALIZE
