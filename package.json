@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://nswa17@github.com/taulukointipalvelut/utab-api-server.git"
+    "url": "git+https://nswa17@github.com/taulukointipalvelut/utab-server.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/taulukointipalvelut/utab-api-server/issues"
+    "url": "https://github.com/taulukointipalvelut/utab-server/issues"
   },
-  "homepage": "https://github.com/taulukointipalvelut/utab-api-server#readme",
+  "homepage": "https://github.com/taulukointipalvelut/utab-server#readme",
   "dependencies": {
     "async": "^2.1.4",
     "blueimp-md5": "^2.6.0",
@@ -35,6 +35,8 @@
     "rimraf": "^2.5.4",
     "run-sequence": "^1.2.2",
     "underscore": "^1.8.3",
+    "brfs": "^1.4.3",
+    "seedrandom": "^2.4.2",
     "winston": "^2.3.0"
   }
 }
