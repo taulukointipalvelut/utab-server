@@ -86,7 +86,7 @@ function respond_error(err, res, stt=500) {
 }
 
 function connect_to_each_tournament(doc) {
-    let t = new utab.TournamentHandler(BASEURL+'/'+doc.id.toString())
+    let t = new utab.TournamentHandler(BASEURL+'/'+doc.id.toString(), {id: doc.id})
     log_connection(doc.id)
     return {id: doc.id, handler: t}
 }
