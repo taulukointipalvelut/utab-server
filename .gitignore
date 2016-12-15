@@ -1,4 +1,6 @@
-utab-core
 1.html
 /node_modules/*
 !/node_modules/.gitkeep
+lib/utab-core/node_modules
+lib/utab-core/test
+utab-core(temp)
