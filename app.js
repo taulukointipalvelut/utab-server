@@ -130,9 +130,9 @@ for (let route of result_routes) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let options = req.body.options || {}
-            let r_or_rs = req.body.r_or_rs
+            let rs = req.body.rs
 
-            node.organize(r_or_rs, options).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+            node.organize(rs, options).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
         })
 }
 

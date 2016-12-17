@@ -715,7 +715,7 @@ There is no DELETE method in allocations endpoint
 
 + Request (application/json)
     + Attributes
-        + r_or_rs: [1, 2] (array[number] | number, required)
+        + rs: [1, 2] (array[number])
         + options
             + force (boolean, optional)
                 + default: false
