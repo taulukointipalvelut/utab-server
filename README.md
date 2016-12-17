@@ -15,6 +15,8 @@ The documentation is available at [here](https://taulukointipalvelut.github.io/u
 
 1. move to repository folder. `cd utab-server`
 
+1. install node dependencies. `npm install`
+
 1. start MongoDB. `mongod`
 
 1. run app. `node app.js`

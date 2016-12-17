@@ -126,26 +126,13 @@ let result_routes = [
 
 for (let route of result_routes) {
     app.route('/tournaments/:tournament_id'+route.path)
-        .get(function(req, res) {
+        .patch(function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            let dict = req.query
-            let r_or_rs = convert_name_if_exists(_.clone(req.query), 'r_or_rs', 'r_or_rs', 'number_or_array').r_or_rs
+            let options = req.body.options || {}
+            let r_or_rs = req.body.r_or_rs
 
-            dict = convert_name_if_exists(dict, 'force', 'force', 'boolean')
-            dict = convert_name_if_exists(dict, 'simple', 'simple', 'boolean')
-            node.organize(r_or_rs, dict).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
-        })
-    app.route('/tournaments/:tournament_id/rounds/:r'+route.path)
-        .get(function(req, res) {
-            log_request(req, route.path)
-            let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            let dict = req.query
-            let r_or_rs = parseInt(req.params.r)
-
-            dict = convert_name_if_exists(dict, 'force', 'force', 'boolean')
-            dict = convert_name_if_exists(dict, 'simple', 'simple', 'boolean')
-            node.organize(r_or_rs, dict).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+            node.organize(r_or_rs, options).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
         })
 }
 

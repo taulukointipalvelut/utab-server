@@ -49,7 +49,7 @@ The following resources support these methods.
     * [/tournaments/:tournament_id/institutions/:id]
 
 The following resources support these methods.
-    1. GET (compile raw results)
+    1. PATCH (compile raw results)
     * [/tournaments/:tournament_id/teams/results]
     * [/tournaments/:tournament_id/debaters/results]
     * [/tournaments/:tournament_id/adjudicators/results]

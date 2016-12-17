@@ -706,15 +706,19 @@ There is no DELETE method in allocations endpoint
 
 ## team results [/tournaments/{tournament_id}/teams/results]
 
-### get compiled team result [GET]
+### get compiled team result [PATCH]
 
  * returns compiled team results. if rounds is not specified, it compiles all raw results including those collected in the current round.
 
  + Parameters
     + tournament_id: 323242342432 (number)
-    + r_or_rs: [1, 2] (array[number] | number, required)
-    + force (boolean, optional)
-        + default: false
+
++ Request (application/json)
+    + Attributes
+        + r_or_rs: [1, 2] (array[number] | number, required)
+        + options
+            + force (boolean, optional)
+                + default: false
 
  + Response 200 (application/json)
     + Attributes
@@ -725,24 +729,6 @@ There is no DELETE method in allocations endpoint
 ## adjudicator results [/tournaments/{tournament_id}/adjudicators/results]
 
 ## debater results [/tournaments/{tournament_id}/debaters/results]
-
-## team results [/tournaments/{tournament_id}/rounds/{r}/teams/results]
-
-### get compiled team result [GET]
-
- * returns compiled team results. if rounds is not specified, it compiles all raw results including those collected in the current round.
-
- + Parameters
-    + r: 1 (number)
-    + tournament_id: 323242342432 (number)
-    + force (boolean, optional)
-        + default: false
-
- + Response 200 (application/json)
-    + Attributes
-        + errors (array[object])
-        + data (CompiledTeamResult)
-        + log (array[object])
 <!--
 ### check team allocation [PATCH]
 
