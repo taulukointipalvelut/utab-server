@@ -11,7 +11,6 @@ var express = require('express')
 const app = express()
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.use('/static', express.static(__dirname+'/static'))
 
 winston.configure({
     transports: [
@@ -441,6 +440,8 @@ app.route('/styles')
         req.accepts('application/json')
         DB.styles.delete(req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
     })
+
+app.use(express.static(__dirname+'/static'))
 
 app.use(function(req, res, next){
 	respond_error({name: 'NotFound', message: 'Not Found', code: 404}, res, 404)
