@@ -2,7 +2,7 @@
 
 Interfaces of Simpler and faster UTab-core in Nodejs and of Database handler.
 
-The original version of UTab-core in Python is [here](https://github.com/taulukointipalvelut/utab-api-server).
+The original version of UTab-core in Python is [here](https://github.com/nswa17/utab-api-server-old-).
 
 ## Files
 
@@ -89,7 +89,6 @@ Planning to support
      * allocations.js: functions to compute allocations
      * results.js: functions to summarize/check results
      * controllers.js: database management interface
-     * checks.js: functions to check data
 
 ```
 utab.js
@@ -111,15 +110,7 @@ utab.js
     │    ├─src/results/sortings.js
     │    └─src/general/math.js
     │
-    ├─src/controllers.js
-    │    └─src/controllers/database.js
-    │          └─src/controllers/schemas.js
-    │
-    └─src/checks.js
-         ├─src/checks/reschecks.js
-         ├─src/checks/dbchecks.js
-         ├─src/checks/tmchecks.js
-         ├─src/checks/adjchecks.js
-         ├─src/checks/vnchecks.js
-         └─src/checks/dbchecks.js
+    └─src/controllers.js
+         └─src/controllers/database.js
+               └─src/controllers/schemas.js
 ```

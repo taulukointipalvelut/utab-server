@@ -547,9 +547,7 @@ throws an error if the specified team does not exist.
 
 ## draws [/tournaments/{tournament_id}/draws]
 
-There is no DELETE method in allocations endpoint
-
-### get draw allocation [GET]
+### get draws [GET]
 + Parameters
     + tournament_id: 3241087341 (number)
 
@@ -559,17 +557,15 @@ There is no DELETE method in allocations endpoint
         + data (array[Square])
         + log (array[object])
 
-### save an draw [POST]
+### save a draw [POST]
 
 ### update saved draw [PUT]
 
-### delete saved draw [PUT]
+### delete saved draw [DELETE]
 
 ## draws [/tournaments/{tournament_id}/rounds/{r}/draws]
 
-There is no DELETE method in allocations endpoint
-
-### get draw allocation [GET]
+### get a draw [GET]
 + Parameters
     + r: 1 (number)
     + tournament_id: 3241087341 (number)
@@ -584,18 +580,7 @@ There is no DELETE method in allocations endpoint
 
 ### update saved draw [PUT]
 
-### delete saved draw [PUT]
-<!--
-### check an allocation [PATCH]
-
- + Request (application/json)
-    + Attributes (array[Square])
-
- + Response 200 (application/json)
-    + Attributes
-        + errors (array[object])
-        + data (array[Square])
-        + log (array[object])-->
+### delete saved draw [DELETE]
 
 # Group Allocations
 
@@ -713,7 +698,7 @@ There is no DELETE method in allocations endpoint
  + Parameters
     + tournament_id: 323242342432 (number)
 
-+ Request (application/json)
+ + Request (application/json)
     + Attributes
         + rs: [1, 2] (array[number])
         + options
@@ -729,36 +714,3 @@ There is no DELETE method in allocations endpoint
 ## adjudicator results [/tournaments/{tournament_id}/adjudicators/results]
 
 ## debater results [/tournaments/{tournament_id}/debaters/results]
-<!--
-### check team allocation [PATCH]
-
-+ Request (application/json)
-+ Attributes (array[Square])
-
-+ Response 200 (application/json)
-+ Attributes
-+ errors (array[object])
-+ data (array[Square])
-+ log (array[object])-->
-<!--
-### check adjudicator allocation [PATCH]
-
-+ Request (application/json)
-+ Attributes (array[Square])
-
-+ Response 200 (application/json)
-+ Attributes
-+ errors (array[object])
-+ data (array[Square])
-+ log (array[object])-->
-<!--
-### check venue allocation []
-
-+ Request (application/json)
-+ Attributes (array[Square])
-
-+ Response 200 (application/json)
-+ Attributes
-+ errors (array[object])
-+ data (array[Square])
-+ log (array[object])-->
