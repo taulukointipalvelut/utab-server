@@ -33,13 +33,24 @@ module.exports = [
 		reply_num: 0
 	},
 	{
-		id: "PDA",
-		name: "PDA",
+		id: "PDA3",
+		name: "PDA3",
 		debater_num_per_team: 3,
 		team_num: 2,
 		positions: ["Government", "Opposition"],
 		positions_short: ["Gov", "Opp"],
 		score_weights: [1, 1, 1],
+		replies: [],
+		reply_num: 0
+	},
+	{
+		id: "PDA4",
+		name: "PDA4",
+		debater_num_per_team: 4,
+		team_num: 2,
+		positions: ["Government", "Opposition"],
+		positions_short: ["Gov", "Opp"],
+		score_weights: [1, 0.5, 0.5, 1],
 		replies: [],
 		reply_num: 0
 	},
