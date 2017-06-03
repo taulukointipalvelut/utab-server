@@ -6,7 +6,7 @@
 
 * [/styles]
 
-The following resources support these methods.
+These methods are supported in the following resource URLs.
 
 1. GET (search or read tournaments)
 
@@ -16,7 +16,7 @@ The following resources support these methods.
 
 * [/tournaments]
 
-The following resources support these methods.
+These methods are supported in the following resource URLs.
 
 1. GET (read tournament config)
 
@@ -24,7 +24,7 @@ The following resources support these methods.
 
 * [/tournaments/:tournament_id]
 
-The following resources support these methods.
+These methods are supported in the following resource URLs.
 
 1. GET (search or read Xs)
 
@@ -65,7 +65,7 @@ The following resources support these methods.
 * [/tournaments/:tournament_id/rounds/:r/draws]
 
 
-The following resources support these methods.
+These methods are supported in the following resource URLs.
 
 1. GET (read an entity)
 
@@ -84,7 +84,7 @@ The following resources support these methods.
 * [/tournaments/:tournament_id/institutions/:id]
 
 
-The following resources support these methods.
+These methods are supported in the following resource URLs.
 
 1. PATCH (compile raw results)
 
@@ -95,7 +95,7 @@ The following resources support these methods.
 * [/tournaments/:tournament_id/adjudicators/results]
 
 
-The following resouces support these methods.
+These methods are supported in the following resource URLs.
 
 1. PATCH (compute an allocation)
 
