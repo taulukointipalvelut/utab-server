@@ -4,7 +4,10 @@ utab server written in node js
 ## Documentation
 
 The documentation is available at [here](https://taulukointipalvelut.github.io/utab-server/)
+
 You can briefly see the methods supported in resource URLs at [here](MEMO.md)
+
+utab-core, which works inside the server, is [here](https://taulukointipalvelut.github.io/utab-core/)
 
 ## Attention
 
@@ -21,3 +24,7 @@ You can briefly see the methods supported in resource URLs at [here](MEMO.md)
 1. Start MongoDB. `$ mongod`
 
 1. Run app. `$ node app`
+
+## Postman
+
+You can figure out how this server works by using Postman. Import postman/*.json
