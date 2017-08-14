@@ -3,6 +3,7 @@ FORMAT: 1A
 ## Data Structures
 
 ### CreateTournament
++ id: 32141324123 (number)
 + name: testtournament (string, required)
 + style: {name: "NA", team_num: 2, score_weights: [1, 1, 0.5]} (object, optional)
     + default: {name: "NA", team_num: 2, score_weights: [1, 1, 0.5]}
@@ -45,13 +46,14 @@ FORMAT: 1A
 + score_weights: [1, 1, 1, 1] (array[number])
 
 ### CreateTeam
++ id: 2332221 (number, required)
 + name: kymstr (string, required)
 + available: true (boolean, optional)
     + default: true
 + debaters_by_r: [{r: 1, debaters: [43234244, 439587243]}] (array[object], optional)
     + default: []
 + institutions: [123431244, 321413244] (array[number], optional)
-    + default: []    
+    + default: []
 + user_defined_data: {} (object, optional)
     + default: {}
 

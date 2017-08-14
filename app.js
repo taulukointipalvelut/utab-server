@@ -9,6 +9,13 @@ var bodyParser = require('body-parser')
 var express = require('express')
 
 const app = express()
+/*
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*")
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+    next()
+})*/
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
@@ -313,9 +320,9 @@ for (let route of routes) {
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             if (Array.isArray(req.body)) {
-                Promise.all(req.body.map(d => node.create(d, req.query.force))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+                Promise.all(req.body.map(d => node.create(d))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             } else {
-                node.create(req.body, req.query.force).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
+                node.create(req.body).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
             }
         })
         .put(function(req, res) {//update//TESTED//
