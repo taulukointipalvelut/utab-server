@@ -1,5 +1,7 @@
 # UTab operating memo
 
+Also see postman/demo
+
 ## Resource URLs
 
 ### About Styles
@@ -9,10 +11,6 @@
 1. GET (search or read)
 
 1. POST (create one)
-
-~~1. PUT (update one)~~
-
-~~1. DELETE (delete one)~~
 
 ### About tournaments
 
@@ -34,17 +32,17 @@
 
 * [/tournaments/:tournament_id/rounds]
 
-1. GET (search or read Xs)
+1. GET (search or read)
 
-1. POST (create an X or Xs)
+1. POST (create one(s))
 
 * [/tournaments/:tournament_id/rounds/:r]
 
-1. GET (search or read Xs)
+1. GET (search or read)
 
-1. PUT (update an X or Xs)
+1. PUT (update one(s))
 
-1. DELETE (delete an X or Xs)
+1. DELETE (delete one(s))
 
 ### About raw results
 
@@ -54,9 +52,11 @@
 
 * [/tournaments/:tournament_id/results/raw/adjudicators]
 
-1. GET (search or read Xs)
+1. GET (search or read)
 
-1. POST (create an X or Xs)
+1. POST (create one(s))
+
+1. DELETE (delete all) DANGEROUS, UNRECOMMENDED
 
 * [/tournaments/:tournament_id/rounds/:r/results/raw/teams/:id/from_id]
 
@@ -88,7 +88,7 @@
 
 1. POST (create one(s))
 
-1. DELETE (delete all) Unrecommended
+1. DELETE (delete all) UNRECOMMENDED
 
 * [/tournaments/:tournament_id/rounds/:r/draws]
 

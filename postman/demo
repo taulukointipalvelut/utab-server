@@ -1,0 +1,881 @@
+{
+	"variables": [],
+	"info": {
+		"name": "201708",
+		"_postman_id": "6e634da4-7404-f361-b7e1-7a26ae5c8f47",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Allocations",
+			"description": "",
+			"item": [
+				{
+					"name": "get team allocation",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/rounds/1/allocations/teams",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get adjudicator allocation",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/rounds/1/allocations/adjudicators",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"allocation\": [\n        {\n            \"id\": 0,\n            \"chairs\": [],\n            \"panels\": [],\n            \"trainees\": [],\n            \"venue\": null,\n            \"teams\": [\n                2,\n                1\n            ]\n        },\n        {\n            \"id\": 1,\n            \"chairs\": [],\n            \"panels\": [],\n            \"trainees\": [],\n            \"venue\": null,\n            \"teams\": [\n                4,\n                3\n            ]\n        }\n    ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get allocation",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/rounds/1/allocations",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"options\": {\n    \"simple\": false,\n    \"team_allocation_algorithm\": \"standard\",\n    \"team_allocation_algorithm_options\": {\n      \"avoid_conflict\": false,\n      \"method\": \"custom\",\n      \"weights\": [1, 0, 1, 0, 0, 0, 0]\n    },\n    \"adjudicator_allocation_algorithm\": \"standard\",\n    \"adjudicator_allocation_algorithm_options\": {\n      \"assign\": \"high_to_slight\"\n    },\n    \"numbers_of_adjudicators\": {\"chairs\": 1, \"panels\": 2},\n    \"venue_allocation_algorithm_options\": {\n      \"shuffle\": false\n    }\n  }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get venue allocation",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/rounds/1/allocations/venues",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"allocation\": [\n        {\n            \"id\": 0,\n            \"chairs\": [],\n            \"panels\": [],\n            \"trainees\": [],\n            \"venue\": null,\n            \"teams\": [\n                2,\n                1\n            ]\n        },\n        {\n            \"id\": 1,\n            \"chairs\": [],\n            \"panels\": [],\n            \"trainees\": [],\n            \"venue\": null,\n            \"teams\": [\n                4,\n                3\n            ]\n        }\n    ]\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get team allocation specifying rs",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/allocations",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"for\": 2,\n  \"options\": {\n    \"by\": []\n  }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Config",
+			"description": "",
+			"item": [
+				{
+					"name": "get config",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Draws",
+			"description": "",
+			"item": [
+				{
+					"name": "get draws",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/draws",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"options\": {\n    \"simple\": false,\n    \"team_allocation_algorithm\": \"standard\",\n    \"team_allocation_algorithm_options\": {\n      \"avoid_conflict\": false  \n    },\n    \"adjudicator_allocation_algorithm\": \"standard\",\n    \"adjudicator_allocation_algorithm_options\": {\n      \"assign\": \"high_to_slight\"\n    },\n    \"numbers_of_adjudicators\": {\"chairs\": 1, \"panels\": 3},\n    \"venue_allocation_algorithm_options\": {\n      \"shuffle\": false\n    }\n  }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entities",
+			"description": "",
+			"item": [
+				{
+					"name": "get teams",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/teams",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get debaters",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/debaters",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get adjudicators",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/adjudicators",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get venues",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/venues",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get institutions",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/institutions",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create teams",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/teams",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n  \t\"id\": 1,\n    \"name\": \"t1\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"debaters\": [1, 2, 3],\n        \"institutions\": [1]\n      },\n      {\n        \"r\": 2,\n        \"debaters\": [1, 2, 3],\n        \"institutions\": [1]\n      },\n      {\n        \"r\": 3,\n        \"debaters\": [1, 2, 3],\n        \"institutions\": [1]\n      },\n      {\n        \"r\": 4,\n        \"debaters\": [1, 2, 3],\n        \"institutions\": [1]\n      }\n    ]\n  },  \n  {\n  \t\"id\": 2,\n    \"name\": \"t2\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"debaters\": [4, 5, 6],\n        \"institutions\": [2]\n      },\n      {\n        \"r\": 2,\n        \"debaters\": [4, 5, 6],\n        \"institutions\": [2]\n      },\n      {\n        \"r\": 3,\n        \"debaters\": [4, 5, 6],\n        \"institutions\": [2]\n      },\n      {\n        \"r\": 4,\n        \"debaters\": [4, 5, 6],\n        \"institutions\": [2]\n      }\n    ]\n  },\n  {\n  \t\"id\": 3,\n    \"name\": \"t3\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"debaters\": [7, 8, 9],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 2,\n        \"debaters\": [7, 8, 9],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 3,\n        \"debaters\": [7, 8, 9],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 4,\n        \"debaters\": [7, 8, 9],\n        \"institutions\": [3]\n      }\n    ]\n  },\n  {\n  \t\"id\": 4,\n    \"name\": \"t4\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"debaters\": [10, 11, 12],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 2,\n        \"debaters\": [10, 11, 12],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 3,\n        \"debaters\": [10, 11, 12],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 4,\n        \"debaters\": [10, 11, 12],\n        \"institutions\": [3]\n      }\n    ]\n  }\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create adjudicators",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/adjudicators",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n  \t  \"id\": 1,\n      \"name\": \"a1\",\n      \"details\": [\n        {\n          \"r\": 1,\n          \"conflicts\": [1],\n          \"institutions\": []\n        },\n        {\n          \"r\": 2,\n          \"conflicts\": [1],\n          \"institutions\": []\n        },\n        {\n          \"r\": 3,\n          \"conflicts\": [1],\n          \"institutions\": []\n        },\n        {\n          \"r\": 4,\n          \"conflicts\": [1],\n          \"institutions\": []\n        }\n      ]\n    },\n    {\n      \"id\": 2,\n      \"name\": \"a2\",\n      \"details\": [\n        {\n          \"r\": 1,\n          \"conflicts\": [],\n          \"institutions\": []\n        },\n        {\n          \"r\": 2,\n          \"conflicts\": [],\n          \"institutions\": []\n        },\n        {\n          \"r\": 3,\n          \"conflicts\": [],\n          \"institutions\": []\n        },\n        {\n          \"r\": 4,\n          \"conflicts\": [],\n          \"institutions\": []\n        }\n      ]\n    },\n    {\n  \t  \"id\": 3,\n      \"name\": \"a3\",\n      \"details\": [\n        {\n          \"r\": 1,\n          \"conflicts\": [],\n          \"institutions\": []\n        },\n        {\n          \"r\": 2,\n          \"conflicts\": [],\n          \"institutions\": []\n        },\n        {\n          \"r\": 3,\n          \"conflicts\": [],\n          \"institutions\": []\n        },\n        {\n          \"r\": 4,\n          \"conflicts\": [],\n          \"institutions\": []\n        }\n      ]\n    },\n    {\n  \t  \"id\": 4,\n      \"name\": \"a4\",\n      \"details\": [\n        {\n          \"r\": 1,\n          \"conflicts\": [],\n          \"institutions\": []\n        },\n        {\n          \"r\": 2,\n          \"conflicts\": [],\n          \"institutions\": []\n        },\n        {\n          \"r\": 3,\n          \"conflicts\": [],\n          \"institutions\": []\n        },\n        {\n          \"r\": 4,\n          \"conflicts\": [],\n          \"institutions\": []\n        }\n      ]\n    },\n    {\n  \t  \"id\": 5,\n      \"name\": \"a5\",\n      \"details\": [\n        {\n          \"r\": 1,\n          \"conflicts\": [],\n          \"institutions\": []\n        },\n        {\n          \"r\": 2,\n          \"conflicts\": [],\n          \"institutions\": []\n        },\n        {\n          \"r\": 3,\n          \"conflicts\": [],\n          \"institutions\": []\n        },\n        {\n          \"r\": 4,\n          \"conflicts\": [],\n          \"institutions\": []\n        }\n      ]\n    },\n    {\n  \t  \"id\": 6,\n      \"name\": \"a6\",\n      \"details\": [\n        {\n          \"r\": 1,\n          \"conflicts\": [],\n          \"institutions\": [2]\n        },\n        {\n          \"r\": 2,\n          \"conflicts\": [],\n          \"institutions\": [2]\n        },\n        {\n          \"r\": 3,\n          \"conflicts\": [],\n          \"institutions\": [2]\n        },\n        {\n          \"r\": 4,\n          \"conflicts\": [],\n          \"institutions\": [2]\n        }\n      ]\n    }\n  ]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create venues",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/venues",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n  \t\"id\": 1,\n    \"name\": \"v1\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"priority\": 1\n      },\n      {\n        \"r\": 2,\n        \"priority\": 1\n      },\n      {\n        \"r\": 3,\n        \"priority\": 1\n      },\n      {\n        \"r\": 4,\n        \"priority\": 1\n      }\n    ]\n  },\n  {\n  \t\"id\": 2,\n    \"name\": \"v2\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"priority\": 2\n      },\n      {\n        \"r\": 2,\n        \"priority\": 2\n      },\n      {\n        \"r\": 3,\n        \"priority\": 2\n      },\n      {\n        \"r\": 4,\n        \"priority\": 2\n      }\n    ]\n  },\n  {\n  \t\"id\": 3,\n    \"name\": \"v3\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"priority\": 3\n      },\n      {\n        \"r\": 2,\n        \"priority\": 3\n      },\n      {\n        \"r\": 3,\n        \"priority\": 3\n      },\n      {\n        \"r\": 4,\n        \"priority\": 3\n      }\n    ]\n  },\n  {\n  \t\"id\": 4,\n    \"name\": \"v4\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"priority\": 4\n      },\n      {\n        \"r\": 2,\n        \"priority\": 4\n      },\n      {\n        \"r\": 3,\n        \"priority\": 4\n      },\n      {\n        \"r\": 4,\n        \"priority\": 4\n      }\n    ]\n  }\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create debaters",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/debaters",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n  \t\"id\": 1,\n    \"name\": \"d1\"\n  },\n  {\n  \t\"id\": 2,\n    \"name\": \"d2\"\n  },\n  {\n  \t\"id\": 3,\n    \"name\": \"d3\"\n  },\n  {\n  \t\"id\": 4,\n    \"name\": \"d4\"\n  },\n  {\n  \t\"id\": 5,\n    \"name\": \"d5\"\n  },\n  {\n  \t\"id\": 6,\n    \"name\": \"d6\"\n  },\n  {\n  \t\"id\": 7,\n    \"name\": \"d7\"\n  },\n  {\n  \t\"id\": 8,\n    \"name\": \"d8\"\n  },\n  {\n  \t\"id\": 9,\n    \"name\": \"d9\"\n  },\n  {\n  \t\"id\": 10,\n    \"name\": \"d10\"\n  },\n  {\n  \t\"id\": 11,\n    \"name\": \"d11\"\n  },\n  {\n  \t\"id\": 12,\n    \"name\": \"d12\"\n  }\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create institutions",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/institutions",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n  \t\"id\": 1,\n    \"name\": \"i1\"\n  },\n  {\n  \t\"id\": 2,\n    \"name\": \"i2\"\n  },\n  {\n  \t\"id\": 3,\n    \"name\": \"i3\"\n  }\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete all teams",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/teams",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete a team",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/teams/1",
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete all adjudicators",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/adjudicators",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"id\": 1\n  },\n  {\n    \"id\": 2\n  },\n  {\n    \"id\": 3\n  },\n  {\n    \"id\": 4\n  },\n  {\n    \"id\": 5\n  },\n  {\n    \"id\": 6\n  }\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete an adjudicator",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/adjudicators/1",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete all venues",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/venues",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n      \"updated\": \"2016-12-11T10:57:26.550Z\",\n      \"created\": \"2016-12-11T10:57:26.550Z\",\n      \"name\": \"v1\",\n      \"id\": 1,\n      \"version\": 0,\n      \"details\": [\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 1\n        },\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 1\n        }\n      ]\n    },\n    {\n      \"updated\": \"2016-12-11T10:57:26.561Z\",\n      \"created\": \"2016-12-11T10:57:26.561Z\",\n      \"name\": \"v2\",\n      \"id\": 2,\n      \"version\": 0,\n      \"details\": [\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 2\n        },\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 2\n        }\n      ]\n    },\n    {\n      \"updated\": \"2016-12-11T10:57:26.563Z\",\n      \"created\": \"2016-12-11T10:57:26.563Z\",\n      \"name\": \"v3\",\n      \"id\": 3,\n      \"version\": 0,\n      \"details\": [\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 3\n        },\n        {\n          \"r\": 1,\n          \"available\": 1,\n          \"priority\": 3\n        }\n      ]\n    }\n  ]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete a venue",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/venues/1",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "update teams",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/teams",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"id\": 149740956705135,\n    \"user_defined_data\": {\"name\": \"a\", \"name2\": \"hi\"}\n  }\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get specific team",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/teams/52787532214378",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Raw Results",
+			"description": "",
+			"item": [
+				{
+					"name": "create raw team results",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/results/raw/teams",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n      \"id\": 1,\n      \"r\": 1,\n      \"from_id\": 1,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"gov\",\n      \"opponents\": [2]\n    },{\n      \"id\": 1,\n      \"r\": 1,\n      \"from_id\": 2,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"gov\",\n      \"opponents\": [2]\n    },{\n      \"id\": 1,\n      \"r\": 1,\n      \"from_id\": 3,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [2]\n    },{\n      \"id\": 2,\n      \"r\": 1,\n      \"from_id\": 1,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"opp\",\n      \"opponents\": [1]\n    },{\n      \"id\": 2,\n      \"r\": 1,\n      \"from_id\": 2,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"opp\",\n      \"opponents\": [1]\n    },{\n      \"id\": 2,\n      \"r\": 1,\n      \"from_id\": 3,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [1]\n    },{\n      \"id\": 3,\n      \"r\": 1,\n      \"from_id\": 4,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [4]\n    },{\n      \"id\": 3,\n      \"r\": 1,\n      \"from_id\": 5,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [4]\n    },{\n      \"id\": 3,\n      \"r\": 1,\n      \"from_id\": 6,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [4]\n    },{\n      \"id\": 4,\n      \"r\": 1,\n      \"from_id\": 4,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [3]\n    },{\n      \"id\": 4,\n      \"r\": 1,\n      \"from_id\": 5,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [3]\n    },{\n      \"id\": 4,\n      \"r\": 1,\n      \"from_id\": 6,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [3]\n    }\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create raw adjudicator results",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/results/raw/adjudicators",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n      \"id\": 1,\n      \"r\": 1,\n      \"from_id\": 1,\n      \"weight\": 1,\n      \"score\": 8,\n      \"judged_teams\": [1, 2],\n      \"comment\": \"\"\n    },{\n      \"id\": 1,\n      \"r\": 1,\n      \"from_id\": 2,\n      \"weight\": 1,\n      \"score\": 8,\n      \"judged_teams\": [1, 2],\n      \"comment\": \"\"\n    },{\n      \"id\": 4,\n      \"r\": 1,\n      \"from_id\": 1,\n      \"weight\": 1,\n      \"score\": 7,\n      \"judged_teams\": [3, 4],\n      \"comment\": \"\"\n    },{\n      \"id\": 4,\n      \"r\": 1,\n      \"from_id\": 2,\n      \"weight\": 1,\n      \"score\": 8,\n      \"judged_teams\": [3, 4],\n      \"comment\": \"\"\n    }\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create raw debater results",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/results/raw/debaters",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n\t{\n\t  \"id\": 1,\n\t  \"r\": 1,\n\t  \"from_id\": 1,\n\t  \"weight\": 1,\n\t  \"scores\": [76, 0, 0, 0]\n\t},{\n\t  \"id\": 2,\n\t  \"r\": 1,\n\t  \"from_id\": 1,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 36.5, 36.5, 0]\n\t},{\n\t  \"id\": 3,\n\t  \"r\": 1,\n\t  \"from_id\": 1,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 0, 0, 74]\n\t},{\n\t  \"id\": 1,\n\t  \"r\": 1,\n\t  \"from_id\": 2,\n\t  \"weight\": 1,\n\t  \"scores\": [76, 0, 0, 0]\n\t},{\n\t  \"id\": 2,\n\t  \"r\": 1,\n\t  \"from_id\": 2,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 36.5, 36.5, 0]\n\t},{\n\t  \"id\": 3,\n\t  \"r\": 1,\n\t  \"from_id\": 2,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 0, 0, 74]\n\t},{\n\t  \"id\": 1,\n\t  \"r\": 1,\n\t  \"from_id\": 3,\n\t  \"weight\": 1,\n\t  \"scores\": [76, 0, 0, 0]\n\t},{\n\t  \"id\": 2,\n\t  \"r\": 1,\n\t  \"from_id\": 3,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 36.5, 36.5, 0]\n\t},{\n\t  \"id\": 3,\n\t  \"r\": 1,\n\t  \"from_id\": 3,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 0, 0, 74]\n\t},{\n\t  \"id\": 4,\n\t  \"r\": 1,\n\t  \"from_id\": 1,\n\t  \"weight\": 1,\n\t  \"scores\": [77, 0, 0, 0]\n\t},{\n\t  \"id\": 5,\n\t  \"r\": 1,\n\t  \"from_id\": 1,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 37, 37, 0]\n\t},{\n\t  \"id\": 6,\n\t  \"r\": 1,\n\t  \"from_id\": 1,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 0, 0, 77]\n\t},{\n\t  \"id\": 4,\n\t  \"r\": 1,\n\t  \"from_id\": 2,\n\t  \"weight\": 1,\n\t  \"scores\": [77, 0, 0, 0]\n\t},{\n\t  \"id\": 5,\n\t  \"r\": 1,\n\t  \"from_id\": 2,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 37, 37, 0]\n\t},{\n\t  \"id\": 6,\n\t  \"r\": 1,\n\t  \"from_id\": 2,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 0, 0, 77]\n\t},{\n\t  \"id\": 4,\n\t  \"r\": 1,\n\t  \"from_id\": 3,\n\t  \"weight\": 1,\n\t  \"scores\": [77, 0, 0, 0]\n\t},{\n\t  \"id\": 5,\n\t  \"r\": 1,\n\t  \"from_id\": 3,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 37, 37, 0]\n\t},{\n\t  \"id\": 6,\n\t  \"r\": 1,\n\t  \"from_id\": 3,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 0, 0, 77]\n\t},{\n\t  \"id\": 7,\n\t  \"r\": 1,\n\t  \"from_id\": 4,\n\t  \"weight\": 1,\n\t  \"scores\": [75, 0, 0, 0]\n\t},{\n\t  \"id\": 8,\n\t  \"r\": 1,\n\t  \"from_id\": 4,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 33, 34, 0]\n\t},{\n\t  \"id\": 9,\n\t  \"r\": 1,\n\t  \"from_id\": 4,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 0, 0, 76]\n\t},{\n\t  \"id\": 7,\n\t  \"r\": 1,\n\t  \"from_id\": 5,\n\t  \"weight\": 1,\n\t  \"scores\": [75, 0, 0, 0]\n\t},{\n\t  \"id\": 8,\n\t  \"r\": 1,\n\t  \"from_id\": 5,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 33, 34, 0]\n\t},{\n\t  \"id\": 9,\n\t  \"r\": 1,\n\t  \"from_id\": 5,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 0, 0, 76]\n\t},{\n\t  \"id\": 7,\n\t  \"r\": 1,\n\t  \"from_id\": 6,\n\t  \"weight\": 1,\n\t  \"scores\": [75, 0, 0, 0]\n\t},{\n\t  \"id\": 8,\n\t  \"r\": 1,\n\t  \"from_id\": 6,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 33, 34, 0]\n\t},{\n\t  \"id\": 9,\n\t  \"r\": 1,\n\t  \"from_id\": 6,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 0, 0, 76]\n\t},{\n\t  \"id\": 10,\n\t  \"r\": 1,\n\t  \"from_id\": 4,\n\t  \"weight\": 1,\n\t  \"scores\": [77, 0, 0, 0]\n\t},{\n\t  \"id\": 11,\n\t  \"r\": 1,\n\t  \"from_id\": 4,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 36.5, 36.5, 0]\n\t},{\n\t  \"id\": 12,\n\t  \"r\": 1,\n\t  \"from_id\": 4,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 0, 37, 0]\n\t},{\n\t  \"id\": 10,\n\t  \"r\": 1,\n\t  \"from_id\": 5,\n\t  \"weight\": 1,\n\t  \"scores\": [77, 0, 0, 0]\n\t},{\n\t  \"id\": 11,\n\t  \"r\": 1,\n\t  \"from_id\": 5,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 36.5, 36.5, 0]\n\t},{\n\t  \"id\": 12,\n\t  \"r\": 1,\n\t  \"from_id\": 5,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 0, 37, 0]\n\t},{\n\t  \"id\": 10,\n\t  \"r\": 1,\n\t  \"from_id\": 6,\n\t  \"weight\": 1,\n\t  \"scores\": [77, 0, 0, 0]\n\t},{\n\t  \"id\": 11,\n\t  \"r\": 1,\n\t  \"from_id\": 6,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 36.5, 36.5, 0]\n\t},{\n\t  \"id\": 12,\n\t  \"r\": 1,\n\t  \"from_id\": 6,\n\t  \"weight\": 1,\n\t  \"scores\": [0, 0, 37, 0]\n\t}\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get raw adjudicator results",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/results/raw/adjudicators",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n      \"id\": 149740956705135,\n      \"r\": 1,\n      \"from_id\": 196445672476539,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"gov\",\n      \"opponents\": [198800052167623]\n    },{\n      \"id\": 149740956705135,\n      \"r\": 1,\n      \"from_id\": 92704246665789,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"gov\",\n      \"opponents\": [198800052167623]\n    },{\n      \"id\": 149740956705135,\n      \"r\": 1,\n      \"from_id\": 198523811047508,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [198800052167623]\n    },{\n      \"id\": 198800052167623,\n      \"r\": 1,\n      \"from_id\": 196445672476539,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"opp\",\n      \"opponents\": [149740956705135]\n    },{\n      \"id\": 198800052167623,\n      \"r\": 1,\n      \"from_id\": 92704246665789,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"opp\",\n      \"opponents\": [149740956705135]\n    },{\n      \"id\": 198800052167623,\n      \"r\": 1,\n      \"from_id\": 198523811047508,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [149740956705135]\n    },{\n      \"id\": 56412115873203,\n      \"r\": 1,\n      \"from_id\": 179389568563669,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [16089974642774]\n    },{\n      \"id\": 56412115873203,\n      \"r\": 1,\n      \"from_id\": 197856142042384,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [16089974642774]\n    },{\n      \"id\": 56412115873203,\n      \"r\": 1,\n      \"from_id\": 101596799226688,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [16089974642774]\n    },{\n      \"id\": 16089974642774,\n      \"r\": 1,\n      \"from_id\": 179389568563669,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [56412115873203]\n    },{\n      \"id\": 16089974642774,\n      \"r\": 1,\n      \"from_id\": 197856142042384,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [56412115873203]\n    },{\n      \"id\": 16089974642774,\n      \"r\": 1,\n      \"from_id\": 101596799226688,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [56412115873203]\n    }\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get specific raw adjudicator results",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/rounds/1/results/raw/teams/1/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n      \"id\": 149740956705135,\n      \"r\": 1,\n      \"from_id\": 196445672476539,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"gov\",\n      \"opponents\": [198800052167623]\n    },{\n      \"id\": 149740956705135,\n      \"r\": 1,\n      \"from_id\": 92704246665789,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"gov\",\n      \"opponents\": [198800052167623]\n    },{\n      \"id\": 149740956705135,\n      \"r\": 1,\n      \"from_id\": 198523811047508,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [198800052167623]\n    },{\n      \"id\": 198800052167623,\n      \"r\": 1,\n      \"from_id\": 196445672476539,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"opp\",\n      \"opponents\": [149740956705135]\n    },{\n      \"id\": 198800052167623,\n      \"r\": 1,\n      \"from_id\": 92704246665789,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"opp\",\n      \"opponents\": [149740956705135]\n    },{\n      \"id\": 198800052167623,\n      \"r\": 1,\n      \"from_id\": 198523811047508,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [149740956705135]\n    },{\n      \"id\": 56412115873203,\n      \"r\": 1,\n      \"from_id\": 179389568563669,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [16089974642774]\n    },{\n      \"id\": 56412115873203,\n      \"r\": 1,\n      \"from_id\": 197856142042384,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [16089974642774]\n    },{\n      \"id\": 56412115873203,\n      \"r\": 1,\n      \"from_id\": 101596799226688,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [16089974642774]\n    },{\n      \"id\": 16089974642774,\n      \"r\": 1,\n      \"from_id\": 179389568563669,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [56412115873203]\n    },{\n      \"id\": 16089974642774,\n      \"r\": 1,\n      \"from_id\": 197856142042384,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [56412115873203]\n    },{\n      \"id\": 16089974642774,\n      \"r\": 1,\n      \"from_id\": 101596799226688,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [56412115873203]\n    }\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get raw team results",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/results/raw/teams",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n      \"id\": 149740956705135,\n      \"r\": 1,\n      \"from_id\": 196445672476539,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"gov\",\n      \"opponents\": [198800052167623]\n    },{\n      \"id\": 149740956705135,\n      \"r\": 1,\n      \"from_id\": 92704246665789,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"gov\",\n      \"opponents\": [198800052167623]\n    },{\n      \"id\": 149740956705135,\n      \"r\": 1,\n      \"from_id\": 198523811047508,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [198800052167623]\n    },{\n      \"id\": 198800052167623,\n      \"r\": 1,\n      \"from_id\": 196445672476539,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"opp\",\n      \"opponents\": [149740956705135]\n    },{\n      \"id\": 198800052167623,\n      \"r\": 1,\n      \"from_id\": 92704246665789,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"opp\",\n      \"opponents\": [149740956705135]\n    },{\n      \"id\": 198800052167623,\n      \"r\": 1,\n      \"from_id\": 198523811047508,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [149740956705135]\n    },{\n      \"id\": 56412115873203,\n      \"r\": 1,\n      \"from_id\": 179389568563669,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [16089974642774]\n    },{\n      \"id\": 56412115873203,\n      \"r\": 1,\n      \"from_id\": 197856142042384,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [16089974642774]\n    },{\n      \"id\": 56412115873203,\n      \"r\": 1,\n      \"from_id\": 101596799226688,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [16089974642774]\n    },{\n      \"id\": 16089974642774,\n      \"r\": 1,\n      \"from_id\": 179389568563669,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [56412115873203]\n    },{\n      \"id\": 16089974642774,\n      \"r\": 1,\n      \"from_id\": 197856142042384,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [56412115873203]\n    },{\n      \"id\": 16089974642774,\n      \"r\": 1,\n      \"from_id\": 101596799226688,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [56412115873203]\n    }\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get raw debater results",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/results/raw/debaters",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n      \"id\": 149740956705135,\n      \"r\": 1,\n      \"from_id\": 196445672476539,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"gov\",\n      \"opponents\": [198800052167623]\n    },{\n      \"id\": 149740956705135,\n      \"r\": 1,\n      \"from_id\": 92704246665789,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"gov\",\n      \"opponents\": [198800052167623]\n    },{\n      \"id\": 149740956705135,\n      \"r\": 1,\n      \"from_id\": 198523811047508,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [198800052167623]\n    },{\n      \"id\": 198800052167623,\n      \"r\": 1,\n      \"from_id\": 196445672476539,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"opp\",\n      \"opponents\": [149740956705135]\n    },{\n      \"id\": 198800052167623,\n      \"r\": 1,\n      \"from_id\": 92704246665789,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"opp\",\n      \"opponents\": [149740956705135]\n    },{\n      \"id\": 198800052167623,\n      \"r\": 1,\n      \"from_id\": 198523811047508,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [149740956705135]\n    },{\n      \"id\": 56412115873203,\n      \"r\": 1,\n      \"from_id\": 179389568563669,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [16089974642774]\n    },{\n      \"id\": 56412115873203,\n      \"r\": 1,\n      \"from_id\": 197856142042384,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [16089974642774]\n    },{\n      \"id\": 56412115873203,\n      \"r\": 1,\n      \"from_id\": 101596799226688,\n      \"weight\": 1,\n      \"win\": 1,\n      \"side\": \"opp\",\n      \"opponents\": [16089974642774]\n    },{\n      \"id\": 16089974642774,\n      \"r\": 1,\n      \"from_id\": 179389568563669,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [56412115873203]\n    },{\n      \"id\": 16089974642774,\n      \"r\": 1,\n      \"from_id\": 197856142042384,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [56412115873203]\n    },{\n      \"id\": 16089974642774,\n      \"r\": 1,\n      \"from_id\": 101596799226688,\n      \"weight\": 1,\n      \"win\": 0,\n      \"side\": \"gov\",\n      \"opponents\": [56412115873203]\n    }\n]"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete all raw debater results",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/results/raw/debaters",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete all raw team results",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/results/raw/teams",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete all raw adjudicator results",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/results/raw/adjudicators",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete specific raw team result",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/rounds/1/results/raw/teams/1/1",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Results",
+			"description": "",
+			"item": [
+				{
+					"name": "get compiled team results",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/results/teams",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rs\": [1],\n  \"options\": {\n    \"force\": false,\n    \"simple\": false\n  }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get compiled adjudicator results",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/results/adjudicators",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rs\": [1],\n  \"options\": {\n    \"force\": false\n  }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get compiled debater results",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/results/debaters",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"rs\": [1],\n  \"options\": {\n    \"force\": false\n  }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rounds",
+			"description": "",
+			"item": [
+				{
+					"name": "get round config",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/rounds/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "create round config",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431/rounds",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"r\": 1,\n  \"motions\": []\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tournaments",
+			"description": "",
+			"item": [
+				{
+					"name": "register tournament",
+					"request": {
+						"url": "localhost:7024/tournaments",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"simple\",\n  \"style\": {\"name\": \"PDA3\", \"team_num\": 2, \"score_weights\": [1, 0.5, 0.5, 1]},\n  \"total_round_num\": 4\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "delete tournament",
+					"request": {
+						"url": "localhost:7024/tournaments/155846550551431",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/x-www-form-urlencoded",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get tournaments",
+					"request": {
+						"url": "localhost:7024/tournaments",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 58125849058451\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Styles",
+			"description": "",
+			"item": [
+				{
+					"name": "get styles",
+					"request": {
+						"url": "localhost:7024/styles",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 58125849058451\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

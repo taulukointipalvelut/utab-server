@@ -124,7 +124,7 @@ IMPLEMENT COMPILED RESULTS API
 */
 
 let result_routes = [
-    {keys: ['teams', 'results'], path: 'results/teams'},
+    {keys: ['teams', 'results'], path: '/results/teams'},
     {keys: ['adjudicators', 'results'], path: '/results/adjudicators'},
     {keys: ['debaters', 'results'], path: '/results/debaters'},
 ]
@@ -146,9 +146,9 @@ IMPLEMENT RAW RESULTS API
 */
 
 let raw_routes = [
-    {keys: ['teams', 'results'], path: 'results/raw/teams', path_specified: 'rounds/:r/results/raw/teams/:id/:from_id'},
-    {keys: ['adjudicators', 'results'], path: 'results/raw/adjudicators', path_specified: 'rounds/:r/results/raw/adjudicators/:id/:from_id'},
-    {keys: ['debaters', 'results'], path: 'results/raw/debaters', path_specified: 'rounds/:r/results/raw/debaters/:id/:from_id'}
+    {keys: ['teams', 'results'], path: '/results/raw/teams', path_specified: '/rounds/:r/results/raw/teams/:id/:from_id'},
+    {keys: ['adjudicators', 'results'], path: '/results/raw/adjudicators', path_specified: '/rounds/:r/results/raw/adjudicators/:id/:from_id'},
+    {keys: ['debaters', 'results'], path: '/results/raw/debaters', path_specified: '/rounds/:r/results/raw/debaters/:id/:from_id'}
 ]
 
 for (let route of raw_routes) {
@@ -169,6 +169,12 @@ for (let route of raw_routes) {
             } else {
                 node.create(dict).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
             }
+        })
+        .delete(function(req, res) {//create//TESTED//
+            log_request(req, route.path)
+            req.accepts('application/json')
+            let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
+            node.deleteAll().then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
         })
     app.route('/tournaments/:tournament_id'+route.path_specified)
         .get(function(req, res) {//read or find//TESTED//
