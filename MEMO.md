@@ -2,41 +2,75 @@
 
 ## Resource URLs
 
-* [/static]
+### About Styles
 
 * [/styles]
 
-These methods are supported in the following resource URLs.
+1. GET (search or read)
 
-1. GET (search or read tournaments)
+1. POST (create one)
 
-1. POST (create an tournament)
+~~1. PUT (update one)~~
 
-1. DELETE (delete an tournament)
+~~1. DELETE (delete one)~~
+
+### About tournaments
 
 * [/tournaments]
 
-These methods are supported in the following resource URLs.
+1. GET (search or read)
+
+1. POST (create one)
+
+* [/tournaments/:tournament_id]
 
 1. GET (read tournament config)
 
 1. PUT (update tournament config)
 
-* [/tournaments/:tournament_id]
+1. DELETE (delete a tournament)
 
-These methods are supported in the following resource URLs.
+### About rounds
+
+* [/tournaments/:tournament_id/rounds]
 
 1. GET (search or read Xs)
 
 1. POST (create an X or Xs)
 
+* [/tournaments/:tournament_id/rounds/:r]
+
+1. GET (search or read Xs)
+
 1. PUT (update an X or Xs)
 
 1. DELETE (delete an X or Xs)
 
-* [/tournaments/:tournament_id/rounds]
+### About raw results
 
-* [/tournaments/:tournament_id/rounds/:r]
+* [/tournaments/:tournament_id/results/raw/teams]
+
+* [/tournaments/:tournament_id/results/raw/debaters]
+
+* [/tournaments/:tournament_id/results/raw/adjudicators]
+
+1. GET (search or read Xs)
+
+1. POST (create an X or Xs)
+
+* [/tournaments/:tournament_id/rounds/:r/results/raw/teams/:id/from_id]
+
+* [/tournaments/:tournament_id/rounds/:r/results/raw/debaters/:id/from_id]
+
+* [/tournaments/:tournament_id/rounds/:r/results/raw/adjudicators/:id/from_id]
+
+1. GET (read an entity)
+
+1. PUT (update an entity)
+
+1. DELETE (delete an entity)
+
+### About entities and draws
 
 * [/tournaments/:tournament_id/teams]
 
@@ -48,30 +82,15 @@ These methods are supported in the following resource URLs.
 
 * [/tournaments/:tournament_id/institutions]
 
-* [/tournaments/:tournament_id/teams/results/raw]
-
-* [/tournaments/:tournament_id/debaters/results/raw]
-
-* [/tournaments/:tournament_id/adjudicators/results/raw]
-
-* [/tournaments/:tournament_id/rounds/:r/teams/results/raw]
-
-* [/tournaments/:tournament_id/rounds/:r/debaters/results/raw]
-
-* [/tournaments/:tournament_id/rounds/:r/adjudicators/results/raw]
-
 * [/tournaments/:tournament_id/draws]
-
-* [/tournaments/:tournament_id/rounds/:r/draws]
-
-
-These methods are supported in the following resource URLs.
 
 1. GET (read an entity)
 
-1. PUT (update an entity)
+1. POST (create one(s))
 
-1. DELETE (delete an entity)
+1. DELETE (delete all) Unrecommended
+
+* [/tournaments/:tournament_id/rounds/:r/draws]
 
 * [/tournaments/:tournament_id/teams/:id]
 
@@ -83,10 +102,13 @@ These methods are supported in the following resource URLs.
 
 * [/tournaments/:tournament_id/institutions/:id]
 
+1. GET (read an entity)
 
-These methods are supported in the following resource URLs.
+1. PUT (update an entity)
 
-1. PATCH (compile raw results)
+1. DELETE (delete an entity)
+
+### About compiled results
 
 * [/tournaments/:tournament_id/teams/results]
 
@@ -94,10 +116,9 @@ These methods are supported in the following resource URLs.
 
 * [/tournaments/:tournament_id/adjudicators/results]
 
+1. PATCH (compile raw results)
 
-These methods are supported in the following resource URLs.
-
-1. PATCH (compute an allocation)
+### About allocations
 
 * [/tournaments/:tournament_id/allocations]
 
@@ -114,3 +135,5 @@ These methods are supported in the following resource URLs.
 * [/tournaments/:tournament_id/rounds/:r/allocations/adjudicators]
 
 * [/tournaments/:tournament_id/rounds/:r/allocations/venues]
+
+1. PATCH (compute an allocation)

@@ -119,15 +119,14 @@ const DB = new controllers.CON({db_url: DBTOURNAMENTSURL, db_style_url: DBSTYLEU
 winston.info('connected to tournaments database')
 let handlers = connect_to_tournaments(DB)
 
-
 /*
 IMPLEMENT COMPILED RESULTS API
 */
 
 let result_routes = [
-    {keys: ['teams', 'results'], path: '/teams/results'},
-    {keys: ['adjudicators', 'results'], path: '/adjudicators/results'},
-    {keys: ['debaters', 'results'], path: '/debaters/results'},
+    {keys: ['teams', 'results'], path: 'results/teams'},
+    {keys: ['adjudicators', 'results'], path: '/results/adjudicators'},
+    {keys: ['debaters', 'results'], path: '/results/debaters'},
 ]
 
 for (let route of result_routes) {
@@ -147,12 +146,9 @@ IMPLEMENT RAW RESULTS API
 */
 
 let raw_routes = [
-    {keys: ['teams', 'results'], path: '/teams/results/raw', specify_r: false},
-    {keys: ['adjudicators', 'results'], path: '/adjudicators/results/raw', specify_r: false},
-    {keys: ['debaters', 'results'], path: '/debaters/results/raw', specify_r: false},
-    {keys: ['teams', 'results'], path: '/rounds/:r/teams/results/raw', specify_r: true},
-    {keys: ['adjudicators', 'results'], path: '/rounds/:r/adjudicators/results/raw', specify_r: true},
-    {keys: ['debaters', 'results'], path: '/rounds/:r/debaters/results/raw', specify_r: true}
+    {keys: ['teams', 'results'], path: 'results/raw/teams', path_specified: 'rounds/:r/results/raw/teams/:id/:from_id'},
+    {keys: ['adjudicators', 'results'], path: 'results/raw/adjudicators', path_specified: 'rounds/:r/results/raw/adjudicators/:id/:from_id'},
+    {keys: ['debaters', 'results'], path: 'results/raw/debaters', path_specified: 'rounds/:r/results/raw/debaters/:id/:from_id'}
 ]
 
 for (let route of raw_routes) {
@@ -161,9 +157,6 @@ for (let route of raw_routes) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = req.query
-            if (route.specify_r) {
-                dict.r = parseInt(req.params.r)
-            }
             node.find(dict).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
         })
         .post(function(req, res) {//create//TESTED//
@@ -171,42 +164,41 @@ for (let route of raw_routes) {
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = req.body
-            if (route.specify_r) {
-                dict.r = parseInt(req.params.r)
-            }
             if (Array.isArray(req.body)) {
                 Promise.all(dict.map(d => node.create(d))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             } else {
                 node.create(dict).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
             }
         })
+    app.route('/tournaments/:tournament_id'+route.path_specified)
+        .get(function(req, res) {//read or find//TESTED//
+            log_request(req, route.path_specified)
+            let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
+            let dict = req.query
+            dict.r = parseInt(req.params.r)
+            dict.from_id = parseInt(req.params.from_id)
+            dict.id = parseInt(req.params.id)
+            node.find(dict).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+        })
         .put(function(req, res) {//update//TESTED//
-            log_request(req, route.path)
+            log_request(req, route.path_specified)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = req.body
-            if (route.specify_r) {
-                dict.r = parseInt(req.params.r)
-            }
-            if (Array.isArray(req.body)) {
-                Promise.all(dict.map(d => node.update(d))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
-            } else {
-                node.update(dict).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res, 404))
-            }
+            dict.r = parseInt(req.params.r)
+            dict.from_id = parseInt(req.params.from_id)
+            dict.id = parseInt(req.params.id)
+            node.update(dict).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res, 404))
         })
         .delete(function(req, res) {//delete//TESTED//
-            log_request(req, route.path)
+            log_request(req, route.path_specified)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = req.body
-            if (route.specify_r) {
-                dict.r = parseInt(req.params.r)
-            }
-            if (Array.isArray(req.body)) {
-                Promise.all(dict.map(d => node.delete(d))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
-            } else {
-                node.delete(dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
-            }
+            dict.r = parseInt(req.params.r)
+            dict.from_id = parseInt(req.params.from_id)
+            dict.id = parseInt(req.params.id)
+            node.delete(dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
         })
 }
 
@@ -325,25 +317,11 @@ for (let route of routes) {
                 node.create(req.body).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
             }
         })
-        .put(function(req, res) {//update//TESTED//
+        .delete(function(req, res) {
             log_request(req, route.path)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            if (Array.isArray(req.body)) {
-                Promise.all(req.body.map(d => node.update(d))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
-            } else {
-                node.update(req.body).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res, 404))
-            }
-        })
-        .delete(function(req, res) {//delete//TESTED//
-            log_request(req, route.path)
-            req.accepts('application/json')
-            let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            if (Array.isArray(req.body)) {
-                Promise.all(req.body.map(d => node.delete(d))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
-            } else {
-                node.delete(req.body).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
-            }
+            node.deleteAll().then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
         })
     app.route('/tournaments/:tournament_id'+route.path+'/:'+route.unique)
         .get(function(req, res) {//read or find//TESTED//
@@ -386,6 +364,16 @@ app.route('/tournaments/:tournament_id')
         let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.config.update(req.body).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
     })
+    .delete(function(req, res) {//TESTED//
+        log_request(req)
+        DB.tournaments.delete({id: parseInt(req.params.tournament_id)}).then(doc => respond_data(doc, res))
+        .then(function () {
+            let th = sys.find_tournament(handlers, parseInt(req.params.tournament_id))
+            th.close()
+            handlers = handlers.filter(hd => hd.id !== parseInt(req.params.tournament_id))
+        })
+        .catch(err => respond_error(err, res, 404))
+    })
 
 /*
 IMPLEMENT TOURNAMENTS API
@@ -416,16 +404,6 @@ app.route('/tournaments')
             .catch(err => respond_error(err, res))
         }
     })
-    .delete(function(req, res) {
-        log_request(req)
-        DB.tournaments.delete(req.body).then(doc => respond_data(doc, res))
-        .then(function () {
-            let th = sys.find_tournament(handlers, req.body.id)
-            th.close()
-            handlers = handlers.filter(hd => hd.id !== req.body.id)
-        })
-        .catch(err => respond_error(err, res, 404))
-    })
 
 app.route('/styles')
     .get(function(req, res) {///TESTED///
@@ -437,7 +415,7 @@ app.route('/styles')
         req.accepts('application/json')
         DB.styles.create(req.body).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
     })
-    .put(function(req, res) {///TESTED///
+    /*.put(function(req, res) {///TESTED///
         log_request(req)
         req.accepts('application/json')
         DB.styles.update(req.body).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res, 404))
@@ -446,7 +424,7 @@ app.route('/styles')
         log_request(req)
         req.accepts('application/json')
         DB.styles.delete(req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
-    })
+    })*/
 
 app.use(express.static(__dirname+'/static'))
 
