@@ -3,7 +3,8 @@ utab server written in node js
 
 ## Documentation
 
-~~The documentation is available at~~ (outdated. see the next link) [here](https://taulukointipalvelut.github.io/utab-server/)
+~~The documentation is available at  [here](https://taulukointipalvelut.github.io/utab-server/)~~
+(outdated. see the next link)
 
 You can briefly see the methods supported in resource URLs at [here](MEMO.md)
 
