@@ -26,7 +26,7 @@ Also see postman/demo
 
 1. PUT (update tournament config)
 
-1. DELETE (delete a tournament)
+1. DELETE (delete)
 
 ### About rounds
 
@@ -40,9 +40,9 @@ Also see postman/demo
 
 1. GET (search or read)
 
-1. PUT (update one(s))
+1. PUT (update)
 
-1. DELETE (delete one(s))
+1. DELETE (delete)
 
 ### About raw results
 
@@ -64,11 +64,11 @@ Also see postman/demo
 
 * [/tournaments/:tournament_id/rounds/:r/results/raw/adjudicators/:id/from_id]
 
-1. GET (read an entity)
+1. GET (read)
 
-1. PUT (update an entity)
+1. PUT (update)
 
-1. DELETE (delete an entity)
+1. DELETE (delete)
 
 ### About entities and draws
 
@@ -84,7 +84,7 @@ Also see postman/demo
 
 * [/tournaments/:tournament_id/draws]
 
-1. GET (read an entity)
+1. GET (read)
 
 1. POST (create one(s))
 
@@ -102,19 +102,19 @@ Also see postman/demo
 
 * [/tournaments/:tournament_id/institutions/:id]
 
-1. GET (read an entity)
+1. GET (read)
 
-1. PUT (update an entity)
+1. PUT (update)
 
-1. DELETE (delete an entity)
+1. DELETE (delete)
 
 ### About compiled results
 
-* [/tournaments/:tournament_id/teams/results]
+* [/tournaments/:tournament_id/results/teams]
 
-* [/tournaments/:tournament_id/debaters/results]
+* [/tournaments/:tournament_id/results/debaters]
 
-* [/tournaments/:tournament_id/adjudicators/results]
+* [/tournaments/:tournament_id/results/djudicators]
 
 1. PATCH (compile raw results)
 
