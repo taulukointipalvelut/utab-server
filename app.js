@@ -9,6 +9,7 @@ var bodyParser = require('body-parser')
 var express = require('express')
 
 const app = express()
+const static_app = express()
 /*
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*")
@@ -44,6 +45,7 @@ const BASEURL = process.env.MONGODB_URI || 'mongodb://localhost'
 const DBTOURNAMENTSURL = BASEURL+'/_tournaments'
 const DBSTYLEURL = BASEURL+'/_styles'
 const PORT = process.env.PORT || 7024
+const STATIC_PORT = process.env.STATIC_PORT || 8000
 
 /*
 INITIALIZE
@@ -432,8 +434,6 @@ app.route('/styles')
         DB.styles.delete(req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
     })*/
 
-app.use(express.static(__dirname+'/static'))
-
 app.use(function(req, res, next){
 	respond_error({name: 'NotFound', message: 'Not Found', code: 404}, res, 404)
 })
@@ -444,9 +444,13 @@ app.use(function(err, req, res, next){
 
 var server = app.listen(PORT)
 winston.info("server started on port: "+PORT+", database address: "+BASEURL)
+winston.info("static server started on port: "+STATIC_PORT)
+
+var static_server = static_app.use(express.static(__dirname+'/static')).listen(STATIC_PORT)
 
 process.on('exit', function() {
     server.close()
+    static_server.close()
     for (let t of handlers) {
         t.handler.close()
         DB.close()
