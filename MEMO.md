@@ -48,7 +48,7 @@ Also see postman/demo
 
 * [/tournaments/:tournament_id/results/raw/teams]
 
-* [/tournaments/:tournament_id/results/raw/debaters]
+* [/tournaments/:tournament_id/results/raw/speakers]
 
 * [/tournaments/:tournament_id/results/raw/adjudicators]
 
@@ -60,7 +60,7 @@ Also see postman/demo
 
 * [/tournaments/:tournament_id/rounds/:r/results/raw/teams/:id/from_id]
 
-* [/tournaments/:tournament_id/rounds/:r/results/raw/debaters/:id/from_id]
+* [/tournaments/:tournament_id/rounds/:r/results/raw/speakers/:id/from_id]
 
 * [/tournaments/:tournament_id/rounds/:r/results/raw/adjudicators/:id/from_id]
 
@@ -78,7 +78,7 @@ Also see postman/demo
 
 * [/tournaments/:tournament_id/venues]
 
-* [/tournaments/:tournament_id/debaters]
+* [/tournaments/:tournament_id/speakers]
 
 * [/tournaments/:tournament_id/institutions]
 
@@ -98,7 +98,7 @@ Also see postman/demo
 
 * [/tournaments/:tournament_id/venues/:id]
 
-* [/tournaments/:tournament_id/debaters/:id]
+* [/tournaments/:tournament_id/speakers/:id]
 
 * [/tournaments/:tournament_id/institutions/:id]
 
@@ -112,7 +112,7 @@ Also see postman/demo
 
 * [/tournaments/:tournament_id/results/teams]
 
-* [/tournaments/:tournament_id/results/debaters]
+* [/tournaments/:tournament_id/results/speakers]
 
 * [/tournaments/:tournament_id/results/djudicators]
 

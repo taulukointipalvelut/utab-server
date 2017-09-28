@@ -172,9 +172,9 @@
 					"response": []
 				},
 				{
-					"name": "get debaters",
+					"name": "get speakers",
 					"request": {
-						"url": "localhost:7024/tournaments/155846550551431/debaters",
+						"url": "localhost:7024/tournaments/155846550551431/speakers",
 						"method": "GET",
 						"header": [],
 						"body": {},
@@ -229,7 +229,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "[\n  {\n  \t\"id\": 1,\n    \"name\": \"t1\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"debaters\": [1, 2, 3],\n        \"institutions\": [1]\n      },\n      {\n        \"r\": 2,\n        \"debaters\": [1, 2, 3],\n        \"institutions\": [1]\n      },\n      {\n        \"r\": 3,\n        \"debaters\": [1, 2, 3],\n        \"institutions\": [1]\n      },\n      {\n        \"r\": 4,\n        \"debaters\": [1, 2, 3],\n        \"institutions\": [1]\n      }\n    ]\n  },  \n  {\n  \t\"id\": 2,\n    \"name\": \"t2\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"debaters\": [4, 5, 6],\n        \"institutions\": [2]\n      },\n      {\n        \"r\": 2,\n        \"debaters\": [4, 5, 6],\n        \"institutions\": [2]\n      },\n      {\n        \"r\": 3,\n        \"debaters\": [4, 5, 6],\n        \"institutions\": [2]\n      },\n      {\n        \"r\": 4,\n        \"debaters\": [4, 5, 6],\n        \"institutions\": [2]\n      }\n    ]\n  },\n  {\n  \t\"id\": 3,\n    \"name\": \"t3\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"debaters\": [7, 8, 9],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 2,\n        \"debaters\": [7, 8, 9],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 3,\n        \"debaters\": [7, 8, 9],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 4,\n        \"debaters\": [7, 8, 9],\n        \"institutions\": [3]\n      }\n    ]\n  },\n  {\n  \t\"id\": 4,\n    \"name\": \"t4\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"debaters\": [10, 11, 12],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 2,\n        \"debaters\": [10, 11, 12],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 3,\n        \"debaters\": [10, 11, 12],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 4,\n        \"debaters\": [10, 11, 12],\n        \"institutions\": [3]\n      }\n    ]\n  }\n]"
+							"raw": "[\n  {\n  \t\"id\": 1,\n    \"name\": \"t1\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"speakers\": [1, 2, 3],\n        \"institutions\": [1]\n      },\n      {\n        \"r\": 2,\n        \"speakers\": [1, 2, 3],\n        \"institutions\": [1]\n      },\n      {\n        \"r\": 3,\n        \"speakers\": [1, 2, 3],\n        \"institutions\": [1]\n      },\n      {\n        \"r\": 4,\n        \"speakers\": [1, 2, 3],\n        \"institutions\": [1]\n      }\n    ]\n  },  \n  {\n  \t\"id\": 2,\n    \"name\": \"t2\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"speakers\": [4, 5, 6],\n        \"institutions\": [2]\n      },\n      {\n        \"r\": 2,\n        \"speakers\": [4, 5, 6],\n        \"institutions\": [2]\n      },\n      {\n        \"r\": 3,\n        \"speakers\": [4, 5, 6],\n        \"institutions\": [2]\n      },\n      {\n        \"r\": 4,\n        \"speakers\": [4, 5, 6],\n        \"institutions\": [2]\n      }\n    ]\n  },\n  {\n  \t\"id\": 3,\n    \"name\": \"t3\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"speakers\": [7, 8, 9],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 2,\n        \"speakers\": [7, 8, 9],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 3,\n        \"speakers\": [7, 8, 9],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 4,\n        \"speakers\": [7, 8, 9],\n        \"institutions\": [3]\n      }\n    ]\n  },\n  {\n  \t\"id\": 4,\n    \"name\": \"t4\",\n    \"details\": [\n      {\n        \"r\": 1,\n        \"speakers\": [10, 11, 12],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 2,\n        \"speakers\": [10, 11, 12],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 3,\n        \"speakers\": [10, 11, 12],\n        \"institutions\": [3]\n      },\n      {\n        \"r\": 4,\n        \"speakers\": [10, 11, 12],\n        \"institutions\": [3]\n      }\n    ]\n  }\n]"
 						},
 						"description": ""
 					},
@@ -276,9 +276,9 @@
 					"response": []
 				},
 				{
-					"name": "create debaters",
+					"name": "create speakers",
 					"request": {
-						"url": "localhost:7024/tournaments/155846550551431/debaters",
+						"url": "localhost:7024/tournaments/155846550551431/speakers",
 						"method": "POST",
 						"header": [
 							{
@@ -501,9 +501,9 @@
 					"response": []
 				},
 				{
-					"name": "create raw debater results",
+					"name": "create raw speaker results",
 					"request": {
-						"url": "localhost:7024/tournaments/155846550551431/results/raw/debaters",
+						"url": "localhost:7024/tournaments/155846550551431/results/raw/speakers",
 						"method": "POST",
 						"header": [
 							{
@@ -581,9 +581,9 @@
 					"response": []
 				},
 				{
-					"name": "get raw debater results",
+					"name": "get raw speaker results",
 					"request": {
-						"url": "localhost:7024/tournaments/155846550551431/results/raw/debaters",
+						"url": "localhost:7024/tournaments/155846550551431/results/raw/speakers",
 						"method": "GET",
 						"header": [
 							{
@@ -601,9 +601,9 @@
 					"response": []
 				},
 				{
-					"name": "delete all raw debater results",
+					"name": "delete all raw speaker results",
 					"request": {
-						"url": "localhost:7024/tournaments/155846550551431/results/raw/debaters",
+						"url": "localhost:7024/tournaments/155846550551431/results/raw/speakers",
 						"method": "DELETE",
 						"header": [
 							{
@@ -727,9 +727,9 @@
 					"response": []
 				},
 				{
-					"name": "get compiled debater results",
+					"name": "get compiled speaker results",
 					"request": {
-						"url": "localhost:7024/tournaments/155846550551431/results/debaters",
+						"url": "localhost:7024/tournaments/155846550551431/results/speakers",
 						"method": "PATCH",
 						"header": [
 							{

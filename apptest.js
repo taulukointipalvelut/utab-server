@@ -78,7 +78,7 @@ IMPLEMENT COMMON DATABASE API
 let result_routes = [
     {keys: ['teams', 'results'], path: '/teams/results'},
     {keys: ['adjudicators', 'results'], path: '/adjudicators/results'},
-    {keys: ['debaters', 'results'], path: '/debaters/results'},
+    {keys: ['speakers', 'results'], path: '/speakers/results'},
 ]
 
 for (let route of result_routes) {

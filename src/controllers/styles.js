@@ -2,7 +2,7 @@ module.exports = [
 	{
 		id: "ACADEMIC",
 		name: "Academic",
-		debater_num_per_team: 4,
+		speaker_num_per_team: 4,
 		team_num: 2,
 		positions: ["Affirmative", "Negative"],
 		positions_short: ["Aff", "Neg"],
@@ -13,7 +13,7 @@ module.exports = [
 	{
 		id: "NA",
 		name: "North American",
-		debater_num_per_team: 2,
+		speaker_num_per_team: 2,
 		team_num: 2,
 		positions: ["Government", "Opposition"],
 		positions_short: ["Gov", "Opp"],
@@ -24,7 +24,7 @@ module.exports = [
 	{
 		id: "NAFA",
 		name: "NAFA",
-		debater_num_per_team: 2,
+		speaker_num_per_team: 2,
 		team_num: 2,
 		positions: ["Affirmative", "Negative"],
 		positions_short: ["Aff", "Opp"],
@@ -35,7 +35,7 @@ module.exports = [
 	{
 		id: "PDA3",
 		name: "PDA3",
-		debater_num_per_team: 3,
+		speaker_num_per_team: 3,
 		team_num: 2,
 		positions: ["Government", "Opposition"],
 		positions_short: ["Gov", "Opp"],
@@ -46,7 +46,7 @@ module.exports = [
 	{
 		id: "PDA4",
 		name: "PDA4",
-		debater_num_per_team: 4,
+		speaker_num_per_team: 4,
 		team_num: 2,
 		positions: ["Government", "Opposition"],
 		positions_short: ["Gov", "Opp"],
@@ -57,7 +57,7 @@ module.exports = [
 	{
 		id: "ASIAN",
 		name: "Asian",
-		debater_num_per_team: 3,
+		speaker_num_per_team: 3,
 		team_num: 2,
 		positions: ["Government", "Opponents"],
 		positions_short: ["Gov", "Opp"],
@@ -68,7 +68,7 @@ module.exports = [
 	{
 		id: "BP",
 		name: "British Parliamentary",
-		debater_num_per_team: 2,
+		speaker_num_per_team: 2,
 		team_num: 4,
 		positions: ["Opening Government", "Opening Opposition", "Closing Government", "Closing Opposition"],
 		positions_short: ["OG", "OO", "CG", "CO"],
@@ -79,7 +79,7 @@ module.exports = [
 	{
 		id: "PF",
 		name: "Public Forum",
-		debater_num_per_team: 2,
+		speaker_num_per_team: 2,
 		team_num: 2,
 		positions: ["Affirmative", "Negative"],
 		positions_short: ["Aff", "Neg"],

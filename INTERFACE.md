@@ -50,7 +50,7 @@ FORMAT: 1A
 + name: kymstr (string, required)
 + available: true (boolean, optional)
     + default: true
-+ debaters_by_r: [{r: 1, debaters: [43234244, 439587243]}] (array[object], optional)
++ speakers_by_r: [{r: 1, speakers: [43234244, 439587243]}] (array[object], optional)
     + default: []
 + institutions: [123431244, 321413244] (array[number], optional)
     + default: []
@@ -61,7 +61,7 @@ FORMAT: 1A
 + id: 1324908734 (number)
 + name: kymstr (string)
 + available: true (boolean)
-+ debaters_by_r: [{r: 1, debaters: [43234244, 439587243]}] (array[object])
++ speakers_by_r: [{r: 1, speakers: [43234244, 439587243]}] (array[object])
 + institutions: [123431244, 321413244] (array[number])
 + user_defined_data: {} (object)
 
@@ -69,7 +69,7 @@ FORMAT: 1A
 + id: 1324908734 (number, required)
 + name: kymstr (string, optional)
 + available: true (boolean, optional)
-+ debaters_by_r: [{r: 1, debaters: [43234244, 439587243]}] (array[object], optional)
++ speakers_by_r: [{r: 1, speakers: [43234244, 439587243]}] (array[object], optional)
 + institutions: [123431244, 321413244] (array[number], optional)
 + user_defined_data: {} (object, optional)
 
@@ -96,7 +96,7 @@ FORMAT: 1A
 + name: kymstr (string)
 + user_defined_data: {} (object)
 
-### Debater
+### Speaker
 + id: 1324908734 (number)
 + name: kymstr (string)
 + user_defined_data: {} (object)
@@ -123,7 +123,7 @@ FORMAT: 1A
 + opponents: [4352432524] (array[number])
 + user_defined_data: {} (object)
 
-### RawDebaterResult
+### RawSpeakerResult
 + id: 3432522346 (number)
 + r: 1 (number)
 + from_id: 232342346 (number)
@@ -159,7 +159,7 @@ FORMAT: 1A
 + opponents: [4352432524] (array[number])
 + user_defined_data_collection: {} (object)
 
-### SummarizedDebaterResult
+### SummarizedSpeakerResult
 + id: 3432522346 (number)
 + r: 1 (number)
 + scores: [76.33333, 0, 37.5] (array[number])
@@ -175,12 +175,12 @@ FORMAT: 1A
 + comments: [Good adjudicator, not too bad] (array[string])
 + user_defined_data_collection: [] (array[object])
 
-### CompiledDebaterResult
+### CompiledSpeakerResult
 + id: 3432522346 (number)
 + average: 75.888889
 + sum: 113.833333
 + sd: 12.53 (number)
-+ details: [] (array[SummarizedDebaterResult])
++ details: [] (array[SummarizedSpeakerResult])
 
 ### CompiledTeamResult
 + id: 3432522346 (number)
@@ -496,18 +496,18 @@ throws an error if the specified team does not exist.
     + tournament_id: 3241087341 (number)
     + venue_id: 321948719034 (number)
 
-## debaters [/tournaments/{tournament_id}/debaters]
+## speakers [/tournaments/{tournament_id}/speakers]
 
 * similar request/response with teams
 + Parameters
     + tournament_id: 3241087341 (number)
 
-## specific debater [/tournaments/{tournament_id}/debaters/{debater_id}]
+## specific speaker [/tournaments/{tournament_id}/speakers/{speaker_id}]
 
 * similar request/response with specific team
 + Parameters
     + tournament_id: 3241087341 (number)
-    + debater_id: 4398201575 (number)
+    + speaker_id: 4398201575 (number)
 
 ## institutions [/tournaments/{tournament_id}/institutions]
 
@@ -541,9 +541,9 @@ throws an error if the specified team does not exist.
 
 ## raw adjudicator results [/tournaments/{tournament_id}/rounds/{r}/adjudicators/results/raw]
 
-## raw debater results [/tournaments/{tournament_id}/debaters/results/raw]
+## raw speaker results [/tournaments/{tournament_id}/speakers/results/raw]
 
-## raw debater results [/tournaments/{tournament_id}/rounds/{r}/debaters/results/raw]
+## raw speaker results [/tournaments/{tournament_id}/rounds/{r}/speakers/results/raw]
 
 # Group Draws
 
@@ -630,7 +630,7 @@ throws an error if the specified team does not exist.
 
 ### compute team allocation [PATCH]
 
- * if simple option is true, it doesn't use debater scores in computing matchups.
+ * if simple option is true, it doesn't use speaker scores in computing matchups.
  + Parameters
     + r: 1 (number)
     + tournament_id: 323242342432 (number)
@@ -715,4 +715,4 @@ throws an error if the specified team does not exist.
 
 ## adjudicator results [/tournaments/{tournament_id}/adjudicators/results]
 
-## debater results [/tournaments/{tournament_id}/debaters/results]
+## speaker results [/tournaments/{tournament_id}/speakers/results]

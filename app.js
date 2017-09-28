@@ -128,7 +128,7 @@ IMPLEMENT COMPILED RESULTS API
 let result_routes = [
     {keys: ['teams', 'results'], path: '/results/teams'},
     {keys: ['adjudicators', 'results'], path: '/results/adjudicators'},
-    {keys: ['debaters', 'results'], path: '/results/debaters'},
+    {keys: ['speakers', 'results'], path: '/results/speakers'},
 ]
 
 for (let route of result_routes) {
@@ -150,7 +150,7 @@ IMPLEMENT RAW RESULTS API
 let raw_routes = [
     {keys: ['teams', 'results'], path: '/results/raw/teams', path_specified: '/rounds/:r/results/raw/teams/:id/:from_id'},
     {keys: ['adjudicators', 'results'], path: '/results/raw/adjudicators', path_specified: '/rounds/:r/results/raw/adjudicators/:id/:from_id'},
-    {keys: ['debaters', 'results'], path: '/results/raw/debaters', path_specified: '/rounds/:r/results/raw/debaters/:id/:from_id'}
+    {keys: ['speakers', 'results'], path: '/results/raw/speakers', path_specified: '/rounds/:r/results/raw/speakers/:id/:from_id'}
 ]
 
 for (let route of raw_routes) {
@@ -303,7 +303,7 @@ var routes = [
     {keys: ['teams'], path: '/teams', unique: 'id'},
     {keys: ['adjudicators'], path: '/adjudicators', unique: 'id'},
     {keys: ['venues'], path: '/venues', unique: 'id'},
-    {keys: ['debaters'], path: '/debaters', unique: 'id'},
+    {keys: ['speakers'], path: '/speakers', unique: 'id'},
     {keys: ['institutions'], path: '/institutions', unique: 'id'},
     {keys: ['rounds'], path: '/rounds', unique: 'r'}
 ]
@@ -398,15 +398,13 @@ app.route('/tournaments')
         if (!dict.hasOwnProperty('name')) {
             respond_error({code: 400, message: "Bad Request", name: "BadRequest"}, res)
         } else {
-            let id = sys.create_hash(dict.name)
-            let db_url = BASEURL + '/'+id
-            dict.id = id
+            let db_url = BASEURL + '/'+dict.id
             dict.db_url = db_url
 
-            DB.tournaments.create({id: id})
+            DB.tournaments.create({id: dict.id})
             .then(function() {
                 let th = new utab.TournamentHandler(db_url, dict)
-                sys.syncadd.push({list: handlers, e: {id: id, handler: th}})
+                sys.syncadd.push({list: handlers, e: {id: dict.id, handler: th}})
                 respond_data(dict, res, 201)
             })
             .catch(err => respond_error(err, res))
@@ -443,7 +441,7 @@ app.use(function(err, req, res, next){
 })
 
 var server = app.listen(PORT)
-winston.info("server started on port: "+PORT+", database address: "+BASEURL)
+winston.info("api server started on port: "+PORT+", database address: "+BASEURL)
 winston.info("static server started on port: "+STATIC_PORT)
 
 var static_server = static_app.use(express.static(__dirname+'/static')).listen(STATIC_PORT)
