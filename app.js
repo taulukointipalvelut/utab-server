@@ -46,6 +46,7 @@ const DBTOURNAMENTSURL = BASEURL+'/_tournaments'
 const DBSTYLEURL = BASEURL+'/_styles'
 const PORT = process.env.PORT || 7024
 const STATIC_PORT = process.env.STATIC_PORT || 8000
+const PREFIX = ''
 
 /*
 INITIALIZE
@@ -132,7 +133,7 @@ let result_routes = [
 ]
 
 for (let route of result_routes) {
-    app.route('/tournaments/:tournament_id'+route.path)
+    app.route(PREFIX+'/tournaments/:tournament_id'+route.path)
         .patch(function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -154,7 +155,7 @@ let raw_routes = [
 ]
 
 for (let route of raw_routes) {
-    app.route('/tournaments/:tournament_id'+route.path)
+    app.route(PREFIX+'/tournaments/:tournament_id'+route.path)
         .get(function(req, res) {//read or find//TESTED//
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -178,7 +179,7 @@ for (let route of raw_routes) {
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             node.deleteAll().then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
         })
-    app.route('/tournaments/:tournament_id'+route.path_specified)
+    app.route(PREFIX+'/tournaments/:tournament_id'+route.path_specified)
         .get(function(req, res) {//read or find//TESTED//
             log_request(req, route.path_specified)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -211,35 +212,35 @@ for (let route of raw_routes) {
 }
 
 /*
-IMPLEMENT ALLOCATION API
+IMPLEMENT DRAW API1
 */
 
-var allocation_routes = [
-    {keys: ['allocations', 'teams'], path: '/allocations/teams', require_pre_allocation: false},
-    {keys: ['allocations', 'adjudicators'], path: '/allocations/adjudicators', require_pre_allocation: true},
-    {keys: ['allocations', 'venues'], path: '/allocations/venues', require_pre_allocation: true},
-    {keys: ['allocations'], path: '/allocations', require_pre_allocation: false}
+var draw_routes1 = [
+    {keys: ['draws', 'teams'], path: '/draws/teams', require_pre_draw: false},
+    {keys: ['draws', 'adjudicators'], path: '/draws/adjudicators', require_pre_draw: true},
+    {keys: ['draws', 'venues'], path: '/draws/venues', require_pre_draw: true},
+    {keys: ['draws'], path: '/draws', require_pre_draw: false}
 ]
 
-for (let route of allocation_routes) {
-    app.route('/tournaments/:tournament_id'+route.path)
+for (let route of draw_routes1) {
+    app.route(PREFIX+'/tournaments/:tournament_id'+route.path)
         .patch(function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let _for = req.body.for
-            if (route.require_pre_allocation) {
-                node.get(_for, req.body.allocation, req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+            if (route.require_pre_draw) {
+                node.get(_for, req.body.draw, req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             } else {
                 node.get(_for, req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             }
         })
-    app.route('/tournaments/:tournament_id/rounds/:r'+route.path)
+    app.route(PREFIX+'/tournaments/:tournament_id/rounds/:r'+route.path)
         .patch(function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let r = parseInt(req.params.r)
-            if (route.require_pre_allocation) {
-                node.get(r, req.body.allocation, req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+            if (route.require_pre_draw) {
+                node.get(r, req.body.draw, req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             } else {
                 node.get(r, req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             }
@@ -247,16 +248,16 @@ for (let route of allocation_routes) {
 }
 
 /*
-IMPLEMENT DRAW API
+IMPLEMENT DRAW API2
 */
 
-var draw_routes = [
+var draw_routes2 = [
     {keys: ['draws'], path: '/draws', specify_r: false},
     {keys: ['draws'], path: '/rounds/:r/draws', specify_r: true}
 ]
 
-for (let route of draw_routes) {
-    app.route('/tournaments/:tournament_id'+route.path)
+for (let route of draw_routes2) {
+    app.route(PREFIX+'/tournaments/:tournament_id'+route.path)
         .get(function(req, res) {
             log_request(req)
             let th = sys.find_tournament(handlers, req.params.tournament_id)
@@ -309,7 +310,7 @@ var routes = [
 ]
 
 for (let route of routes) {
-    app.route('/tournaments/:tournament_id'+route.path)
+    app.route(PREFIX+'/tournaments/:tournament_id'+route.path)
         .get(function(req, res) {//read or find//TESTED//
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -331,7 +332,7 @@ for (let route of routes) {
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             node.deleteAll().then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
         })
-    app.route('/tournaments/:tournament_id'+route.path+'/:'+route.unique)
+    app.route(PREFIX+'/tournaments/:tournament_id'+route.path+'/:'+route.unique)
         .get(function(req, res) {//read or find//TESTED//
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -361,7 +362,7 @@ for (let route of routes) {
 IMPLEMENT TOURNAMENT CONFIG API
 */
 
-app.route('/tournaments/:tournament_id')
+app.route(PREFIX+'/tournaments/:tournament_id')
     .get(function(req, res) {//TESTED//
         log_request(req)
         let th = sys.find_tournament(handlers, req.params.tournament_id)
@@ -387,7 +388,7 @@ app.route('/tournaments/:tournament_id')
 IMPLEMENT TOURNAMENTS API
 */
 
-app.route('/tournaments')
+app.route(PREFIX+'/tournaments')
     .get(function(req, res) {
         Promise.all(handlers.map(h => h.handler.config.read()))
         .then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
@@ -411,7 +412,7 @@ app.route('/tournaments')
         }
     })
 
-app.route('/styles')
+app.route(PREFIX+'/styles')
     .get(function(req, res) {///TESTED///
         log_request(req)
         DB.styles.find(req.query).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
