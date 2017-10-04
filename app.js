@@ -434,6 +434,10 @@ app.route(PREFIX+'/styles')
         DB.styles.delete(req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
     })*/
 
+app.route('/')
+    .get((req, res) => res.redirect('index.html'))
+static_app.use(express.static(__dirname+'/static'))
+
 app.use(function(req, res, next){
 	respond_error({name: 'NotFound', message: 'Not Found', code: 404}, res, 404)
 })
@@ -442,7 +446,6 @@ app.use(function(err, req, res, next){
     respond_error({name: 'InternalServerError', message: 'Internal Server Error', code: 500}, res)
 })
 
-static_app.use(express.static(__dirname+'/static'))
 
 if (PORT !== STATIC_PORT) {
     var server = app.listen(PORT)
