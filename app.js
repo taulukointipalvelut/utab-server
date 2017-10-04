@@ -8,8 +8,16 @@ var sys = require('./src/sys.js')
 var bodyParser = require('body-parser')
 var express = require('express')
 
+const BASEURL = process.env.MONGODB_URI || 'mongodb://localhost'
+const DBTOURNAMENTSURL = BASEURL+'/_tournaments'
+const DBSTYLEURL = BASEURL+'/_styles'
+const PORT = process.env.PORT || 80
+const STATIC_PORT = process.env.PORT || 80
+const PREFIX = '/api'
+
 const app = express()
-const static_app = express()
+const static_app = STATIC_PORT === PORT ? app : express()
+
 /*
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*")
@@ -40,13 +48,6 @@ winston.configure({
         })
     ]
 })
-
-const BASEURL = process.env.MONGODB_URI || 'mongodb://localhost'
-const DBTOURNAMENTSURL = BASEURL+'/_tournaments'
-const DBSTYLEURL = BASEURL+'/_styles'
-const PORT = process.env.PORT || 7024
-const STATIC_PORT = process.env.STATIC_PORT || 8000
-const PREFIX = ''
 
 /*
 INITIALIZE
@@ -441,11 +442,17 @@ app.use(function(err, req, res, next){
     respond_error({name: 'InternalServerError', message: 'Internal Server Error', code: 500}, res)
 })
 
-var server = app.listen(PORT)
-winston.info("api server started on port: "+PORT+", database address: "+BASEURL)
-winston.info("static server started on port: "+STATIC_PORT)
+static_app.use(express.static(__dirname+'/static'))
 
-var static_server = static_app.use(express.static(__dirname+'/static')).listen(STATIC_PORT)
+if (PORT !== STATIC_PORT) {
+    var server = app.listen(PORT)
+    var static_server = static_app.listen(STATIC_PORT)
+    winston.info("api server started on port: "+PORT+", database address: "+BASEURL)
+    winston.info("static server started on port: "+STATIC_PORT)
+} else {
+    var server = app.listen(PORT)
+    winston.info("api and static server started on port: "+PORT+", database address: "+BASEURL)
+}
 
 process.on('exit', function() {
     server.close()
