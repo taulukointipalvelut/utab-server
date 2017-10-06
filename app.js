@@ -168,10 +168,17 @@ for (let route of raw_routes) {
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = req.body
+            function reconverter (d) {
+                let roles = ['leader', 'deputy', 'member', 'reply']
+                if (d.hasOwnProperty('scores')) {
+                    d.scores = roles.map(role => d.scores[role])
+                }
+                return d
+            }
             if (Array.isArray(req.body)) {
-                Promise.all(dict.map(d => node.create(d))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+                Promise.all(dict.map(d => node.create(reconverter(d)))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             } else {
-                node.create(dict).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
+                node.create(reconverter(dict)).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
             }
         })
         .delete(function(req, res) {//create//TESTED//
