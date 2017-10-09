@@ -7,6 +7,11 @@ var TournamentSchema = new mongoose.Schema({
 	versionKey: 'version'
 })
 
+var UserSchema = new mongoose.Schema({
+	id: {type: String, required: true},
+	password: {type: String, required: true}
+})
+
 var StylesSchema = new mongoose.Schema({
 	id: {type: String, required: true, unique: true},
 	name: {type: String, required: true},
@@ -20,6 +25,6 @@ var StylesSchema = new mongoose.Schema({
 	versionKey: 'version'
 })
 
-
+exports.UserSchema = UserSchema
 exports.TournamentSchema = TournamentSchema
 exports.StylesSchema = StylesSchema

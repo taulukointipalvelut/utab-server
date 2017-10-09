@@ -11,6 +11,7 @@ var express = require('express')
 const BASEURL = process.env.MONGODB_URI || 'mongodb://localhost'
 const DBTOURNAMENTSURL = BASEURL+'/_tournaments'
 const DBSTYLEURL = BASEURL+'/_styles'
+const DBUSERURL = BASEURL+'/_users'
 const PORT = process.env.PORT || 80
 const STATIC_PORT = process.env.PORT || 80
 const PREFIX = '/api'
@@ -120,7 +121,7 @@ function log_request(req, path="?") {
     winston.debug('['+req.method+']'+' path '+req.path+' is accessed @ '+path+'\nQuery\n'+JSON.stringify(req.query, null, 2)+'\nRequest\n'+JSON.stringify(req.body, null, 4))
 }
 
-const DB = new controllers.CON({db_url: DBTOURNAMENTSURL, db_style_url: DBSTYLEURL})
+const DB = new controllers.CON({db_url: DBTOURNAMENTSURL, db_style_url: DBSTYLEURL, db_user_url: DBUSERURL})
 winston.info('connected to tournaments database')
 let handlers = connect_to_tournaments(DB)
 

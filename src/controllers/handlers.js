@@ -15,6 +15,23 @@ function arrange_doc(doc) {
     return new_doc
 }
 
+class DBUsersHandler {
+    constructor ({ db_user_url }) {
+        var conn = mongoose.createConnection(db_user_url)
+        this.conn = conn
+        conn.on('error', function (e) {
+            console.log('connection failed: '+e)
+        })
+
+        var Style = conn.model('User', schemas.UserSchema)
+
+        this.users = new UsersCollectionHandler(Style)
+    }
+    close() {
+        this.conn.close()
+    }
+}
+
 class DBStylesHandler {
     constructor({db_style_url: db_style_url}) {
         var conn = mongoose.createConnection(db_style_url)
@@ -115,6 +132,7 @@ class _CollectionHandler {//TESTED// returns Promise object
         })
     }
 }
+
 class TournamentsCollectionHandler extends _CollectionHandler {
     constructor(Model) {
         super(Model, ['id'])
@@ -127,8 +145,15 @@ class StylesCollectionHandler extends _CollectionHandler {
     }
 }
 
+class UsersCollectionHandler extends _CollectionHandler {
+    constructor(Model) {
+        super(Model, ['id'])
+    }
+}
+
 exports.DBTournamentsHandler = DBTournamentsHandler
 exports.DBStylesHandler = DBStylesHandler
+exports.DBUsersHandler = DBUsersHandler
 
 //var dt = new DBTournamentsHandler()
 //dt.create({id: 3, name: "hi"}).then(dt.read().then(console.log)).catch(console.error)
