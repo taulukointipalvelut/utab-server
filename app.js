@@ -170,17 +170,10 @@ for (let route of raw_routes) {
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = req.body
-            function reconverter (d) {
-                let roles = ['leader', 'deputy', 'member', 'reply']
-                if (d.hasOwnProperty('scores')) {
-                    d.scores = roles.map(role => d.scores[role])
-                }
-                return d
-            }
             if (Array.isArray(req.body)) {
-                Promise.all(dict.map(d => node.create(reconverter(d)))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+                Promise.all(dict.map(d => node.create(d))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             } else {
-                node.create(reconverter(dict)).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
+                node.create(dict).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
             }
         })
         .delete(function(req, res) {//create//TESTED//
@@ -233,7 +226,7 @@ var draw_routes1 = [
 ]
 
 for (let route of draw_routes1) {
-    app.route(PREFIX+'/tournaments/:tournament_id'+route.path)
+    /*app.route(PREFIX+'/tournaments/:tournament_id'+route.path)
         .patch(function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -243,16 +236,16 @@ for (let route of draw_routes1) {
             } else {
                 node.get(_for, req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             }
-        })
+        })*/
     app.route(PREFIX+'/tournaments/:tournament_id/rounds/:r'+route.path)
         .patch(function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let r = parseInt(req.params.r)
             if (route.require_pre_draw) {
-                node.get(r, req.body.draw, req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+                node.get(r, req.body.draw, req.body.options).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             } else {
-                node.get(r, req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+                node.get(r, req.body.options).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             }
         })
 }
