@@ -7,7 +7,8 @@ const controllers = require('./src/controllers.js')
 const sys = require('./src/sys.js')
 const bodyParser = require('body-parser')
 const express = require('express')
-const cookieSession = require('cookie-session')
+const session = require('express-session')
+const randtoken = require('rand-token')
 
 const BASEURL = process.env.MONGODB_URI || 'mongodb://localhost'
 const DBTOURNAMENTSURL = BASEURL+'/_tournaments'
@@ -19,12 +20,25 @@ const PREFIX = '/api'
 const app = express()
 const api_routes = express.Router()
 
+app.use(function (req, res, next) {
+    //res.header("Access-Control-Allow-Origin", "http://localhost:8010")
+    res.header("Access-Control-Allow-Origin", req.headers['origin'])
+    res.header("Access-Control-Allow-Methods", req.headers['access-control-request-method'])
+    res.header("Access-Control-Allow-Headers", "Authorization,Origin,X-Requested-With,Content-Type,Accept")
+    res.header("Access-Control-Allow-Credentials", "true")
+    if (req.method === 'OPTIONS') {
+        res.sendStatus(200)
+    } else {
+        return next()
+    }
+})
+app.use(session({
+    secret: 'secret key',
+    resave: false,
+    saveUninitialized: true
+}))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-app.use(cookieSession({
-  name: 'session',
-  keys: ['key1', 'key2']
-}))
 
 winston.configure({
     transports: [
@@ -117,22 +131,35 @@ function log_request(req, path="?") {
     winston.debug('['+req.method+']'+' path '+req.path+' is accessed @ '+path+'\nQuery\n'+JSON.stringify(req.query, null, 2)+'\nRequest\n'+JSON.stringify(req.body, null, 4))
 }
 
+function authenticate(req, res, next) {
+    if (req.body.username === 'admin' && req.body.password === 'nimda') {
+        req.session.admin = true
+        req.session.username = req.body.username
+        return next()
+    } else {
+        respond_error({ name: "LoginFailed", message: "Incorrect Username or Password", code: 401 }, res, 401)
+    }
+}
+
+function is_auth (req) {
+    if (req.session && req.session.admin) {
+        return true
+    } else {
+        return false
+    }
+}
+
+function check_auth (req, res, next) {
+    if (is_auth(req)) {
+        return next()
+    } else {
+        respond_error({ name: "InvalidSession", message: "Invalid Session", code: 401 }, res, 401)
+    }
+}
+
 const DB = new controllers.CON({db_url: DBTOURNAMENTSURL, db_style_url: DBSTYLEURL, db_user_url: DBUSERURL})
 winston.info('connected to tournaments database')
 let handlers = connect_to_tournaments(DB)
-
-function isAuth (req, res, next) {
-    console.log(req.headers)
-    console.log(req.headers.session)
-    let session = req.get('Session')
-    if (session === 'dsZKlfaadlsifuasd23adsfha0das') {
-        console.log("authorized")
-        return next()
-    } else {
-        console.log("unauthorized")
-        return next()
-    }
-}
 
 /*
 IMPLEMENT COMPILED RESULTS API
@@ -146,7 +173,7 @@ let result_routes = [
 
 for (let route of result_routes) {
     api_routes.route('/tournaments/:tournament_id'+route.path)
-        .patch(function(req, res) {
+        .patch(check_auth, function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let options = req.body.options || {}
@@ -169,12 +196,19 @@ let raw_routes = [
 for (let route of raw_routes) {
     api_routes.route('/tournaments/:tournament_id'+route.path)
         .get(function(req, res) {//read or find//TESTED//
-            log_request(req, route.path)
-            let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            let dict = req.query
-            node.find(dict).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+            if (!is_auth(req)) {
+                log_request(req, route.path)
+                let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
+                let dict = req.query
+                node.summarize().then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+            } else {
+                log_request(req, route.path)
+                let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
+                let dict = req.query
+                node.find(dict).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+            }
         })
-        .post(function(req, res) {//create//TESTED//
+        .post(check_auth, function(req, res) {//create//TESTED//
             log_request(req, route.path)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -185,14 +219,14 @@ for (let route of raw_routes) {
                 node.create(dict).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
             }
         })
-        .delete(function(req, res) {//create//TESTED//
+        .delete(check_auth, function(req, res) {//create//TESTED//
             log_request(req, route.path)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             node.deleteAll().then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
         })
     api_routes.route('/tournaments/:tournament_id'+route.path_specified)
-        .get(function(req, res) {//read or find//TESTED//
+        .get(check_auth, function(req, res) {//read or find//TESTED//
             log_request(req, route.path_specified)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = req.query
@@ -201,7 +235,7 @@ for (let route of raw_routes) {
             dict.id = parseInt(req.params.id)
             node.find(dict).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
         })
-        .put(function(req, res) {//update//TESTED//
+        .put(check_auth, function(req, res) {//update//TESTED//
             log_request(req, route.path_specified)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -211,7 +245,7 @@ for (let route of raw_routes) {
             dict.id = parseInt(req.params.id)
             node.update(dict).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res, 404))
         })
-        .delete(function(req, res) {//delete//TESTED//
+        .delete(check_auth, function(req, res) {//delete//TESTED//
             log_request(req, route.path_specified)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -247,7 +281,7 @@ for (let route of draw_routes1) {
             }
         })*/
     api_routes.route('/tournaments/:tournament_id/rounds/:r'+route.path)
-        .patch(function(req, res) {
+        .patch(check_auth, function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let r = parseInt(req.params.r)
@@ -328,7 +362,7 @@ for (let route of routes) {
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             node.find(req.query).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
         })
-        .post(function(req, res) {//create//TESTED//
+        .post(check_auth, function(req, res) {//create//TESTED//
             log_request(req, route.path)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -338,7 +372,7 @@ for (let route of routes) {
                 node.create(req.body).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
             }
         })
-        .delete(function(req, res) {
+        .delete(check_auth, function(req, res) {
             log_request(req, route.path)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -352,7 +386,7 @@ for (let route of routes) {
             dict[route.unique] = parseInt(req.params[route.unique])
             node.findOne(dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
         })
-        .put(function(req, res) {//update//TESTED//
+        .put(check_auth, function(req, res) {//update//TESTED//
             log_request(req, route.path)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -360,7 +394,7 @@ for (let route of routes) {
             dict[route.unique] = parseInt(req.params[route.unique])
             node.update(dict).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res, 404))
         })
-        .delete(function(req, res) {//delete//TESTED//
+        .delete(check_auth, function(req, res) {//delete//TESTED//
             log_request(req, route.path)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -380,12 +414,12 @@ api_routes.route('/tournaments/:tournament_id')
         let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.config.read().then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
     })
-    .put(function(req, res) {
+    .put(check_auth, function(req, res) {
         log_request(req)
         let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.config.update(req.body).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
     })
-    .delete(function(req, res) {//TESTED//
+    .delete(check_auth, function(req, res) {//TESTED//
         log_request(req)
         DB.tournaments.delete({id: parseInt(req.params.tournament_id)}).then(doc => respond_data(doc, res))
         .then(function () {
@@ -401,12 +435,12 @@ IMPLEMENT TOURNAMENTS API
 */
 
 api_routes.route('/tournaments')
-    .get(isAuth, function(req, res) {
+    .get(function(req, res) {
         log_request(req)
         Promise.all(handlers.map(h => h.handler.config.read()))
         .then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
     })
-    .post(function(req, res) {
+    .post(check_auth, function(req, res) {
         log_request(req)
         let dict = _.clone(req.body)
         if (!dict.hasOwnProperty('name')) {
@@ -430,7 +464,7 @@ api_routes.route('/styles')
         log_request(req)
         DB.styles.find(req.query).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
     })
-    .post(function(req, res) {///TESTED///
+    .post(check_auth, function(req, res) {///TESTED///
         log_request(req)
         req.accepts('application/json')
         DB.styles.create(req.body).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
@@ -447,15 +481,18 @@ api_routes.route('/styles')
     })*/
 
 api_routes.route('/login')
-    .get(function (req, res) {
-        req.session.views = (req.session.views || 0) + 1
-        respond_data({ views: String(req.session.views) }, res)
+    .post(authenticate, function (req, res) {///TESTED///
+        log_request(req)
+        //req.session.token = randtoken.generate(40)
+        respond_data(true, res)
     })
-    .post(function (req, res, next) {///TESTED///
+
+api_routes.route('/logout')
+    .get(function (req, res) {///TESTED///
         log_request(req)
         req.accepts('application/json')
-        respond_data({ session: 'dsZKlfaadlsifuasd23adsfha0das' }, res)
-        //respond_error({ name: "LoginFailed", message: "Incorrect username or password", code: 401 }, res, 401)
+        req.session.destroy()
+        respond_data(null, res)
     })
 
 app.use(PREFIX, api_routes)
@@ -468,10 +505,10 @@ app.use(express.static(__dirname+'/static'))
 app.use(function(req, res, next){
 	respond_error({name: 'NotFound', message: 'Not Found', code: 404}, res, 404)
 })
-/*
+
 app.use(function(err, req, res, next){
     respond_error({name: 'InternalServerError', message: 'Internal Server Error', code: 500}, res)
-})*/
+})
 
 let server = app.listen(PORT)
 winston.info("server started on port: "+PORT+", database address: "+BASEURL)
