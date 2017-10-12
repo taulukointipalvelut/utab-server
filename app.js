@@ -1,31 +1,22 @@
 "use strict";
 
-var winston = require('winston')
-var _ = require('underscore')
-var utab = require('./lib/utab-core/utab.js')
-var controllers = require('./src/controllers.js')
-var sys = require('./src/sys.js')
-var bodyParser = require('body-parser')
-var express = require('express')
+const winston = require('winston')
+const _ = require('underscore')
+const utab = require('./lib/utab-core/utab.js')
+const controllers = require('./src/controllers.js')
+const sys = require('./src/sys.js')
+const bodyParser = require('body-parser')
+const express = require('express')
 
 const BASEURL = process.env.MONGODB_URI || 'mongodb://localhost'
 const DBTOURNAMENTSURL = BASEURL+'/_tournaments'
 const DBSTYLEURL = BASEURL+'/_styles'
 const DBUSERURL = BASEURL+'/_users'
 const PORT = process.env.PORT || 80
-const STATIC_PORT = process.env.PORT || 80
 const PREFIX = '/api'
 
 const app = express()
-const static_app = STATIC_PORT === PORT ? app : express()
-
-/*
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*")
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
-    next()
-})*/
+const api_routes = express.Router()
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -125,6 +116,19 @@ const DB = new controllers.CON({db_url: DBTOURNAMENTSURL, db_style_url: DBSTYLEU
 winston.info('connected to tournaments database')
 let handlers = connect_to_tournaments(DB)
 
+function isAuth (req, res, next) {
+    console.log(req.headers)
+    console.log(req.headers.session)
+    let session = req.get('Session')
+    if (session === 'dsZKlfaadlsifuasd23adsfha0das') {
+        console.log("authorized")
+        return next()
+    } else {
+        console.log("unauthorized")
+        return next()
+    }
+}
+
 /*
 IMPLEMENT COMPILED RESULTS API
 */
@@ -136,7 +140,7 @@ let result_routes = [
 ]
 
 for (let route of result_routes) {
-    app.route(PREFIX+'/tournaments/:tournament_id'+route.path)
+    api_routes.route('/tournaments/:tournament_id'+route.path)
         .patch(function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -158,7 +162,7 @@ let raw_routes = [
 ]
 
 for (let route of raw_routes) {
-    app.route(PREFIX+'/tournaments/:tournament_id'+route.path)
+    api_routes.route('/tournaments/:tournament_id'+route.path)
         .get(function(req, res) {//read or find//TESTED//
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -182,7 +186,7 @@ for (let route of raw_routes) {
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             node.deleteAll().then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
         })
-    app.route(PREFIX+'/tournaments/:tournament_id'+route.path_specified)
+    api_routes.route('/tournaments/:tournament_id'+route.path_specified)
         .get(function(req, res) {//read or find//TESTED//
             log_request(req, route.path_specified)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -226,7 +230,7 @@ var draw_routes1 = [
 ]
 
 for (let route of draw_routes1) {
-    /*app.route(PREFIX+'/tournaments/:tournament_id'+route.path)
+    /*api_routes.route('/tournaments/:tournament_id'+route.path)
         .patch(function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -237,7 +241,7 @@ for (let route of draw_routes1) {
                 node.get(_for, req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             }
         })*/
-    app.route(PREFIX+'/tournaments/:tournament_id/rounds/:r'+route.path)
+    api_routes.route('/tournaments/:tournament_id/rounds/:r'+route.path)
         .patch(function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -260,7 +264,7 @@ var draw_routes2 = [
 ]
 
 for (let route of draw_routes2) {
-    app.route(PREFIX+'/tournaments/:tournament_id'+route.path)
+    api_routes.route('/tournaments/:tournament_id'+route.path)
         .get(function(req, res) {
             log_request(req)
             let th = sys.find_tournament(handlers, req.params.tournament_id)
@@ -313,7 +317,7 @@ var routes = [
 ]
 
 for (let route of routes) {
-    app.route(PREFIX+'/tournaments/:tournament_id'+route.path)
+    api_routes.route('/tournaments/:tournament_id'+route.path)
         .get(function(req, res) {//read or find//TESTED//
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -335,7 +339,7 @@ for (let route of routes) {
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             node.deleteAll().then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
         })
-    app.route(PREFIX+'/tournaments/:tournament_id'+route.path+'/:'+route.unique)
+    api_routes.route('/tournaments/:tournament_id'+route.path+'/:'+route.unique)
         .get(function(req, res) {//read or find//TESTED//
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -365,7 +369,7 @@ for (let route of routes) {
 IMPLEMENT TOURNAMENT CONFIG API
 */
 
-app.route(PREFIX+'/tournaments/:tournament_id')
+api_routes.route('/tournaments/:tournament_id')
     .get(function(req, res) {//TESTED//
         log_request(req)
         let th = sys.find_tournament(handlers, req.params.tournament_id)
@@ -391,8 +395,9 @@ app.route(PREFIX+'/tournaments/:tournament_id')
 IMPLEMENT TOURNAMENTS API
 */
 
-app.route(PREFIX+'/tournaments')
-    .get(function(req, res) {
+api_routes.route('/tournaments')
+    .get(isAuth, function(req, res) {
+        log_request(req)
         Promise.all(handlers.map(h => h.handler.config.read()))
         .then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
     })
@@ -415,7 +420,7 @@ app.route(PREFIX+'/tournaments')
         }
     })
 
-app.route(PREFIX+'/styles')
+api_routes.route('/styles')
     .get(function(req, res) {///TESTED///
         log_request(req)
         DB.styles.find(req.query).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
@@ -436,32 +441,34 @@ app.route(PREFIX+'/styles')
         DB.styles.delete(req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
     })*/
 
+api_routes.route('/login')
+    .post(function (req, res, next) {///TESTED///
+        log_request(req)
+        req.accepts('application/json')
+        respond_data({ session: 'dsZKlfaadlsifuasd23adsfha0das' }, res)
+        //respond_error({ name: "LoginFailed", message: "Incorrect username or password", code: 401 }, res, 401)
+    })
+
+app.use(PREFIX, api_routes)
+
 app.route('/')
     .get((req, res) => res.redirect('index.html'))
-static_app.use(express.static(__dirname+'/static'))
+
+app.use(express.static(__dirname+'/static'))
 
 app.use(function(req, res, next){
 	respond_error({name: 'NotFound', message: 'Not Found', code: 404}, res, 404)
 })
-
+/*
 app.use(function(err, req, res, next){
     respond_error({name: 'InternalServerError', message: 'Internal Server Error', code: 500}, res)
-})
+})*/
 
-
-if (PORT !== STATIC_PORT) {
-    var server = app.listen(PORT)
-    var static_server = static_app.listen(STATIC_PORT)
-    winston.info("api server started on port: "+PORT+", database address: "+BASEURL)
-    winston.info("static server started on port: "+STATIC_PORT)
-} else {
-    var server = app.listen(PORT)
-    winston.info("api and static server started on port: "+PORT+", database address: "+BASEURL)
-}
+let server = app.listen(PORT)
+winston.info("server started on port: "+PORT+", database address: "+BASEURL)
 
 process.on('exit', function() {
     server.close()
-    static_server.close()
     for (let t of handlers) {
         t.handler.close()
         DB.close()
