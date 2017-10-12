@@ -7,6 +7,7 @@ const controllers = require('./src/controllers.js')
 const sys = require('./src/sys.js')
 const bodyParser = require('body-parser')
 const express = require('express')
+const cookieSession = require('cookie-session')
 
 const BASEURL = process.env.MONGODB_URI || 'mongodb://localhost'
 const DBTOURNAMENTSURL = BASEURL+'/_tournaments'
@@ -20,6 +21,10 @@ const api_routes = express.Router()
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2']
+}))
 
 winston.configure({
     transports: [
@@ -442,6 +447,10 @@ api_routes.route('/styles')
     })*/
 
 api_routes.route('/login')
+    .get(function (req, res) {
+        req.session.views = (req.session.views || 0) + 1
+        respond_data({ views: String(req.session.views) }, res)
+    })
     .post(function (req, res, next) {///TESTED///
         log_request(req)
         req.accepts('application/json')
