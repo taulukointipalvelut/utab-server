@@ -33,7 +33,7 @@ app.use(function (req, res, next) {
     }
 })
 app.use(session({
-    secret: 'secret key',
+    secret: randtoken.generate(16),
     resave: false,
     saveUninitialized: true
 }))
@@ -488,7 +488,7 @@ api_routes.route('/login')
     })
 
 api_routes.route('/logout')
-    .get(function (req, res) {///TESTED///
+    .delete(function (req, res) {///TESTED///
         log_request(req)
         req.accepts('application/json')
         req.session.destroy()
