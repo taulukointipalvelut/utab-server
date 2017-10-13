@@ -16,6 +16,7 @@ const DBSTYLEURL = BASEURL+'/_styles'
 const DBUSERURL = BASEURL+'/_users'
 const PORT = process.env.PORT || 80
 const PREFIX = '/api'
+const SESSIONMAXAGE = 36000000
 
 const app = express()
 const api_routes = express.Router()
@@ -35,7 +36,10 @@ app.use(function (req, res, next) {
 app.use(session({
     secret: randtoken.generate(16),
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        maxAge: SESSIONMAXAGE
+    }
 }))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -484,7 +488,7 @@ api_routes.route('/login')
     .post(authenticate, function (req, res) {///TESTED///
         log_request(req)
         //req.session.token = randtoken.generate(40)
-        respond_data(true, res)
+        respond_data(SESSIONMAXAGE, res)
     })
 
 api_routes.route('/logout')
