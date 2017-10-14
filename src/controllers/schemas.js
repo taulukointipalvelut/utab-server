@@ -10,13 +10,20 @@ var TournamentSchema = new mongoose.Schema({
 var UserSchema = new mongoose.Schema({
 	id: {type: String, required: true},
 	password: {type: String, required: true}
+},{
+    timestamps: {createdAt: 'created', updatedAt: 'updated'},
+	versionKey: 'version'
 })
 
 var StylesSchema = new mongoose.Schema({
-	id: {type: String, required: true, unique: true},
+	id: {type: Number, required: true, unique: true},
 	name: {type: String, required: true},
 	team_num: {type: Number, required: true},
 	score_weights: {type: mongoose.Schema.Types.Mixed, required: true},
+	side_labels: {type: mongoose.Schema.Types.Mixed, default: { gov: "Government", opp: "Opposition" }},
+	side_labels_short: {type: mongoose.Schema.Types.Mixed, default: { gov: "Gov", opp: "Opp" }},
+	speaker_sequence: {type: mongoose.Schema.Types.Mixed, required: true},
+	roles: {type: mongoose.Schema.Types.Mixed, required: true},
     user_defined_data: {type: mongoose.Schema.Types.Mixed, default: {}}
 },{
     timestamps: {createdAt: 'created', updatedAt: 'updated'},

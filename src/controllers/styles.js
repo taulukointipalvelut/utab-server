@@ -16,7 +16,31 @@ module.exports = [
 			{order: 2, value: 1},
 			{order: 3, value: 1},
 			{order: 4, value: 1}
-		]
+		],
+        speaker_sequence: [
+          { order: 1, value: 'gov-1' },
+          { order: 2, value: 'opp-1' },
+          { order: 3, value: 'gov-2' },
+          { order: 4, value: 'opp-2' },
+          { order: 5, value: 'gov-3' },
+          { order: 6, value: 'opp-3' },
+          { order: 7, value: 'opp-4' },
+          { order: 8, value: 'gov-4' }
+        ],
+        roles: {
+            gov: [
+              { order: 1, long: 'Constructive', abbr: 'Con', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 2, long: 'Attack', abbr: 'Att', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 3, long: 'Defence', abbr: 'Def', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 4, long: 'Summary', abbr: 'Sum', range: { from: 1, to: 10, unit: 1, default: 5 } }
+            ],
+            opp: [
+              { order: 1, long: 'Constructive', abbr: 'Con', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 2, long: 'Attack', abbr: 'Att', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 3, long: 'Defence', abbr: 'Def', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 4, long: 'Summary', abbr: 'Sum', range: { from: 1, to: 10, unit: 1, default: 5 } }
+            ]
+        }
 	},
 	{
 		id: 2,
@@ -34,8 +58,28 @@ module.exports = [
 			{order: 1, value: 1},
 			{order: 2, value: 1},
 			{order: 3, value: 0.5}
-		]
-	},
+		],
+        speaker_sequence: [
+          { order: 1, value: 'gov-1' },
+          { order: 2, value: 'opp-1' },
+          { order: 3, value: 'gov-2' },
+          { order: 4, value: 'opp-2' },
+          { order: 5, value: 'opp-3' },
+          { order: 6, value: 'gov-3' },
+        ],
+        roles: {
+            gov: [
+              { order: 1, long: 'Prime Minister', abbr: 'PM', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 2, long: 'Member of Government', abbr: 'MG', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 3, long: 'Government Reply', abbr: 'GR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+            ],
+            opp: [
+              { order: 1, long: 'Leader of Opposition', abbr: 'LO', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 2, long: 'Member of Opposition', abbr: 'MO', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 3, long: 'Opposition Reply', abbr: 'OR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+            ]
+        }
+	},/*
 	{
 		id: 3,
 		name: "NAFA",
@@ -54,7 +98,7 @@ module.exports = [
 			{order: 3, value: 1},
 			{order: 4, value: 1}
 		]
-	},
+	},*/
 	{
 		id: 4,
 		name: "PDA3",
@@ -71,7 +115,27 @@ module.exports = [
 			{order: 1, value: 1},
 			{order: 2, value: 1},
 			{order: 3, value: 1}
-		]
+		],
+        speaker_sequence: [
+          { order: 1, value: 'gov-1' },
+          { order: 2, value: 'opp-1' },
+          { order: 3, value: 'gov-2' },
+          { order: 4, value: 'opp-2' },
+          { order: 5, value: 'opp-3' },
+          { order: 6, value: 'gov-3' }
+        ],
+        roles: {
+            gov: [
+              { order: 1, long: 'Prime Minister', abbr: 'PM', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 2, long: 'Member of Government', abbr: 'MG', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 3, long: 'Government Reply', abbr: 'GR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+            ],
+            opp: [
+              { order: 1, long: 'Leader of Opposition', abbr: 'LO', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 2, long: 'Member of Opposition', abbr: 'MO', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 3, long: 'Opposition Reply', abbr: 'OR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+            ]
+        }
 	},
 	{
 		id: 5,
@@ -90,7 +154,31 @@ module.exports = [
 			{order: 2, value: 0.5},
 			{order: 3, value: 0.5},
 			{order: 4, value: 1}
-		]
+		],
+        speaker_sequence: [
+          { order: 1, value: 'gov-1' },
+          { order: 2, value: 'opp-1' },
+          { order: 3, value: 'gov-2' },
+          { order: 4, value: 'gov-3' },
+          { order: 5, value: 'opp-2' },
+          { order: 6, value: 'opp-3' },
+          { order: 7, value: 'opp-4' },
+          { order: 8, value: 'gov-4' }
+        ],
+        roles: {
+            gov: [
+              { order: 1, long: 'Prime Minister', abbr: 'PM', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 2, long: 'Member of Government1', abbr: 'MG1', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 3, long: 'Member of Government2', abbr: 'MG2', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 4, long: 'Government Reply', abbr: 'GR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+            ],
+            opp: [
+              { order: 1, long: 'Leader of Opposition', abbr: 'LO', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 2, long: 'Member of Opposition1', abbr: 'MO1', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 3, long: 'Member of Opposition2', abbr: 'MO2', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 4, long: 'Opposition Reply', abbr: 'OR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+            ]
+        }
 	},
 	{
 		id: 6,
@@ -109,7 +197,31 @@ module.exports = [
 			{order: 2, value: 1},
 			{order: 3, value: 1},
 			{order: 4, value: 0.5}
-		]
+		],
+        speaker_sequence: [
+          { order: 1, value: 'gov-1' },
+          { order: 2, value: 'opp-1' },
+          { order: 3, value: 'gov-2' },
+          { order: 4, value: 'opp-2' },
+          { order: 5, value: 'gov-3' },
+          { order: 6, value: 'opp-3' },
+          { order: 7, value: 'opp-4' },
+          { order: 8, value: 'gov-4' }
+        ],
+        roles: {
+            gov: [
+              { order: 1, long: 'Prime Minister', abbr: 'PM', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 2, long: 'Member of Government', abbr: 'MG', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 3, long: 'Whip', abbr: 'Whip', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 4, long: 'Government Reply', abbr: 'GR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+            ],
+            opp: [
+              { order: 1, long: 'Leader of Opposition', abbr: 'LO', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 2, long: 'Member of Opposition', abbr: 'MO', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 3, long: 'Whip', abbr: 'Whip', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 4, long: 'Opposition Reply', abbr: 'OR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+            ]
+        }
 	},/*
 	{
 		id: 7,
@@ -122,7 +234,7 @@ module.exports = [
 			{order: 2, value: 1}
 		]
 	},*/
-	{
+	/*{
 		id: 8,
 		name: "Public Forum",
 		team_num: 2,
@@ -140,5 +252,5 @@ module.exports = [
 			{order: 3, value: 1},
 			{order: 4, value: 1}
 		]
-	}
+	}*/
 ]
