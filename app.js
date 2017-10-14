@@ -425,12 +425,14 @@ api_routes.route('/tournaments/:tournament_id')
     })
     .delete(check_auth, function(req, res) {//TESTED//
         log_request(req)
-        DB.tournaments.delete({id: parseInt(req.params.tournament_id)}).then(doc => respond_data(doc, res))
-        .then(function () {
+        DB.tournaments.delete({id: parseInt(req.params.tournament_id)})
+        .then(function (doc) {
             let th = sys.find_tournament(handlers, parseInt(req.params.tournament_id))
-            th.close()
+            th.destroy()
             handlers = handlers.filter(hd => hd.id !== parseInt(req.params.tournament_id))
+            return doc
         })
+        .then(doc => respond_data(doc, res))
         .catch(err => respond_error(err, res, 404))
     })
 
