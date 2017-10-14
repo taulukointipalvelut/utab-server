@@ -2,7 +2,6 @@ module.exports = [
 	{
 		id: 1,
 		name: "Academic",
-		speaker_num_per_team: 4,
 		team_num: 2,
 		side_labels: {
 			gov: "Affirmative",
@@ -22,7 +21,6 @@ module.exports = [
 	{
 		id: 2,
 		name: "North American",
-		speaker_num_per_team: 2,
 		team_num: 2,
 		side_labels: {
 			gov: "Government",
@@ -41,7 +39,6 @@ module.exports = [
 	{
 		id: 3,
 		name: "NAFA",
-		speaker_num_per_team: 2,
 		team_num: 2,
 		side_labels: {
 			gov: "Affirmative",
@@ -61,7 +58,6 @@ module.exports = [
 	{
 		id: 4,
 		name: "PDA3",
-		speaker_num_per_team: 3,
 		team_num: 2,
 		side_labels: {
 			gov: "Government",
@@ -80,7 +76,6 @@ module.exports = [
 	{
 		id: 5,
 		name: "PDA4",
-		speaker_num_per_team: 4,
 		team_num: 2,
 		side_labels: {
 			gov: "Government",
@@ -100,7 +95,6 @@ module.exports = [
 	{
 		id: 6,
 		name: "Asian",
-		speaker_num_per_team: 3,
 		team_num: 2,
 		side_labels: {
 			gov: "Government",
@@ -120,7 +114,6 @@ module.exports = [
 	{
 		id: 7,
 		name: "British Parliamentary",
-		speaker_num_per_team: 2,
 		team_num: 4,
 		side_labels: ["Opening Government", "Opening Opposition", "Closing Government", "Closing Opposition"],
 		side_labels_short: ["OG", "OO", "CG", "CO"],
@@ -132,7 +125,6 @@ module.exports = [
 	{
 		id: 8,
 		name: "Public Forum",
-		speaker_num_per_team: 2,
 		team_num: 2,
 		side_labels: {
 			gov: "Affirmative",
