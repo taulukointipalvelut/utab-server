@@ -212,7 +212,7 @@ for (let route of raw_routes) {
                 node.find(dict).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             }
         })
-        .post(check_auth, function(req, res) {//create//TESTED//
+        .post(function(req, res) {//create//TESTED//
             log_request(req, route.path)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
