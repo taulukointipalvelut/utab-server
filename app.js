@@ -462,7 +462,6 @@ api_routes.route('/tournaments')
             let id = hash(dict.name, false)
             let db_url = BASEURL + '/'+id
             dict.id = id
-            dict.db_url = db_url
 
             DB.tournaments.create({id: id})
                 .then(function () {
