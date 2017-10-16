@@ -29,16 +29,16 @@ module.exports = [
         ],
         roles: {
             gov: [
-              { order: 1, long: 'Constructive', abbr: 'Con', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 2, long: 'Attack', abbr: 'Att', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 3, long: 'Defence', abbr: 'Def', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 4, long: 'Summary', abbr: 'Sum', range: { from: 1, to: 10, unit: 1, default: 5 } }
+              { order: 1, long: 'Constructive', abbr: 'Const', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 2, long: 'Attack', abbr: 'Attack', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 3, long: 'Defense', abbr: 'Defense', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 4, long: 'Summary', abbr: 'Summary', range: { from: 1, to: 10, unit: 1, default: 5 } }
             ],
             opp: [
-              { order: 1, long: 'Constructive', abbr: 'Con', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 2, long: 'Attack', abbr: 'Att', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 3, long: 'Defence', abbr: 'Def', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 4, long: 'Summary', abbr: 'Sum', range: { from: 1, to: 10, unit: 1, default: 5 } }
+              { order: 1, long: 'Constructive', abbr: 'Const', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 2, long: 'Attack', abbr: 'Attack', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 3, long: 'Defense', abbr: 'Defense', range: { from: 1, to: 10, unit: 1, default: 5 } },
+              { order: 4, long: 'Summary', abbr: 'Summary', range: { from: 1, to: 10, unit: 1, default: 5 } }
             ]
         }
 	},
