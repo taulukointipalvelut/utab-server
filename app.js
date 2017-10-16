@@ -9,6 +9,7 @@ const bodyParser = require('body-parser')
 const express = require('express')
 const session = require('express-session')
 const randtoken = require('rand-token')
+const md5 = require('blueimp-md5')
 
 const BASEURL = process.env.MONGODB_URI || 'mongodb://localhost'
 const DBTOURNAMENTSURL = BASEURL+'/_tournaments'
@@ -68,6 +69,11 @@ winston.configure({
 /*
 INITIALIZE
 */
+
+function hash (val, random=true) {
+    let date = random ? Date.now() : 0
+    return parseInt(md5(val, date).slice(0, Number.MAX_SAFE_INTEGER.toString().length - 2), 16)
+}
 
 function convert_name_if_exists(dict, from, to, convert='boolean') {
     let new_dict = _.clone(dict)
@@ -451,18 +457,20 @@ api_routes.route('/tournaments')
         log_request(req)
         let dict = _.clone(req.body)
         if (!dict.hasOwnProperty('name')) {
-            respond_error({code: 400, message: "Bad Request", name: "BadRequest"}, res)
+            respond_error({code: 400, message: "Tournament Name Required", name: "NameRequired"}, res)
         } else {
-            let db_url = BASEURL + '/'+dict.id
+            let id = hash(dict.name, false)
+            let db_url = BASEURL + '/'+id
+            dict.id = id
             dict.db_url = db_url
 
-            DB.tournaments.create({id: dict.id})
-            .then(function() {
-                let th = new utab.TournamentHandler(db_url, dict)
-                sys.syncadd.push({list: handlers, e: {id: dict.id, handler: th}})
-                respond_data(dict, res, 201)
-            })
-            .catch(err => respond_error(err, res))
+            DB.tournaments.create({id: id})
+                .then(function () {
+                    let th = new utab.TournamentHandler(db_url, dict)
+                    sys.syncadd.push({list: handlers, e: {id: id, handler: th}})
+                    respond_data(dict, res, 201)
+                })
+                .catch(err => respond_error(err, res))
         }
     })
 
