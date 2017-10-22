@@ -222,21 +222,10 @@ module.exports = [
               { order: 4, long: 'Opposition Reply', abbr: 'OR', range: { from: 1, to: 10, unit: 1, default: 5 } }
             ]
         }
-	},/*
+	},
 	{
 		id: 7,
-		name: "British Parliamentary",
-		team_num: 4,
-		side_labels: ["Opening Government", "Opening Opposition", "Closing Government", "Closing Opposition"],
-		side_labels_short: ["OG", "OO", "CG", "CO"],
-		score_weights: [
-			{order: 1, value: 1},
-			{order: 2, value: 1}
-		]
-	},*/
-	/*{
-		id: 8,
-		name: "Public Forum",
+		name: "1vs1",
 		team_num: 2,
 		side_labels: {
 			gov: "Affirmative",
@@ -247,10 +236,19 @@ module.exports = [
 			opp: "Neg"
 		},
 		score_weights: [
-			{order: 1, value: 1},
-			{order: 2, value: 1},
-			{order: 3, value: 1},
-			{order: 4, value: 1}
-		]
-	}*/
+			{order: 1, value: 1}
+		],
+        speaker_sequence: [
+          { order: 1, value: 'gov-1' },
+          { order: 2, value: 'opp-1' }
+        ],
+        roles: {
+            gov: [
+              { order: 1, long: 'Constructive', abbr: 'Const', range: { from: 70, to: 80, unit: 0.5, default: 75 } }
+            ],
+            opp: [
+              { order: 1, long: 'Constructive', abbr: 'Const', range: { from: 70, to: 80, unit: 0.5, default: 75 } }
+            ]
+        }
+	}
 ]
