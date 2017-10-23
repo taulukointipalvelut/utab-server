@@ -27,7 +27,7 @@ class DBUsersHandler {
 
         this.users = new UsersCollectionHandler(Style)
     }
-    close() {
+    close () {
         this.conn.close()
     }
 }
