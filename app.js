@@ -88,7 +88,7 @@ function convert_name_if_exists(dict, from, to, convert='boolean') {
             }
         }
     } else if (convert === 'number') {
-        var f = x => parseInt(x)
+        var f = x => parseInt(x, 10)
     } else if (convert === 'number_or_array') {
         var f = x => JSON.parse(x)
     } else {
@@ -240,9 +240,9 @@ for (let route of raw_routes) {
             log_request(req, route.path_specified)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = req.query
-            dict.r = parseInt(req.params.r)
-            dict.from_id = parseInt(req.params.from_id)
-            dict.id = parseInt(req.params.id)
+            dict.r = parseInt(req.params.r, 10)
+            dict.from_id = parseInt(req.params.from_id, 10)
+            dict.id = parseInt(req.params.id, 10)
             node.find(dict).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
         })
         .put(check_auth, function(req, res) {//update//TESTED//
@@ -250,9 +250,9 @@ for (let route of raw_routes) {
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = req.body
-            dict.r = parseInt(req.params.r)
-            dict.from_id = parseInt(req.params.from_id)
-            dict.id = parseInt(req.params.id)
+            dict.r = parseInt(req.params.r, 10)
+            dict.from_id = parseInt(req.params.from_id, 10)
+            dict.id = parseInt(req.params.id, 10)
             node.update(dict).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res, 404))
         })
         .delete(check_auth, function(req, res) {//delete//TESTED//
@@ -260,9 +260,9 @@ for (let route of raw_routes) {
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = req.body
-            dict.r = parseInt(req.params.r)
-            dict.from_id = parseInt(req.params.from_id)
-            dict.id = parseInt(req.params.id)
+            dict.r = parseInt(req.params.r, 10)
+            dict.from_id = parseInt(req.params.from_id, 10)
+            dict.id = parseInt(req.params.id, 10)
             node.delete(dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
         })
 }
@@ -294,7 +294,7 @@ for (let route of draw_routes1) {
         .patch(check_auth, function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
-            let r = parseInt(req.params.r)
+            let r = parseInt(req.params.r, 10)
             if (route.require_pre_draw) {
                 node.get(r, req.body.draw, req.body.options).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             } else {
@@ -319,7 +319,7 @@ for (let route of draw_routes2) {
             let th = sys.find_tournament(handlers, req.params.tournament_id)
             let dict = _.clone(req.query)
             if (route.specify_r) {
-                dict.r = parseInt(req.params.r)
+                dict.r = parseInt(req.params.r, 10)
             }
             th.draws.read(dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
         })
@@ -328,7 +328,7 @@ for (let route of draw_routes2) {
             let th = sys.find_tournament(handlers, req.params.tournament_id)
             let dict = _.clone(req.body)
             if (route.specify_r) {
-                dict.r = parseInt(req.params.r)
+                dict.r = parseInt(req.params.r, 10)
             }
             th.draws.create(dict).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res))
         })
@@ -337,7 +337,7 @@ for (let route of draw_routes2) {
             let th = sys.find_tournament(handlers, req.params.tournament_id)
             let dict = _.clone(req.body)
             if (route.specify_r) {
-                dict.r = parseInt(req.params.r)
+                dict.r = parseInt(req.params.r, 10)
             }
             th.draws.update(dict).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res))
         })
@@ -346,7 +346,7 @@ for (let route of draw_routes2) {
             let th = sys.find_tournament(handlers, req.params.tournament_id)
             let dict = _.clone(req.body)
             if (route.specify_r) {
-                dict.r = parseInt(req.params.r)
+                dict.r = parseInt(req.params.r, 10)
             }
             th.draws.delete(dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
         })
@@ -394,15 +394,15 @@ for (let route of routes) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = {}
-            dict[route.unique] = parseInt(req.params[route.unique])
+            dict[route.unique] = parseInt(req.params[route.unique], 10)
             node.findOne(dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
         })
-        .put(check_auth, function(req, res) {//update//TESTED//
+        .put(check_administrator, function(req, res) {//update//TESTED//
             log_request(req, route.path)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = _.clone(req.body)
-            dict[route.unique] = parseInt(req.params[route.unique])
+            dict[route.unique] = parseInt(req.params[route.unique], 10)
             node.update(dict).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res, 404))
         })
         .delete(check_auth, function(req, res) {//delete//TESTED//
@@ -410,7 +410,7 @@ for (let route of routes) {
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = _.clone(req.body)
-            dict[route.unique] = parseInt(req.params[route.unique])
+            dict[route.unique] = parseInt(req.params[route.unique], 10)
             node.delete(dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
         })
 }
@@ -432,11 +432,12 @@ api_routes.route('/tournaments/:tournament_id')
     })
     .delete(check_auth, function(req, res) {//TESTED//
         log_request(req)
-        DB.tournaments.delete({id: parseInt(req.params.tournament_id)})
+        DB.tournaments.delete({id: parseInt(req.params.tournament_id, 10)})
         .then(function (doc) {
-            let th = sys.find_tournament(handlers, parseInt(req.params.tournament_id))
+            let th = sys.find_tournament(handlers, req.params.tournament_id)
             th.destroy()
-            handlers = handlers.filter(hd => hd.id !== parseInt(req.params.tournament_id))
+            DB.users.deleteTournament({ username: req.session.username, tournament_id: parseInt(req.params.tournament_id, 10) })
+            handlers = handlers.filter(hd => hd.id !== parseInt(req.params.tournament_id, 10))
             return doc
         })
         .then(doc => respond_data(doc, res))
