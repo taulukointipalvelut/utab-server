@@ -11,6 +11,7 @@ class CON {
         this.close = function () {
             tournaments_handler.close()
             styles_handler.close()
+            users_handler.close()
         }
     }
 }

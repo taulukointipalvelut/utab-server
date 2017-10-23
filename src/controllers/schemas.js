@@ -8,8 +8,10 @@ var TournamentSchema = new mongoose.Schema({
 })
 
 var UserSchema = new mongoose.Schema({
-	id: {type: String, required: true},
-	password: {type: String, required: true}
+	username: {type: String, required: true, unique: true, minlength: 6},
+	password: {type: String, required: true, minlength: 8},
+	tournaments: [{type: Number}],
+	usertype: {type: String, default: 'organizer'}//'user', 'superuser'
 },{
     timestamps: {createdAt: 'created', updatedAt: 'updated'},
 	versionKey: 'version'

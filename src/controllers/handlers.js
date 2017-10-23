@@ -147,7 +147,41 @@ class StylesCollectionHandler extends _CollectionHandler {
 
 class UsersCollectionHandler extends _CollectionHandler {
     constructor(Model) {
-        super(Model, ['id'])
+        super(Model, ['username'])
+    }
+    findOneStrict(dict) {
+        let that = this
+        return super.read.call(that).then(function(docs) {
+            for (let doc of docs) {
+                if (doc.username === dict.username && doc.password === dict.password) {
+                    return arrange_doc(doc)
+                }
+            }
+            loggers.controllers('error', 'DoesNotExist'+JSON.stringify(dict))
+            throw new errors.DoesNotExist(identity)
+        })
+    }
+    addTournament (dict) {
+        let that = this
+        return super.findOne.call(that, { username: dict.username })
+            .then(doc => {
+                doc.tournaments.push(dict.tournament_id)
+                return doc
+            })
+            .then(doc => {
+                return super.update.call(that, doc)
+            })
+    }
+    deleteTournament (dict) {
+        let that = this
+        return super.findOne.call(that, { username: dict.username })
+            .then(doc => {
+                doc.tournaments = doc.tournaments.filter(id => id !== dict.tournament_id)
+                return doc
+            })
+            .then(doc => {
+                return super.update.call(that, doc)
+            })
     }
 }
 

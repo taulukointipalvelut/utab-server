@@ -141,26 +141,42 @@ function log_request(req, path="?") {
     winston.debug('['+req.method+']'+' path '+req.path+' is accessed @ '+path+'\nQuery\n'+JSON.stringify(req.query, null, 2)+'\nRequest\n'+JSON.stringify(req.body, null, 4))
 }
 
-function authenticate(req, res, next) {
-    if (req.body.username === 'admin' && req.body.password === 'nimda') {
-        req.session.admin = true
-        req.session.username = req.body.username
-        return next()
-    } else {
-        respond_error({ name: "LoginFailed", message: "Incorrect Username or Password", code: 401 }, res, 401)
-    }
-}
-
-function is_auth (req) {
-    if (req.session && req.session.admin) {
+function is_administrator (req) {
+    if (req.session && req.session.usertype === 'superuser') {
+        return true
+    } else if (req.session && req.session.usertype === 'organizer' && req.session.tournaments.includes(req.params.tournament_id)) {
         return true
     } else {
         return false
     }
 }
 
-function check_auth (req, res, next) {
-    if (is_auth(req)) {
+function is_organizer (req) {
+    if (req.session && ['superuser', 'organizer'].includes(req.session.usertype)) {
+        return true
+    } else {
+        return false
+    }
+}
+
+function is_user (req) {
+    if (req.session && ['user', 'superuser', 'organizer'].includes(req.session.usertype)) {
+        return true
+    } else {
+        return false
+    }
+}
+
+function check_organizer (req, res, next) {
+    if (is_organizer(req)) {
+        return next()
+    } else {
+        respond_error({ name: "RegisterFirst", message: "Please Register or Login", code: 401 }, res, 401)
+    }
+}
+
+function check_administrator (req, res, next) {
+    if (is_administrator(req)) {
         return next()
     } else {
         respond_error({ name: "InvalidSession", message: "Invalid Session", code: 401 }, res, 401)
@@ -183,7 +199,7 @@ let result_routes = [
 
 for (let route of result_routes) {
     api_routes.route('/tournaments/:tournament_id'+route.path)
-        .patch(check_auth, function(req, res) {
+        .patch(check_administrator, function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let options = req.body.options || {}
@@ -206,7 +222,7 @@ let raw_routes = [
 for (let route of raw_routes) {
     api_routes.route('/tournaments/:tournament_id'+route.path)
         .get(function(req, res) {//read or find//TESTED//
-            if (!is_auth(req)) {
+            if (!is_administrator(req)) {
                 log_request(req, route.path)
                 let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
                 let dict = req.query
@@ -229,14 +245,14 @@ for (let route of raw_routes) {
                 node.create(dict).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
             }
         })
-        .delete(check_auth, function(req, res) {//create//TESTED//
+        .delete(check_administrator, function(req, res) {//create//TESTED//
             log_request(req, route.path)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             node.deleteAll().then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
         })
     api_routes.route('/tournaments/:tournament_id'+route.path_specified)
-        .get(check_auth, function(req, res) {//read or find//TESTED//
+        .get(check_administrator, function(req, res) {//read or find//TESTED//
             log_request(req, route.path_specified)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let dict = req.query
@@ -245,7 +261,7 @@ for (let route of raw_routes) {
             dict.id = parseInt(req.params.id, 10)
             node.find(dict).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
         })
-        .put(check_auth, function(req, res) {//update//TESTED//
+        .put(check_administrator, function(req, res) {//update//TESTED//
             log_request(req, route.path_specified)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -255,7 +271,7 @@ for (let route of raw_routes) {
             dict.id = parseInt(req.params.id, 10)
             node.update(dict).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res, 404))
         })
-        .delete(check_auth, function(req, res) {//delete//TESTED//
+        .delete(check_administrator, function(req, res) {//delete//TESTED//
             log_request(req, route.path_specified)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -291,7 +307,7 @@ for (let route of draw_routes1) {
             }
         })*/
     api_routes.route('/tournaments/:tournament_id/rounds/:r'+route.path)
-        .patch(check_auth, function(req, res) {
+        .patch(check_administrator, function(req, res) {
             log_request(req, route.path)
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             let r = parseInt(req.params.r, 10)
@@ -372,7 +388,7 @@ for (let route of routes) {
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             node.find(req.query).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
         })
-        .post(check_auth, function(req, res) {//create//TESTED//
+        .post(check_administrator, function(req, res) {//create//TESTED//
             log_request(req, route.path)
             req.accepts('application/json')
             let force = req.query.force
@@ -383,7 +399,7 @@ for (let route of routes) {
                 node.create(req.body, force).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
             }
         })
-        .delete(check_auth, function(req, res) {
+        .delete(check_administrator, function(req, res) {
             log_request(req, route.path)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -405,7 +421,7 @@ for (let route of routes) {
             dict[route.unique] = parseInt(req.params[route.unique], 10)
             node.update(dict).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res, 404))
         })
-        .delete(check_auth, function(req, res) {//delete//TESTED//
+        .delete(check_administrator, function(req, res) {//delete//TESTED//
             log_request(req, route.path)
             req.accepts('application/json')
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
@@ -425,12 +441,12 @@ api_routes.route('/tournaments/:tournament_id')
         let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.config.read().then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
     })
-    .put(check_auth, function(req, res) {
+    .put(check_administrator, function(req, res) {
         log_request(req)
         let th = sys.find_tournament(handlers, req.params.tournament_id)
         th.config.update(req.body).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
     })
-    .delete(check_auth, function(req, res) {//TESTED//
+    .delete(check_administrator, function(req, res) {//TESTED//
         log_request(req)
         DB.tournaments.delete({id: parseInt(req.params.tournament_id, 10)})
         .then(function (doc) {
@@ -454,7 +470,7 @@ api_routes.route('/tournaments')
         Promise.all(handlers.map(h => h.handler.config.read()))
         .then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
     })
-    .post(check_auth, function(req, res) {
+    .post(check_organizer, function(req, res) {
         log_request(req)
         let dict = _.clone(req.body)
         if (!dict.hasOwnProperty('name')) {
@@ -468,6 +484,7 @@ api_routes.route('/tournaments')
                 .then(function () {
                     let th = new utab.TournamentHandler(db_url, dict)
                     sys.syncadd.push({list: handlers, e: {id: id, handler: th}})
+                    DB.users.addTournament({ username: req.session.username, tournament_id: id })
                     respond_data(dict, res, 201)
                 })
                 .catch(err => respond_error(err, res))
@@ -479,7 +496,7 @@ api_routes.route('/styles')
         log_request(req)
         DB.styles.find(req.query).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
     })
-    .post(check_auth, function(req, res) {///TESTED///
+    .post(check_administrator, function(req, res) {///TESTED///
         log_request(req)
         req.accepts('application/json')
         DB.styles.create(req.body).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
@@ -496,18 +513,33 @@ api_routes.route('/styles')
     })*/
 
 api_routes.route('/login')
-    .post(authenticate, function (req, res) {///TESTED///
+    .post(function (req, res) {///TESTED///
         log_request(req)
-        //req.session.token = randtoken.generate(40)
-        respond_data(SESSIONMAXAGE, res)
+        DB.users.findOneStrict(req.body)
+            .then(doc => {
+                req.session.username = doc.username
+                req.session.usertype = doc.usertype
+                req.session.tournaments = doc.tournaments
+                let data = {
+                    username: doc.username,
+                    usertype: doc.usertype,
+                    tournaments: doc.tournaments
+                }
+                return respond_data(data, res)
+            })
+            .catch(() => respond_error({ name: "LoginFailed", message: "Incorrect Username or Password", code: 401 }, res, 401))
     })
-
-api_routes.route('/logout')
     .delete(function (req, res) {///TESTED///
         log_request(req)
         req.accepts('application/json')
         req.session.destroy()
         respond_data(null, res)
+    })
+
+api_routes.route('/signup')
+    .post(function (req, res) {
+        log_request(req)
+        DB.users.create({ username: req.body.username, password: req.body.password }).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res))
     })
 
 app.use(PREFIX, api_routes)
