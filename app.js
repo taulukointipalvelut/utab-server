@@ -75,6 +75,12 @@ function hash (val, random=true) {
     return parseInt(md5(val, date).slice(0, Number.MAX_SAFE_INTEGER.toString().length - 2), 16)
 }
 
+function drop_db_url(doc) {
+    let new_doc = JSON.parse(JSON.stringify(doc))
+    delete new_doc.db_url
+    return new_doc
+}
+
 function convert_name_if_exists(dict, from, to, convert='boolean') {
     let new_dict = _.clone(dict)
     if (convert === 'boolean') {
@@ -468,7 +474,8 @@ api_routes.route('/tournaments')
     .get(function(req, res) {
         log_request(req)
         Promise.all(handlers.map(h => h.handler.config.read()))
-        .then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+        .then(docs => docs.map(drop_db_url)).then(docs => respond_data(docs, res))
+        .catch(err => respond_error(err, res))
     })
     .post(check_organizer, function(req, res) {
         log_request(req)
