@@ -150,7 +150,7 @@ function log_request(req, path="?") {
 function is_administrator (req) {
     if (req.session && req.session.usertype === 'superuser') {
         return true
-    } else if (req.session && req.session.usertype === 'organizer' && req.session.tournaments.includes(req.params.tournament_id)) {
+    } else if (req.session && req.session.usertype === 'organizer' && req.session.tournaments.includes(parseInt(req.params.tournament_id, 10))) {
         return true
     } else {
         return false

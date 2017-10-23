@@ -165,22 +165,23 @@ class UsersCollectionHandler extends _CollectionHandler {
         let that = this
         return super.findOne.call(that, { username: dict.username })
             .then(doc => {
-                doc.tournaments.push(dict.tournament_id)
-                return doc
+                let tournaments = doc.tournaments.slice()
+                tournaments.push(dict.tournament_id)
+                return tournaments
             })
-            .then(doc => {
-                return super.update.call(that, doc)
+            .then(tournaments => {
+                return super.update.call(that, { username: dict.username, tournaments })
             })
     }
     deleteTournament (dict) {
         let that = this
         return super.findOne.call(that, { username: dict.username })
             .then(doc => {
-                doc.tournaments = doc.tournaments.filter(id => id !== dict.tournament_id)
-                return doc
+                let tournaments = doc.tournaments
+                return tournaments.filter(id => id !== dict.tournament_id)
             })
-            .then(doc => {
-                return super.update.call(that, doc)
+            .then(tournaments => {
+                return super.update.call(that, { username: dict.username, tournaments })
             })
     }
 }
