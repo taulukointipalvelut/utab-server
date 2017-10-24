@@ -520,6 +520,16 @@ api_routes.route('/styles')
     })*/
 
 api_routes.route('/login')
+    .get(function (req, res) {///TESTED///
+        log_request(req)
+        req.accepts('application/json')
+        let data = {
+            username: req.session && req.session.username ? req.session.username : '',
+            usertype: req.session && req.session.usertype ? req.session.usertype : '',
+            tournaments: req.session && req.session.tournaments ? req.session.tournaments : []
+        }
+        respond_data(data, res)
+    })
     .post(function (req, res) {///TESTED///
         log_request(req)
         DB.users.findOneStrict(req.body)
