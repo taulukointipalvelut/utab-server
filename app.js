@@ -397,10 +397,10 @@ for (let route of routes) {
         .post(check_administrator, function(req, res) {//create//TESTED//
             log_request(req, route.path)
             req.accepts('application/json')
-            let force = req.query.force
+            let force = req.query.force === 'true'
             let node = sys.get_node(handlers, req.params.tournament_id, route.keys)
             if (Array.isArray(req.body)) {
-                Promise.all(req.body.map(d => node.create(d))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+                Promise.all(req.body.map(d => node.create(d, force))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             } else {
                 node.create(req.body, force).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
             }
