@@ -2,7 +2,7 @@ module.exports = [
 	{
 		id: 1,
 		name: "Academic",
-		team_num: 2,
+		//team_num: 2,
 		side_labels: {
 			gov: "Affirmative",
 			opp: "Negative"
@@ -51,7 +51,7 @@ module.exports = [
 	{
 		id: 2,
 		name: "North American",
-		team_num: 2,
+		//team_num: 2,
 		side_labels: {
 			gov: "Government",
 			opp: "Opposition"
@@ -113,7 +113,7 @@ module.exports = [
 	{
 		id: 4,
 		name: "PDA3",
-		team_num: 2,
+		//team_num: 2,
 		side_labels: {
 			gov: "Government",
 			opp: "Opposition"
@@ -156,7 +156,7 @@ module.exports = [
 	{
 		id: 5,
 		name: "PDA4",
-		team_num: 2,
+		//team_num: 2,
 		side_labels: {
 			gov: "Government",
 			opp: "Opposition"
@@ -205,7 +205,7 @@ module.exports = [
 	{
 		id: 6,
 		name: "Asian",
-		team_num: 2,
+		//team_num: 2,
 		side_labels: {
 			gov: "Government",
 			opp: "Opponents"
@@ -254,7 +254,7 @@ module.exports = [
 	{
 		id: 7,
 		name: "1vs1",
-		team_num: 2,
+		//team_num: 2,
 		side_labels: {
 			gov: "Affirmative",
 			opp: "Negative"

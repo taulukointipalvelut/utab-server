@@ -20,7 +20,7 @@ var UserSchema = new mongoose.Schema({
 var StylesSchema = new mongoose.Schema({
 	id: {type: Number, required: true, unique: true},
 	name: {type: String, required: true},
-	team_num: {type: Number, required: true},
+	//team_num: {type: Number, required: true},
 	score_weights: {type: mongoose.Schema.Types.Mixed, required: true},
 	side_labels: {type: mongoose.Schema.Types.Mixed, default: { gov: "Government", opp: "Opposition" }},
 	side_labels_short: {type: mongoose.Schema.Types.Mixed, default: { gov: "Gov", opp: "Opp" }},
