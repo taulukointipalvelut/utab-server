@@ -25,6 +25,17 @@ var StylesSchema = new mongoose.Schema({
 	side_labels: {type: mongoose.Schema.Types.Mixed, default: { gov: "Government", opp: "Opposition" }},
 	side_labels_short: {type: mongoose.Schema.Types.Mixed, default: { gov: "Gov", opp: "Opp" }},
 	speaker_sequence: {type: mongoose.Schema.Types.Mixed, required: true},
+	range: [
+		{
+			order: { type: Number, required: true },
+			value: {
+				from: { type: Number, require: true },
+				to: { type: Number, required: true },
+				unit: { type: Number, required: true },
+				default: { type: Number, required: true }
+			}
+	 	}
+	],
 	roles: {type: mongoose.Schema.Types.Mixed, required: true},
     user_defined_data: {type: mongoose.Schema.Types.Mixed, default: {}}
 },{

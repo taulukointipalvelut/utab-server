@@ -27,18 +27,24 @@ module.exports = [
           { order: 7, value: 'opp-4' },
           { order: 8, value: 'gov-4' }
         ],
+		range: [
+			{ order: 1, value: { from: 1, to: 10, unit: 1, default: 5 } },
+			{ order: 2, value: { from: 1, to: 10, unit: 1, default: 5 } },
+			{ order: 3, value: { from: 1, to: 10, unit: 1, default: 5 } },
+			{ order: 4, value: { from: 1, to: 10, unit: 1, default: 5 } }
+		],
         roles: {
             gov: [
-              { order: 1, long: 'Constructive', abbr: 'Const', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 2, long: 'Attack', abbr: 'Attack', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 3, long: 'Defense', abbr: 'Defense', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 4, long: 'Summary', abbr: 'Summary', range: { from: 1, to: 10, unit: 1, default: 5 } }
+              { order: 1, long: 'Constructive', abbr: 'Const' },
+              { order: 2, long: 'Attack', abbr: 'Attack' },
+              { order: 3, long: 'Defense', abbr: 'Defense' },
+              { order: 4, long: 'Summary', abbr: 'Summary' }
             ],
             opp: [
-              { order: 1, long: 'Constructive', abbr: 'Const', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 2, long: 'Attack', abbr: 'Attack', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 3, long: 'Defense', abbr: 'Defense', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 4, long: 'Summary', abbr: 'Summary', range: { from: 1, to: 10, unit: 1, default: 5 } }
+              { order: 1, long: 'Constructive', abbr: 'Const' },
+              { order: 2, long: 'Attack', abbr: 'Attack' },
+              { order: 3, long: 'Defense', abbr: 'Defense' },
+              { order: 4, long: 'Summary', abbr: 'Summary' }
             ]
         }
 	},
@@ -59,6 +65,11 @@ module.exports = [
 			{order: 2, value: 1},
 			{order: 3, value: 0.5}
 		],
+		range: [
+			{ order: 1, value: { from: 60, to: 90, unit: 1, default: 75 } },
+			{ order: 2, value: { from: 60, to: 90, unit: 1, default: 75 } },
+			{ order: 3, value: { from: 30, to: 45, unit: 0.5, default: 37.5 } }
+		],
         speaker_sequence: [
           { order: 1, value: 'gov-1' },
           { order: 2, value: 'opp-1' },
@@ -69,14 +80,14 @@ module.exports = [
         ],
         roles: {
             gov: [
-              { order: 1, long: 'Prime Minister', abbr: 'PM', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 2, long: 'Member of Government', abbr: 'MG', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 3, long: 'Government Reply', abbr: 'GR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+              { order: 1, long: 'Prime Minister', abbr: 'PM' },
+              { order: 2, long: 'Member of Government', abbr: 'MG' },
+              { order: 3, long: 'Government Reply', abbr: 'GR' }
             ],
             opp: [
-              { order: 1, long: 'Leader of Opposition', abbr: 'LO', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 2, long: 'Member of Opposition', abbr: 'MO', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 3, long: 'Opposition Reply', abbr: 'OR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+              { order: 1, long: 'Leader of Opposition', abbr: 'LO' },
+              { order: 2, long: 'Member of Opposition', abbr: 'MO' },
+              { order: 3, long: 'Opposition Reply', abbr: 'OR' }
             ]
         }
 	},/*
@@ -124,16 +135,21 @@ module.exports = [
           { order: 5, value: 'opp-3' },
           { order: 6, value: 'gov-3' }
         ],
+		range: [
+			{ order: 1, value: { from: 1, to: 10, unit: 1, default: 5 } },
+			{ order: 2, value: { from: 1, to: 10, unit: 1, default: 5 } },
+			{ order: 3, value: { from: 1, to: 10, unit: 1, default: 5 } }
+		],
         roles: {
             gov: [
-              { order: 1, long: 'Prime Minister', abbr: 'PM', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 2, long: 'Member of Government', abbr: 'MG', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 3, long: 'Government Reply', abbr: 'GR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+              { order: 1, long: 'Prime Minister', abbr: 'PM' },
+              { order: 2, long: 'Member of Government', abbr: 'MG' },
+              { order: 3, long: 'Government Reply', abbr: 'GR' }
             ],
             opp: [
-              { order: 1, long: 'Leader of Opposition', abbr: 'LO', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 2, long: 'Member of Opposition', abbr: 'MO', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 3, long: 'Opposition Reply', abbr: 'OR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+              { order: 1, long: 'Leader of Opposition', abbr: 'LO' },
+              { order: 2, long: 'Member of Opposition', abbr: 'MO' },
+              { order: 3, long: 'Opposition Reply', abbr: 'OR' }
             ]
         }
 	},
@@ -155,6 +171,12 @@ module.exports = [
 			{order: 3, value: 0.5},
 			{order: 4, value: 1}
 		],
+		range: [
+			{ order: 1, value: { from: 1, to: 10, unit: 1, default: 5 } },
+			{ order: 2, value: { from: 1, to: 10, unit: 1, default: 5 } },
+			{ order: 3, value: { from: 1, to: 10, unit: 1, default: 5 } },
+			{ order: 4, value: { from: 1, to: 10, unit: 1, default: 5 } }
+		],
         speaker_sequence: [
           { order: 1, value: 'gov-1' },
           { order: 2, value: 'opp-1' },
@@ -167,16 +189,16 @@ module.exports = [
         ],
         roles: {
             gov: [
-              { order: 1, long: 'Prime Minister', abbr: 'PM', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 2, long: 'Member of Government1', abbr: 'MG1', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 3, long: 'Member of Government2', abbr: 'MG2', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 4, long: 'Government Reply', abbr: 'GR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+              { order: 1, long: 'Prime Minister', abbr: 'PM' },
+              { order: 2, long: 'Member of Government1', abbr: 'MG1' },
+              { order: 3, long: 'Member of Government2', abbr: 'MG2' },
+              { order: 4, long: 'Government Reply', abbr: 'GR' }
             ],
             opp: [
-              { order: 1, long: 'Leader of Opposition', abbr: 'LO', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 2, long: 'Member of Opposition1', abbr: 'MO1', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 3, long: 'Member of Opposition2', abbr: 'MO2', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 4, long: 'Opposition Reply', abbr: 'OR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+              { order: 1, long: 'Leader of Opposition', abbr: 'LO' },
+              { order: 2, long: 'Member of Opposition1', abbr: 'MO1' },
+              { order: 3, long: 'Member of Opposition2', abbr: 'MO2' },
+              { order: 4, long: 'Opposition Reply', abbr: 'OR' }
             ]
         }
 	},
@@ -198,6 +220,12 @@ module.exports = [
 			{order: 3, value: 1},
 			{order: 4, value: 0.5}
 		],
+		range: [
+			{ order: 1, value: { from: 60, to: 90, unit: 1, default: 75 } },
+			{ order: 2, value: { from: 60, to: 90, unit: 1, default: 75 } },
+			{ order: 3, value: { from: 60, to: 90, unit: 1, default: 75 } },
+			{ order: 4, value: { from: 30, to: 45, unit: 0.5, default: 37.5 } }
+		],
         speaker_sequence: [
           { order: 1, value: 'gov-1' },
           { order: 2, value: 'opp-1' },
@@ -210,16 +238,16 @@ module.exports = [
         ],
         roles: {
             gov: [
-              { order: 1, long: 'Prime Minister', abbr: 'PM', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 2, long: 'Member of Government', abbr: 'MG', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 3, long: 'Whip', abbr: 'Whip', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 4, long: 'Government Reply', abbr: 'GR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+              { order: 1, long: 'Prime Minister', abbr: 'PM' },
+              { order: 2, long: 'Member of Government', abbr: 'MG' },
+              { order: 3, long: 'Whip', abbr: 'Whip' },
+              { order: 4, long: 'Government Reply', abbr: 'GR' }
             ],
             opp: [
-              { order: 1, long: 'Leader of Opposition', abbr: 'LO', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 2, long: 'Member of Opposition', abbr: 'MO', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 3, long: 'Whip', abbr: 'Whip', range: { from: 1, to: 10, unit: 1, default: 5 } },
-              { order: 4, long: 'Opposition Reply', abbr: 'OR', range: { from: 1, to: 10, unit: 1, default: 5 } }
+              { order: 1, long: 'Leader of Opposition', abbr: 'LO' },
+              { order: 2, long: 'Member of Opposition', abbr: 'MO' },
+              { order: 3, long: 'Whip', abbr: 'Whip' },
+              { order: 4, long: 'Opposition Reply', abbr: 'OR' }
             ]
         }
 	},
@@ -238,16 +266,19 @@ module.exports = [
 		score_weights: [
 			{order: 1, value: 1}
 		],
+		range: [
+			{ order: 1, value: { from: 60, to: 90, unit: 1, default: 75 } }
+		],
         speaker_sequence: [
           { order: 1, value: 'gov-1' },
           { order: 2, value: 'opp-1' }
         ],
         roles: {
             gov: [
-              { order: 1, long: 'Constructive', abbr: 'Const', range: { from: 70, to: 80, unit: 0.5, default: 75 } }
+              { order: 1, long: 'Constructive', abbr: 'Const' }
             ],
             opp: [
-              { order: 1, long: 'Constructive', abbr: 'Const', range: { from: 70, to: 80, unit: 0.5, default: 75 } }
+              { order: 1, long: 'Constructive', abbr: 'Const' }
             ]
         }
 	}
