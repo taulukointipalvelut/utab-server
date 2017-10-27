@@ -415,8 +415,11 @@ api_routes.route('/tournaments/:tournament_id')
         log_request(req)
         let tournament_id = parseInt(req.params.tournament_id, 10)
         Handler.configs.delete(tournament_id)
-            .then(doc => respond_data(doc, res))
-            .catch(err => respond_error(err, res))
+            .then(tournament => {
+                Handler.destroy(tournament_id)
+                    .then(docs => respond_data(tournament, res))
+                    .catch(err => respond_error(err, res))
+            })
     })
 
 /*
@@ -519,9 +522,9 @@ app.use(function(req, res, next){
 	respond_error({name: 'NotFound', message: 'Not Found', code: 404}, res, 404)
 })
 
-app.use(function(err, req, res, next){
+/*app.use(function(err, req, res, next){
     respond_error({name: 'InternalServerError', message: 'Internal Server Error', code: 500}, res)
-})
+})*/
 
 let server = app.listen(PORT)
 winston.info("server started on port: "+PORT+", database address: "+BASEURL)
