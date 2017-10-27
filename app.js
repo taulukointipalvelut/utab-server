@@ -201,7 +201,7 @@ for (let route of raw_routes) {
             let node = sys.get_node(Handler, route.keys)
             let dict = req.body
             if (Array.isArray(req.body)) {
-                Promise.all(dict.map(d => node.create(tournament_id))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
+                Promise.all(dict.map(d => node.create(tournament_id, d))).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             } else {
                 node.create(tournament_id, dict).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
             }
