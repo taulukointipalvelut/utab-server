@@ -5,13 +5,8 @@ function create_hash(seed) {
     return parseInt(md5(seed).slice(0, 12), 16)
 }
 
-function find_tournament(list, id) {
-    return list.filter(e => e.id === parseInt(id, 10))[0].handler
-}
-
-function get_node(tournaments, tournament_id, keys) {
-    let t = find_tournament(tournaments, tournament_id)
-    return get_property(t, keys)
+function get_node(handler, keys) {
+    return get_property(handler, keys)
 }
 
 function get_property(object, keys) {//TESTED//
@@ -45,5 +40,4 @@ for (let i = 0; i < 20; i++) {
 exports.syncadd = syncadd
 exports.get_node = get_node
 exports.create_hash = create_hash
-exports.find_tournament = find_tournament
 exports.get_id = get_id

@@ -52,24 +52,6 @@ class DBStylesHandler {
     }
 }
 
-class DBTournamentsHandler {//TESTED//
-    constructor({db_url: db_url}) {
-        var conn = mongoose.createConnection(db_url)
-        this.conn = conn
-        conn.on('error', function (e) {
-            console.log('connection failed: '+e)
-        })
-
-        var Tournament = conn.model('Tournament', schemas.TournamentSchema)
-
-        this.tournaments = new TournamentsCollectionHandler(Tournament)
-
-    }
-    close() {
-        this.conn.close()
-    }
-}
-
 function get_identity(identifiers, dict) {
     var new_dict = {}
     for (var identifier of identifiers) {
@@ -133,12 +115,6 @@ class _CollectionHandler {//TESTED// returns Promise object
     }
 }
 
-class TournamentsCollectionHandler extends _CollectionHandler {
-    constructor(Model) {
-        super(Model, ['id'])
-    }
-}
-
 class StylesCollectionHandler extends _CollectionHandler {
     constructor(Model) {
         super(Model, ['id'])
@@ -186,7 +162,6 @@ class UsersCollectionHandler extends _CollectionHandler {
     }
 }
 
-exports.DBTournamentsHandler = DBTournamentsHandler
 exports.DBStylesHandler = DBStylesHandler
 exports.DBUsersHandler = DBUsersHandler
 

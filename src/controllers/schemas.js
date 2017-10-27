@@ -1,12 +1,5 @@
 var mongoose = require('mongoose')
 
-var TournamentSchema = new mongoose.Schema({
-	id: {type: Number, required: true, unique: true}
-},{
-    timestamps: {createdAt: 'created', updatedAt: 'updated'},
-	versionKey: 'version'
-})
-
 var UserSchema = new mongoose.Schema({
 	username: {type: String, required: true, unique: true, minlength: 6},
 	password: {type: String, required: true, minlength: 8},
@@ -44,5 +37,4 @@ var StylesSchema = new mongoose.Schema({
 })
 
 exports.UserSchema = UserSchema
-exports.TournamentSchema = TournamentSchema
 exports.StylesSchema = StylesSchema
