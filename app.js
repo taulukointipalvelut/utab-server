@@ -211,7 +211,8 @@ for (let route of raw_routes) {
             req.accepts('application/json')
             let tournament_id = parseInt(req.params.tournament_id, 10)
             let node = sys.get_node(Handler, route.keys)
-            node.deleteAll(tournament_id).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
+            let dict = { r: parseInt(req.body.r, 10) }
+            node.delete(tournament_id, dict).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
         })
     api_routes.route('/tournaments/:tournament_id'+route.path_specified)
         .get(check_administrator, function(req, res) {//read or find//TESTED//
@@ -244,7 +245,7 @@ for (let route of raw_routes) {
             dict.r = parseInt(req.params.r, 10)
             dict.from_id = parseInt(req.params.from_id, 10)
             dict.id = parseInt(req.params.id, 10)
-            node.delete(tournament_id, dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
+            node.deleteOne(tournament_id, dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
         })
 }
 
@@ -319,7 +320,7 @@ for (let route of draw_routes2) {
             if (route.specify_r) {
                 dict.r = parseInt(req.params.r, 10)
             }
-            Handler.draws.delete(tournament_id, dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
+            Handler.draws.deleteOne(tournament_id, dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
         })
 }
 
@@ -361,7 +362,7 @@ for (let route of routes) {
             req.accepts('application/json')
             let tournament_id = parseInt(req.params.tournament_id, 10)
             let node = sys.get_node(Handler, route.keys)
-            node.deleteAll(tournament_id).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
+            node.delete(tournament_id).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
         })
     api_routes.route('/tournaments/:tournament_id'+route.path+'/:'+route.unique)
         .get(function(req, res) {//read or find//TESTED//
@@ -388,7 +389,7 @@ for (let route of routes) {
             let node = sys.get_node(Handler, route.keys)
             let dict = _.clone(req.body)
             dict[route.unique] = parseInt(req.params[route.unique], 10)
-            node.delete(tournament_id, dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
+            node.deleteOne(tournament_id, dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
         })
 }
 
@@ -414,7 +415,7 @@ api_routes.route('/tournaments/:tournament_id')
     .delete(check_administrator, function(req, res) {//TESTED//
         log_request(req)
         let tournament_id = parseInt(req.params.tournament_id, 10)
-        Handler.configs.delete(tournament_id)
+        Handler.configs.deleteOne(tournament_id)
             .then(tournament => {
                 Handler.destroy(tournament_id)
                     .then(docs => respond_data(tournament, res))
@@ -468,7 +469,7 @@ api_routes.route('/styles')
     .delete(function(req, res) {///TESTED///
         log_request(req)
         req.accepts('application/json')
-        ServerHandler.styles.delete(req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
+        ServerHandler.styles.deleteOne(req.body).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res, 404))
     })*/
 
 api_routes.route('/login')
