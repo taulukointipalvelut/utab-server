@@ -412,40 +412,29 @@ for (let route of routes) {
         })
 }
 
-/*
-PARTICIPANTS LOGIN API
-*/
-
-api_routes.route('/tournaments/:tournament_id/login')
-    .post(function (req, res) {///TESTED///
+api_routes.route('/tournaments/:tournament_id/users')
+    .post(check_organizer, function (req, res) {
         log_request(req)
-        let login_key = req.body.login_key
-        let usertype = req.body.usertype
-        let tournament_id = parseInt(req.params.tournament_id, 10)
-        Handler.configs.readOne(tournament_id)
-            .then(doc => {
-                if (doc.auth[usertype].key === login_key) {
-                    req.session.username = ''
-                    req.session.usertype = usertype
-                    req.session.tournaments = [tournament_id]
-                    let data = {
-                        username: '',
-                        usertype: usertype,
-                        tournaments: [tournament_id]
-                    }
-                    return respond_data(data, res)
-                } else {
-                    throw {}
-                }
-            })
-            .catch(() => respond_error({ name: "LoginFailed", message: "Incorrect Login Key", code: 401 }, res, 401))
+        let usertype = ['speaker', 'adjudicator', 'audience'].includes(req.body.usertype) ? req.body.usertype : undefined
+        if (usertype !== undefined) {
+            ServerHandler.users.create({ username: req.body.username, password: req.body.password, usertype, tournaments: [parseInt(req.params.tournament_id)] })
+                         .then(doc => respond_data(doc, res, 201))
+                         .catch(err => respond_error(err, res))
+        } else {
+            respond_error({ code: 500, name: 'UsertypeNotDefined' }, res)
+        }
     })
-    /*.delete(function (req, res) {///TESTED///
+    .put(check_organizer, function (req, res) {
         log_request(req)
-        req.accepts('application/json')
-        req.session.destroy()
-        respond_data(null, res)
-    })*/
+        let usertype = ['speaker', 'adjudicator', 'audience'].includes(req.body.usertype) ? req.body.usertype : undefined
+        if (usertype !== undefined) {
+            ServerHandler.users.update({ username: req.body.username, password: req.body.password, usertype, tournaments: [parseInt(req.params.tournament_id)] })
+                         .then(doc => respond_data(doc, res, 201))
+                         .catch(err => respond_error(err, res))
+        } else {
+            respond_error({ code: 500, name: 'UsertypeNotDefined' }, res)
+        }
+    })
 
 /*
 IMPLEMENT TOURNAMENT CONFIG API
@@ -566,7 +555,7 @@ api_routes.route('/login')
 api_routes.route('/signup')
     .post(function (req, res) {
         log_request(req)
-        ServerHandler.users.create({ username: req.body.username, password: req.body.password }).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res))
+        ServerHandler.users.create({ username: req.body.username, password: req.body.password, usertype: 'organizer' }).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res))
     })
 
 app.use(PREFIX, api_routes)

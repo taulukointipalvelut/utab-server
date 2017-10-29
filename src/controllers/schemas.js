@@ -4,7 +4,7 @@ var UserSchema = new mongoose.Schema({
 	username: {type: String, required: true, unique: true, minlength: 6},
 	password: {type: String, required: true, minlength: 8},
 	tournaments: [{type: Number}],
-	usertype: {type: String, default: 'organizer'}//'user', 'superuser'
+	usertype: {type: String, required: true}//'user', 'superuser'
 },{
     timestamps: {createdAt: 'created', updatedAt: 'updated'},
 	versionKey: 'version'
