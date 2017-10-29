@@ -138,26 +138,24 @@ class UsersCollectionHandler extends _CollectionHandler {
         })
     }
     addTournament (dict) {
-        let that = this
-        return super.findOne.call(that, { username: dict.username })
+        return super.findOne({ username: dict.username })
             .then(doc => {
                 let tournaments = doc.tournaments.slice()
                 tournaments.push(dict.tournament_id)
                 return tournaments
             })
             .then(tournaments => {
-                return super.update.call(that, { username: dict.username, tournaments })
+                return super.update({ username: dict.username, tournaments })
             })
     }
     deleteTournament (dict) {
-        let that = this
-        return super.findOne.call(that, { username: dict.username })
+        return super.findOne({ username: dict.username })
             .then(doc => {
                 let tournaments = doc.tournaments
                 return tournaments.filter(id => id !== dict.tournament_id)
             })
             .then(tournaments => {
-                return super.update.call(that, { username: dict.username, tournaments })
+                return super.update({ username: dict.username, tournaments })
             })
     }
 }
