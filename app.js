@@ -460,6 +460,7 @@ api_routes.route('/tournaments/:tournament_id')
         let tournament_id = parseInt(req.params.tournament_id, 10)
         Handler.configs.deleteOne(tournament_id)
             .then(tournament => {
+                req.session.tournaments = req.session.tournaments.filter(t => t.id !== tournament_id)
                 Handler.destroy(tournament_id)
                     .then(docs => {
                         ServerHandler.users.deleteTournament({ username: req.session.username, tournament_id })
@@ -490,6 +491,7 @@ api_routes.route('/tournaments')
             dict.id = hash(dict.name, false)
             Handler.configs.create(dict)
                 .then(() => {
+                    req.session.tournaments.push(dict.id)
                     ServerHandler.users.addTournament({ username: req.session.username, tournament_id: dict.id })
                     respond_data(dict, res, 201)
                 })
