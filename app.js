@@ -417,18 +417,7 @@ api_routes.route('/tournaments/:tournament_id/users')
         log_request(req)
         let usertype = ['speaker', 'adjudicator', 'audience'].includes(req.body.usertype) ? req.body.usertype : undefined
         if (usertype !== undefined) {
-            ServerHandler.users.create({ username: req.body.username, password: req.body.password, usertype, tournaments: [parseInt(req.params.tournament_id)] })
-                         .then(doc => respond_data(doc, res, 201))
-                         .catch(err => respond_error(err, res))
-        } else {
-            respond_error({ code: 500, name: 'UsertypeNotDefined' }, res)
-        }
-    })
-    .put(check_organizer, function (req, res) {
-        log_request(req)
-        let usertype = ['speaker', 'adjudicator', 'audience'].includes(req.body.usertype) ? req.body.usertype : undefined
-        if (usertype !== undefined) {
-            ServerHandler.users.update({ username: req.body.username, password: req.body.password, usertype, tournaments: [parseInt(req.params.tournament_id)] })
+            ServerHandler.users.createOrUpdate({ username: req.body.username, password: req.body.password, usertype, tournaments: [parseInt(req.params.tournament_id)] })
                          .then(doc => respond_data(doc, res, 201))
                          .catch(err => respond_error(err, res))
         } else {

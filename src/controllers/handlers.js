@@ -88,6 +88,9 @@ class _CollectionHandler {//TESTED// returns Promise object
             }
         })
     }
+    createOrUpdate(dict) {//TESTED//
+        return this.create(dict).catch(() => this.update(dict))
+    }
     delete(dict) {//TESTED//
         var M = this.Model
         var identity = get_identity(this.identifiers, dict)
