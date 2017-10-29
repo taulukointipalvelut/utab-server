@@ -9,7 +9,7 @@
     "postinstall": "npm -prefix ./lib/utab-core/ install ./lib/utab-core/"
   },
   "engines": {
-    "node": "6.8.1"
+    "node": "8.8.1"
   },
   "repository": {
     "type": "git",
