@@ -114,7 +114,7 @@ function is_administrator (req) {
     }
 }
 
-function is_user_factory (usertype, above_usertypes) {
+function is_user_factory (usertypes, above_usertypes) {
     return function (req) {
         if (req.session && req.session.usertype === 'superuser') {
             return new Promise(resolve => resolve(true))
@@ -123,15 +123,16 @@ function is_user_factory (usertype, above_usertypes) {
         } else {
             return Handler.configs.readOne(parseInt(req.params.tournament_id, 10))
                    .then(config => {
-                       return config.auth[usertype].required ? false : true
+                       return usertypes.some(usertype => !config.auth[usertype].required)
                    })
         }
     }
 }
 
-let is_audience = is_user_factory('audience', ['speaker', 'adjudicator', 'audience'])
-let is_adjudicator = is_user_factory('adjudicator', ['adjudicator'])
-let is_speaker = is_user_factory('speaker', ['speaker'])
+let is_audience = is_user_factory(['audience'], ['speaker', 'adjudicator', 'audience'])
+let is_adjudicator = is_user_factory(['adjudicator'], ['adjudicator'])
+let is_speaker = is_user_factory(['speaker'], ['speaker'])
+let is_adjudicator_or_speaker = is_user_factory(['adjudicator', 'speaker'], ['adjudicator', 'speaker'])
 
 let user_error = { name: "RegisterFirst", message: "Please Login or Register", code: 401 }
 let organizer_error = { name: "LoginFirst", message: "Please Login", code: 401 }
@@ -156,6 +157,7 @@ let check_organizer = check_factory(is_organizer, organizer_error)
 let check_adjudicator = check_factory(is_adjudicator)
 let check_speaker = check_factory(is_speaker)
 let check_audience = check_factory(is_audience)
+let check_adjudicator_or_speaker = check_factory(is_adjudicator_or_speaker)
 
 /*
 INITIALIZE
@@ -192,9 +194,9 @@ IMPLEMENT RAW RESULTS API
 */
 
 let raw_routes = [
-    {keys: ['teams', 'results'], path: '/results/raw/teams', path_specified: '/rounds/:r/results/raw/teams/:id/:from_id'},
-    {keys: ['adjudicators', 'results'], path: '/results/raw/adjudicators', path_specified: '/rounds/:r/results/raw/adjudicators/:id/:from_id'},
-    {keys: ['speakers', 'results'], path: '/results/raw/speakers', path_specified: '/rounds/:r/results/raw/speakers/:id/:from_id'}
+    {keys: ['teams', 'results'], path: '/results/raw/teams', path_specified: '/rounds/:r/results/raw/teams/:id/:from_id', post_check_function: check_adjudicator},
+    {keys: ['adjudicators', 'results'], path: '/results/raw/adjudicators', path_specified: '/rounds/:r/results/raw/adjudicators/:id/:from_id', post_check_function: check_adjudicator_or_speaker},
+    {keys: ['speakers', 'results'], path: '/results/raw/speakers', path_specified: '/rounds/:r/results/raw/speakers/:id/:from_id', post_check_function: check_adjudicator}
 ]
 
 for (let route of raw_routes) {
@@ -213,7 +215,7 @@ for (let route of raw_routes) {
                 node.find(tournament_id, dict).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             }
         })
-        .post(check_audience, function(req, res) {////////////////////BUG IS HERE(cannot distinguish sender's usertype from rounte url. In case where speaker ok and adj access limit)
+        .post(route.post_check_function, function(req, res) {
             log_request(req, route.path)
             req.accepts('application/json')
             let tournament_id = parseInt(req.params.tournament_id, 10)
