@@ -17,7 +17,7 @@ const DBSTYLEURL = BASEURL+'/_styles'
 const DBUSERURL = BASEURL+'/_users'
 const PORT = process.env.PORT || 80
 const PREFIX = '/api'
-const SESSIONMAXAGE = 36000000
+const SESSIONMAXAGE = 108000000
 
 const app = express()
 const api_routes = express.Router()
@@ -95,48 +95,67 @@ function log_request(req, path="?") {
     winston.debug('['+req.method+']'+' path '+req.path+' is accessed @ '+path+'\nQuery\n'+JSON.stringify(req.query, null, 2)+'\nRequest\n'+JSON.stringify(req.body, null, 4))
 }
 
+function is_organizer (req) {
+    if (req.session && ['superuser', 'organizer'].includes(req.session.usertype)) {
+        return new Promise(resolve => resolve(true))
+    } else {
+        return new Promise(resolve => resolve(false))
+    }
+}
+
 function is_administrator (req) {
     let tournament_id = req.params.tournament_id ? parseInt(req.params.tournament_id, 10) : null
     if (req.session && req.session.usertype === 'superuser') {
-        return true
+        return new Promise(resolve => resolve(true))
     } else if (req.session && req.session.usertype === 'organizer' && req.session.tournaments.includes(tournament_id)) {
-        return true
+        return new Promise(resolve => resolve(true))
     } else {
-        return false
+        return new Promise(resolve => resolve(false))
     }
 }
 
-function is_organizer (req) {
-    if (req.session && ['superuser', 'organizer'].includes(req.session.usertype)) {
-        return true
-    } else {
-        return false
+function is_user_factory (usertype, above_usertypes) {
+    return function (req) {
+        if (req.session && req.session.usertype === 'superuser') {
+            return new Promise(resolve => resolve(true))
+        } else if (req.session && above_usertypes.concat(['organizer']).includes(req.session.usertype) && req.session.tournaments.includes(parseInt(req.params.tournament_id, 10))) {
+            return new Promise(resolve => resolve(true))
+        } else {
+            return Handler.configs.readOne(parseInt(req.params.tournament_id, 10))
+                   .then(config => {
+                       return config.auth[usertype].required ? false : true
+                   })
+        }
     }
 }
 
-function is_user (req) {
-    if (req.session && ['user', 'superuser', 'organizer'].includes(req.session.usertype)) {
-        return true
-    } else {
-        return false
+let is_audience = is_user_factory('audience', ['speaker', 'adjudicator', 'audience'])
+let is_adjudicator = is_user_factory('adjudicator', ['adjudicator'])
+let is_speaker = is_user_factory('speaker', ['speaker'])
+
+let user_error = { name: "RegisterFirst", message: "Please Login or Register", code: 401 }
+let organizer_error = { name: "LoginFirst", message: "Please Login", code: 401 }
+
+function check_factory (check_function, error=user_error) {
+    return function (req, res, next) {
+        check_function(req)
+            .then(val => {
+                if (val) {
+                    return next()
+                } else {
+                    console.log('rejected@'+req.originalUrl)
+                    respond_error(error, res, 401)
+                }
+            })
+            .catch(() => respond_error(error, res, 401))
     }
 }
 
-function check_organizer (req, res, next) {
-    if (is_organizer(req)) {
-        return next()
-    } else {
-        respond_error({ name: "RegisterFirst", message: "Please Register or Login", code: 401 }, res, 401)
-    }
-}
-
-function check_administrator (req, res, next) {
-    if (is_administrator(req)) {
-        return next()
-    } else {
-        respond_error({ name: "InvalidSession", message: "Invalid Session", code: 401 }, res, 401)
-    }
-}
+let check_administrator = check_factory(is_administrator, organizer_error)
+let check_organizer = check_factory(is_organizer, organizer_error)
+let check_adjudicator = check_factory(is_adjudicator)
+let check_speaker = check_factory(is_speaker)
+let check_audience = check_factory(is_audience)
 
 /*
 INITIALIZE
@@ -180,7 +199,7 @@ let raw_routes = [
 
 for (let route of raw_routes) {
     api_routes.route('/tournaments/:tournament_id'+route.path)
-        .get(function(req, res) {//read or find//TESTED//
+        .get(check_audience, function(req, res) {//read or find//TESTED//
             let tournament_id = parseInt(req.params.tournament_id, 10)
             if (!is_administrator(req)) {
                 log_request(req, route.path)
@@ -194,7 +213,7 @@ for (let route of raw_routes) {
                 node.find(tournament_id, dict).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
             }
         })
-        .post(function(req, res) {//create//TESTED//
+        .post(check_audience, function(req, res) {////////////////////BUG IS HERE(cannot distinguish sender's usertype from rounte url. In case where speaker ok and adj access limit)
             log_request(req, route.path)
             req.accepts('application/json')
             let tournament_id = parseInt(req.params.tournament_id, 10)
@@ -286,7 +305,7 @@ var draw_routes2 = [
 
 for (let route of draw_routes2) {
     api_routes.route('/tournaments/:tournament_id'+route.path)
-        .get(function(req, res) {
+        .get(check_audience, function(req, res) {
             log_request(req)
             let tournament_id = parseInt(req.params.tournament_id, 10)
             let dict = _.clone(req.query)
@@ -295,7 +314,7 @@ for (let route of draw_routes2) {
             }
             Handler.draws.read(tournament_id, dict).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res))
         })
-        .post(function(req, res) {
+        .post(check_administrator, function(req, res) {
             log_request(req)
             let tournament_id = parseInt(req.params.tournament_id, 10)
             let dict = _.clone(req.body)
@@ -304,7 +323,7 @@ for (let route of draw_routes2) {
             }
             Handler.draws.create(tournament_id, dict).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res))
         })
-        .put(function(req, res) {
+        .put(check_administrator, function(req, res) {
             log_request(req)
             let tournament_id = parseInt(req.params.tournament_id, 10)
             let dict = _.clone(req.body)
@@ -313,7 +332,7 @@ for (let route of draw_routes2) {
             }
             Handler.draws.update(tournament_id, dict).then(doc => respond_data(doc, res, 201)).catch(err => respond_error(err, res))
         })
-        .delete(function(req, res) {
+        .delete(check_administrator, function(req, res) {
             log_request(req)
             let tournament_id = parseInt(req.params.tournament_id, 10)
             let dict = _.clone(req.body)
@@ -339,7 +358,7 @@ var routes = [
 
 for (let route of routes) {
     api_routes.route('/tournaments/:tournament_id'+route.path)
-        .get(function(req, res) {//read or find//TESTED//
+        .get(check_audience, function(req, res) {//read or find//TESTED//
             log_request(req, route.path)
             let tournament_id = parseInt(req.params.tournament_id, 10)
             let node = sys.get_node(Handler, route.keys)
@@ -365,7 +384,7 @@ for (let route of routes) {
             node.delete(tournament_id).then(doc => respond_data(doc, res)).catch(err => respond_error(err, res, 404))
         })
     api_routes.route('/tournaments/:tournament_id'+route.path+'/:'+route.unique)
-        .get(function(req, res) {//read or find//TESTED//
+        .get(check_audience, function(req, res) {//read or find//TESTED//
             log_request(req, route.path)
             let tournament_id = parseInt(req.params.tournament_id, 10)
             let node = sys.get_node(Handler, route.keys)
@@ -394,11 +413,46 @@ for (let route of routes) {
 }
 
 /*
+PARTICIPANTS LOGIN API
+*/
+
+api_routes.route('/tournaments/:tournament_id/login')
+    .post(function (req, res) {///TESTED///
+        log_request(req)
+        let login_key = req.body.login_key
+        let usertype = req.body.usertype
+        let tournament_id = parseInt(req.params.tournament_id, 10)
+        Handler.configs.readOne(tournament_id)
+            .then(doc => {
+                if (doc.auth[usertype].key === login_key) {
+                    req.session.username = ''
+                    req.session.usertype = usertype
+                    req.session.tournaments = [tournament_id]
+                    let data = {
+                        username: '',
+                        usertype: usertype,
+                        tournaments: [tournament_id]
+                    }
+                    return respond_data(data, res)
+                } else {
+                    throw {}
+                }
+            })
+            .catch(() => respond_error({ name: "LoginFailed", message: "Incorrect Login Key", code: 401 }, res, 401))
+    })
+    /*.delete(function (req, res) {///TESTED///
+        log_request(req)
+        req.accepts('application/json')
+        req.session.destroy()
+        respond_data(null, res)
+    })*/
+
+/*
 IMPLEMENT TOURNAMENT CONFIG API
 */
 
 api_routes.route('/tournaments/:tournament_id')
-    .get(function(req, res) {//TESTED//
+    .get(check_audience, function(req, res) {//TESTED//
         log_request(req)
         let tournament_id = parseInt(req.params.tournament_id, 10)
         Handler.configs.readOne(tournament_id)
@@ -418,7 +472,10 @@ api_routes.route('/tournaments/:tournament_id')
         Handler.configs.deleteOne(tournament_id)
             .then(tournament => {
                 Handler.destroy(tournament_id)
-                    .then(docs => respond_data(tournament, res))
+                    .then(docs => {
+                        ServerHandler.users.deleteTournament({ username: req.session.username, tournament_id })
+                        respond_data(tournament, res)
+                    })
                     .catch(err => respond_error(err, res))
             })
     })
@@ -456,7 +513,7 @@ api_routes.route('/styles')
         log_request(req)
         ServerHandler.styles.find(req.query).then(docs => respond_data(docs, res)).catch(err => respond_error(err, res))
     })
-    .post(check_administrator, function(req, res) {///TESTED///
+    .post(check_organizer, function(req, res) {///TESTED///
         log_request(req)
         req.accepts('application/json')
         ServerHandler.styles.create(req.body).then(docs => respond_data(docs, res, 201)).catch(err => respond_error(err, res))
