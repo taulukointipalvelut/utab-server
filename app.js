@@ -83,7 +83,13 @@ function respond_data(data, res, stt=200) {
 }
 
 function respond_error(err, res, stt=500) {
-    var response = {data: null, errors: [{name: err.name || 'InternalServerError', message: err.message || 'Unexpected Internal Server Error', code: err.code || stt, raw: err}]}
+    let is_mongoerror = err.name === 'MongoError'
+    let response = {}
+    if (!is_mongoerror) {
+        response = {data: null, errors: [{name: err.name || 'InternalServerError', message: err.message || 'Unexpected Internal Server Error', code: err.code || stt, raw: err}]}
+    } else {
+        response = {data: null, errors: [{name: err.name, message: 'Unexpected Internal Server Error', code: err.code || stt, raw: null}]}
+    }
 
     winston.query({from: new Date - 24 * 3600 * 1000, until: new Date,limit: 10, start: 0}, function(e, d) {
         response.log = d.file
