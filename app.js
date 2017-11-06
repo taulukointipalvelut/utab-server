@@ -569,9 +569,9 @@ app.use(function(req, res, next){
 	respond_error({name: 'NotFound', message: 'Not Found', code: 404}, res, 404)
 })
 
-/*app.use(function(err, req, res, next){
+app.use(function(err, req, res, next){
     respond_error({name: 'InternalServerError', message: 'Internal Server Error', code: 500}, res)
-})*/
+})
 
 let server = app.listen(PORT)
 winston.info("server started on port: "+PORT+", database address: "+BASEURL)
