@@ -80,7 +80,7 @@ function drop_db_url(doc) {
 
 function respond_data(data, res, stt=200) {
     let response = {data: data, errors: [], log: []}
-    res.status(stt).json(response)
+    setTimeout(() => res.status(stt).json(response), 1000)
 }
 
 function respond_error(err, res, stt=500) {
