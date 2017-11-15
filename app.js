@@ -18,6 +18,7 @@ const DBUSERURL = BASEURL+'/_users'
 const PORT = process.env.PORT || 80
 const PREFIX = '/api'
 const SESSIONMAXAGE = 108000000
+const DATE = Date.now()
 
 const app = express()
 const api_routes = express.Router()
@@ -68,7 +69,7 @@ winston.configure({
 })
 
 function hash (val, random=true) {
-    let date = random ? Date.now() : 0
+    let date = random ? DATE : 0
     return parseInt(md5(val, date).slice(0, Number.MAX_SAFE_INTEGER.toString().length - 2), 16)
 }
 
@@ -443,14 +444,23 @@ api_routes.route('/tournaments/:tournament_id')
         log_request(req)
         let tournament_id = parseInt(req.params.tournament_id, 10)
         Handler.configs.readOne(tournament_id)
-            .then(doc => respond_data(doc, res))
+            .then(doc => {
+              // if (!is_administrator(req)) {
+              //   delete doc.auth.adjudicator.key
+              //   delete doc.auth.speaker.key
+              //   delete doc.auth.audience.key
+              // }
+              respond_data(doc, res)
+            })
             .catch(err => respond_error(err, res))
     })
     .put(check_administrator, function(req, res) {
         log_request(req)
         let tournament_id = parseInt(req.params.tournament_id, 10)
         Handler.configs.update(tournament_id, req.body)
-            .then(doc => respond_data(doc, res))
+            .then(doc => {
+              respond_data(doc, res)
+            })
             .catch(err => respond_error(err, res))
     })
     .delete(check_administrator, function(req, res) {//TESTED//
