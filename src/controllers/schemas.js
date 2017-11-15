@@ -29,6 +29,12 @@ var StylesSchema = new mongoose.Schema({
 			}
 	 	}
 	],
+	adjudicator_range: {
+			from: {type: Number, required: true},
+			to: {type: Number, required: true},
+			default: {type: Number, required: true},
+			unit: {type: Number, required: true}
+	},
 	roles: {type: mongoose.Schema.Types.Mixed, required: true},
     user_defined_data: {type: mongoose.Schema.Types.Mixed, default: {}}
 },{
