@@ -85,6 +85,7 @@ function respond_data(data, res, stt=200) {
 }
 
 function respond_error(err, res, stt=500) {
+    winston.error(err)
     let is_mongoerror = err.name === 'MongoError'
     let response = {}
     if (!is_mongoerror) {
