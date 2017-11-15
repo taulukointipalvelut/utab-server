@@ -153,7 +153,7 @@ function check_factory (check_function, error=user_error) {
                 if (val) {
                     return next()
                 } else {
-                    console.log('rejected@'+req.originalUrl)
+                    winston.info('rejected@'+req.originalUrl)
                     respond_error(error, res, 401)
                 }
             })
