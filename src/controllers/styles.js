@@ -185,8 +185,8 @@ module.exports = [
 		},
 		score_weights: [
 			{order: 1, value: 1},
-			{order: 2, value: 0.5},
-			{order: 3, value: 0.5},
+			{order: 2, value: 1},
+			{order: 3, value: 1},
 			{order: 4, value: 1}
 		],
 		range: [
