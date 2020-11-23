@@ -16,8 +16,8 @@ function arrange_doc(doc) {
 }
 
 class DBUsersHandler {
-    constructor ({ db_user_url }) {
-        var conn = mongoose.createConnection(db_user_url)
+    constructor ({ db_uri, db_users_name }) {
+        var conn = mongoose.createConnection().openUri(db_uri, { dbName: db_users_name, useNewUrlParser: true, useUnifiedTopology: true })
         this.conn = conn
         conn.on('error', function (e) {
             console.log('connection failed: '+e)
@@ -33,8 +33,8 @@ class DBUsersHandler {
 }
 
 class DBStylesHandler {
-    constructor({db_style_url: db_style_url}) {
-        var conn = mongoose.createConnection(db_style_url)
+    constructor({ db_uri, db_styles_name }) {
+        var conn = mongoose.createConnection().openUri(db_uri, { dbName: db_styles_name, useNewUrlParser: true, useUnifiedTopology: true })
         this.conn = conn
         conn.on('error', function (e) {
             console.log('connection failed: '+e)

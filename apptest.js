@@ -66,7 +66,7 @@ function log_request(req) {
     winston.debug('['+req.method+']'+' path '+req.path+' is accessed\nQuery\n'+JSON.stringify(req.query, null, 2)+'\nRequest\n'+JSON.stringify(req.body, null, 4))
 }
 
-const DB = new controllers.CON({db_url: DBURL, db_style_url: DBSTYLEURL})
+const DB = new controllers.CON({db_uri: DBURL, db_style_url: DBSTYLEURL})
 winston.info('connected to tournaments database')
 let handlers = connect_to_tournaments(DB)
 /*

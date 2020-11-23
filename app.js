@@ -11,10 +11,10 @@ const session = require('express-session')
 const randtoken = require('rand-token')
 const md5 = require('blueimp-md5')
 
-const BASEURL = process.env.MONGODB_URI || 'mongodb://localhost'
-const DBTOURNAMENTSURL = BASEURL+'/_tournaments'
-const DBSTYLEURL = BASEURL+'/_styles'
-const DBUSERURL = BASEURL+'/_users'
+const DBURI = process.env.MONGODB_URI || 'mongodb://localhost'
+const DBSTYLESNAME = '_styles'
+const DBUSERSNAME = '_users'
+const DBTOURNAMENTSNAME = '_tournaments'
 const PORT = process.env.PORT || 80
 const PREFIX = '/api'
 const SESSIONMAXAGE = 108000000
@@ -171,8 +171,8 @@ let check_adjudicator_or_speaker = check_factory(is_adjudicator_or_speaker)
 /*
 INITIALIZE
 */
-const Handler = new Utab(DBTOURNAMENTSURL)
-const ServerHandler = new controllers.CON({db_style_url: DBSTYLEURL, db_user_url: DBUSERURL})
+const Handler = new Utab({db_uri: DBURI, db_tournaments_name: DBTOURNAMENTSNAME})
+const ServerHandler = new controllers.CON({db_uri: DBURI, db_styles_name: DBSTYLESNAME, db_users_name: DBUSERSNAME})
 winston.info('connected to server database')
 
 /*
@@ -585,7 +585,7 @@ app.use(function(err, req, res, next){
 })
 
 let server = app.listen(PORT)
-winston.info("server started on port: "+PORT+", database address: "+BASEURL)
+winston.info("server started on port: "+PORT+", database address: "+DBURI)
 
 process.on('exit', function() {
     server.close()
