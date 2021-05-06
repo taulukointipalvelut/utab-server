@@ -31,7 +31,7 @@
     "mongoose": "^5.10.15",
     "mpath": "^0.8.0",
     "rand-token": "^0.4.0",
-    "underscore": "^1.8.3",
+    "underscore": "^1.12.1",
     "winston": "^2.4.0"
   }
 }
