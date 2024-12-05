@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/taulukointipalvelut/utab-server#readme",
   "dependencies": {
-    "async": "^2.6.0",
+    "async": "^2.6.4",
     "blueimp-md5": "^2.10.0",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
